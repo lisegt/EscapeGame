@@ -28,7 +28,7 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-//conflit
+//conflit git
 //test 4
 
 @Composable

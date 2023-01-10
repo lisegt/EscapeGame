@@ -28,7 +28,7 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-//test
+//test 2
 
 @Composable
 fun Greeting(name: String) {

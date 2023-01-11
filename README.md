@@ -7,8 +7,6 @@ S'adressant à notre client, Mme Delphine VIELA, il consiste en la création d�
 
 A l'heure actuelle, ce projet n'est pas encore abouti, il est en cours de développement.
 
-```
-
 ## Pour exécuter le projet
 
 - exécution du projet dans Android Studio

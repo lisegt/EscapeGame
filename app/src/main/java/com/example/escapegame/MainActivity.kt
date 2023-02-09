@@ -83,7 +83,7 @@ fun pageAccueil(
             modifier = Modifier.padding(vertical = 24.dp),
             onClick = onContinueClicked
         ) {
-            Text(text = "Entrer !")
+            Text(text = "Entrer")
         }
     }
 }

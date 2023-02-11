@@ -16,6 +16,13 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.NavDestination
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
 import com.example.escapegame.ui.theme.EscapeGameTheme
 
 class MainActivity : ComponentActivity() {
@@ -24,7 +31,11 @@ class MainActivity : ComponentActivity() {
         setContent {
             EscapeGameTheme {
 
-                MyApp()
+                val navController = rememberNavController()
+
+
+
+                MyAppNavHost()
                 /*
                 // A surface container using the 'background' color from the theme
                 Surface(
@@ -43,54 +54,76 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-
 @Composable
-fun MyApp(modifier: Modifier = Modifier){
+fun MyAppNavHost(
+    modifier: Modifier = Modifier,
+    navController: NavHostController = rememberNavController(),
+    startDestination: String = "accueil"
+) {
+    NavHost(
+        modifier = modifier,
+        navController = navController,
+        startDestination = startDestination
+    ) {
+        composable("accueil"){
+            pageAccueil(modifier, navController)
+        }
+        composable("bienvenue"){
+            pageBienvenue(modifier = modifier, navController = navController )
+        }
+        composable("hall_accueil"){
+            pageHallAccueil()
+        }
+
+    }
+}
+/*
+@Composable
+fun MyApp(modifier: Modifier = Modifier, navController: NavController){
         //l'état doit être hissé
         var clickDebutJeu by remember { mutableStateOf(true) }
 
         Surface(modifier) {
             if (clickDebutJeu) {
-                pageAccueil(onContinueClicked = { clickDebutJeu = false})
+                pageAccueil(modifier, navController )
             } else {
                 Greetings()
             }
         }
 }
+ */
 
+
+
+@Preview(showBackground = true, widthDp = 320, heightDp = 320)
 @Composable
-fun pageAccueil(
-    onContinueClicked: () -> Unit,
-    modifier: Modifier = Modifier
-) {
-    //background avec image
-    Box(modifier = with (Modifier){
-        fillMaxSize()
-            .paint(
-                // Replace with your image id
-                painterResource(id = R.drawable.isis_ext),
-                contentScale = ContentScale.FillBounds)
+fun OnboardingPreview() {
+    EscapeGameTheme {
+        MyAppNavHost()
     }
-    )
+}
+/*
+@Preview(showBackground = true, name = "Text Preview", widthDp = 320)
+@Composable
+fun GreetingsPreview() {
+    EscapeGameTheme {
+        Greetings()
+    }
+}
+ */
 
-    Column(
-        modifier = modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    )  {
-        Text("L'aventure des Ingénieurs vert-U-eux")
-        Button(
-            modifier = Modifier.padding(vertical = 24.dp),
-            onClick = onContinueClicked
-        ) {
-            Text(text = "Entrer")
-        }
+
+@Preview(showBackground = true, name = "Text Preview", widthDp = 320)
+@Composable
+fun MyAppPreview() {
+    EscapeGameTheme {
+        MyAppNavHost(Modifier.fillMaxSize())
     }
 }
 
-
+/*
 @Composable
-private fun Greetings(
+fun Greetings(
     modifier: Modifier = Modifier,
     names: List<String> = listOf("World", "Compose")){
 
@@ -131,28 +164,4 @@ fun Greeting(name: String) {
     }
 
 }
-
-@Preview(showBackground = true, widthDp = 320, heightDp = 320)
-@Composable
-fun OnboardingPreview() {
-    EscapeGameTheme {
-        pageAccueil(onContinueClicked = {})
-    }
-}
-
-
-@Preview(showBackground = true, name = "Text Preview", widthDp = 320)
-@Composable
-fun GreetingsPreview() {
-    EscapeGameTheme {
-        Greetings()
-    }
-}
-
-@Preview(showBackground = true, name = "Text Preview", widthDp = 320)
-@Composable
-fun MyAppPreview() {
-    EscapeGameTheme {
-        MyApp(Modifier.fillMaxSize())
-    }
-}
+ */

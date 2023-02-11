@@ -3,6 +3,7 @@ package com.example.escapegame
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
@@ -26,6 +27,8 @@ import androidx.navigation.compose.rememberNavController
 import com.example.escapegame.ui.theme.EscapeGameTheme
 
 class MainActivity : ComponentActivity() {
+
+    @OptIn(ExperimentalAnimationApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -54,6 +57,7 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
+@ExperimentalAnimationApi
 @Composable
 fun MyAppNavHost(
     modifier: Modifier = Modifier,
@@ -96,6 +100,7 @@ fun MyApp(modifier: Modifier = Modifier, navController: NavController){
 
 
 @Preview(showBackground = true, widthDp = 320, heightDp = 320)
+@ExperimentalAnimationApi
 @Composable
 fun OnboardingPreview() {
     EscapeGameTheme {
@@ -115,6 +120,7 @@ fun GreetingsPreview() {
 
 @Preview(showBackground = true, name = "Text Preview", widthDp = 320)
 @Composable
+@ExperimentalAnimationApi
 fun MyAppPreview() {
     EscapeGameTheme {
         MyAppNavHost(Modifier.fillMaxSize())

@@ -1,58 +1,70 @@
 package com.example.escapegame
 
-import androidx.compose.animation.*
-import androidx.compose.animation.core.tween
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.MaterialTheme
+import androidx.compose.animation.core.spring
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.Button
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.draw.paint
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.escapegame.ui.theme.EscapeGameTheme
 
-@ExperimentalAnimationApi
+var titreHallAccueil = "Depuis une semaine, les plus grands scientifiques, ingénieurs, chercheurs, philosophes et inventeurs travaillent ensemble : notre planète est en danger …"
+var corpsHallAccueil = "… il est temps d’agir"
 @Composable
-fun pageHallAccueil(mainViewModel: MainViewModel = viewModel()) {
-    val seconds by mainViewModel.seconds.collectAsState(initial = "00")
+fun pageHallAccueil(
+    modifier: Modifier,
+    navController: NavController
+){
+    //background avec image
+    Box(modifier = with (Modifier){
+        fillMaxSize()
+            .paint(
+                // Replace with your image id
+                painterResource(id = R.drawable.hall),
+                contentScale = ContentScale.FillBounds)
+    }
+    )
 
     Column(
-        modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Top,
-        horizontalAlignment = Alignment.End
-    ) {
-        AnimatedContent(
-            targetState = seconds,
-            transitionSpec ={
-                addAnimation().using(SizeTransform(clip = true))
-            }
-        ) { targetCount ->
-            Text(
-                text = "$targetCount",
-                style = TextStyle(fontSize = MaterialTheme.typography.h1.fontSize),
-                textAlign = TextAlign.Center
-            )
-        }
+        modifier = modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    )  {
+        Text(titreHallAccueil, color = Color.White)
+        Text(
+            text = corpsHallAccueil,
+            fontSize = 10.sp,
+            textAlign = TextAlign.Center,
+            color = Color.White)
+        BoutonVersCouloirSalleConseil(navController)
     }
 }
-@ExperimentalAnimationApi
-fun addAnimation(duration: Int = 800): ContentTransform {
-    return slideInVertically(animationSpec = tween(duration)) { height -> height } + fadeIn(animationSpec = tween(durationMillis = duration)) with slideOutVertically(animationSpec = tween(durationMillis = duration)) {height -> -height} + fadeOut(animationSpec = tween(durationMillis = duration))
+
+@Composable
+private fun BoutonVersCouloirSalleConseil(navController: NavController) {
+    Button(
+        modifier = Modifier.padding(vertical = 24.dp),
+        onClick = { navController.navigate("couloir_salle_conseil") }
+    ) {
+        Text(text = "Se diriger vers la salle de conseil")
+    }
 }
 
 @Preview(showBackground = true, widthDp = 320, heightDp = 320)
-@ExperimentalAnimationApi
 @Composable
-fun HallAccueilPreview() {
+fun BoutonVersCouloirSalleConseilPreview() {
     EscapeGameTheme {
-        pageHallAccueil()
+        pageBienvenue(modifier = Modifier, navController = rememberNavController() )
     }
 }

@@ -8,6 +8,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.paint
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
@@ -41,11 +42,12 @@ fun pageBienvenue(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     )  {
-        Text("Bienvenue les ingénieurs Vert-U-eux !")
+        Text(titre, color = Color.White)
         Text(
-            text = "Vous voici dans le building où a lieu la Conférence des Continents et Mers du Monde (CCMM)",
+            text = corps,
             fontSize = 10.sp,
-            textAlign = TextAlign.Center)
+            textAlign = TextAlign.Center,
+            color = Color.White)
         BoutonVersHallAccueil(navController)
     }
 }

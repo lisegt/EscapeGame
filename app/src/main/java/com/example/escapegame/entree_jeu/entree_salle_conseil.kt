@@ -16,6 +16,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -25,7 +26,8 @@ import com.example.escapegame.ui.theme.EscapeGameTheme
 @Composable
 fun entreeSalleConseil(
     modifier: Modifier,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    navController: NavController
 ){
     //background avec image
     Box(modifier = with (Modifier){
@@ -36,21 +38,29 @@ fun entreeSalleConseil(
                 contentScale = ContentScale.FillBounds)
     }
     )
-
-    Box(
-        modifier = modifier
-            .fillMaxSize()
-            .clickable(onClick = onClick)
-            .offset(318.dp,230.dp)
-    ) {
-        Image(
-            painter = painterResource(id = R.drawable.cercle),
-            alpha = 0.2F,
-            contentDescription = null,
-            modifier = Modifier.size(100.dp)
-        )
-    }
+    PoigneeCliquableSalleConseil(
+        onClick = { onClick },
+        clickableWidth = 0.13F,
+        clickableHeight = 0.25F,
+        clickableOffset = IntOffset(320, 240),
+        navController = navController)
 }
 
+@Composable
+fun PoigneeCliquableSalleConseil(
+    onClick: () -> Unit,
+    clickableWidth: Float = 0.4F,
+    clickableHeight: Float = 0.5F,
+    clickableOffset: IntOffset = IntOffset.Zero,
+    navController: NavController
+) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth(clickableWidth)
+            .fillMaxHeight(clickableHeight)
+            .offset(clickableOffset.x.dp, clickableOffset.y.dp)
+            .clickable(onClick = {navController.navigate("salle_conseil")})
+    )
+}
 
 

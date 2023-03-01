@@ -14,8 +14,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.escapegame.entree_jeu.reglesJeu
-import com.example.escapegame.entree_jeu.salleConseil
+import com.example.escapegame.entree_jeu.*
 import com.example.escapegame.ui.theme.EscapeGameTheme
 import kotlin.time.ExperimentalTime
 
@@ -75,10 +74,10 @@ fun MyAppNavHost(
             pageHallAccueil(modifier = modifier, navController = navController)
         }
         composable("couloir_salle_conseil"){
-            couloirSalleConseil(modifier = modifier, onClick = {navController.navigate("entree_salle_conseil")})
+            couloirSalleConseil(modifier = modifier, onClick = {navController.navigate("entree_salle_conseil")}, navController = navController)
         }
         composable("entree_salle_conseil"){
-            entreeSalleConseil(modifier = modifier, onClick = {navController.navigate("salle_conseil")})
+            entreeSalleConseil(modifier = modifier, onClick = {navController.navigate("salle_conseil")}, navController = navController)
         }
         composable("salle_conseil"){
             salleConseil(modifier = modifier,  navController = navController)
@@ -86,26 +85,20 @@ fun MyAppNavHost(
         composable("couloir_salle_afrique"){
             couloirSalleAfrique(modifier = modifier, navController = navController)
         }
-        composable("regles_du_jeu"){
-            reglesJeu(modifier = modifier, navController = navController)
+        composable("regles_du_jeu_1"){
+            reglesJeu_page1(modifier = modifier, navController = navController)
+        }
+        composable("regles_du_jeu_2"){
+            reglesJeu_page2(modifier = modifier, navController = navController)
+        }
+        composable("regles_du_jeu_3"){
+            reglesJeu_page3(modifier = modifier, navController = navController)
+        }
+        composable("entree_salle_afrique"){
+            entreeSalleAfrique(modifier = modifier, onClick = {navController.navigate("salle_conseil")})
         }
     }
 }
-/*
-@Composable
-fun MyApp(modifier: Modifier = Modifier, navController: NavController){
-        //l'état doit être hissé
-        var clickDebutJeu by remember { mutableStateOf(true) }
-
-        Surface(modifier) {
-            if (clickDebutJeu) {
-                pageAccueil(modifier, navController )
-            } else {
-                Greetings()
-            }
-        }
-}
- */
 
 
 

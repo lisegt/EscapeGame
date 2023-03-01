@@ -24,7 +24,7 @@ var corps1ReglesJeu = "L'Escape game peut se jouer seul (en autonomie)ou en équ
 var corps2ReglesJeu = "Vous avez choisi de jouez seul, vous êtes en autonomie.Continuez à prendre connaissance des règles du jeu."
 var corps3ReglesJeu = "Votre mission (si vous l'acceptez ...)"
 @Composable
-fun reglesJeu(
+fun reglesJeu_page1(
     modifier: Modifier,
     navController: NavController
 ){
@@ -51,23 +51,35 @@ fun reglesJeu(
         )
 
         Column(
-            modifier = modifier.fillMaxSize(),
+            modifier = modifier
+                .fillMaxSize()
+                .padding(60.dp, 60.dp),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(titreReglesJeu, color = Color.White)
-            Text(
-                text = corps1ReglesJeu,
-                fontSize = 10.sp,
-                textAlign = TextAlign.Center,
-                color = Color.White
-            )
-            Text(
-                text = corps2ReglesJeu,
-                fontSize = 10.sp,
-                textAlign = TextAlign.Center,
-                color = Color.White
-            )
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                Text(
+                    text = titreReglesJeu,
+                    color = Color(48,165,232),
+                    fontSize = 30.sp)
+            }
+            Column(
+                modifier = modifier.padding(0.dp, 20.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    text = corps1ReglesJeu,
+                    fontSize = 14.sp,
+                    color = Color.White
+                )
+                Text(
+                    text = corps2ReglesJeu,
+                    fontSize = 14.sp,
+                    textAlign = TextAlign.Center,
+                    color = Color.White
+                )
+            }
+
         }
 
         Column(
@@ -104,7 +116,7 @@ fun FloatingButtonNextRule(onClick: () -> Unit) {
             content = {
                 Icon(
                     painter = painterResource(id = R.drawable.next),
-                    contentDescription = "Next",
+                    contentDescription = "Next"
                 )
             }
         )

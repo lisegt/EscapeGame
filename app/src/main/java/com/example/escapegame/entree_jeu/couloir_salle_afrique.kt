@@ -60,7 +60,7 @@ fun couloirSalleAfrique(
 private fun BoutonVersReglesDuJeu(navController: NavController) {
     Button(
         modifier = Modifier.padding(vertical = 24.dp),
-        onClick = { navController.navigate("regles_du_jeu") }
+        onClick = { navController.navigate("regles_du_jeu_1") }
     ) {
         Text(text = "Voir les règles du jeu")
     }

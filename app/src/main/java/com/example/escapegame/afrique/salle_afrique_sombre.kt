@@ -1,11 +1,7 @@
-package com.example.escapegame.entree_jeu
-
-import com.example.escapegame.R
+package com.example.escapegame
 import androidx.compose.animation.core.spring
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.forEachGesture
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
@@ -16,53 +12,65 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.paint
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.example.escapegame.pageBienvenue
 import com.example.escapegame.ui.theme.EscapeGameTheme
-import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.IntOffset
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.offset
-import androidx.compose.runtime.Composable
 
 @Composable
-fun entreeSalleAfrique(
+fun salleAfriqueSombre(
     modifier: Modifier,
-    navController: NavController
+    navController: NavController,
 ){
     //background avec image
     Box(modifier = with (Modifier){
         fillMaxSize()
             .paint(
                 // Replace with your image id
-                painterResource(id = R.drawable.entree_salle_afrique),
+                painterResource(id = R.drawable.lumiere_eteinte),
                 contentScale = ContentScale.FillBounds)
     }
     )
 
-    PorteCliquableSalleAfrique(
-        clickableWidth = 0.4F,
-        clickableHeight = 0.9F,
-        clickableOffset = IntOffset(240, 40),
-        navController = navController
-    )
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .padding(60.dp, 60.dp),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(
+            text = "Lumière !",
+            color = Color(238, 183,43),
+            fontSize = 40.sp,
+            textAlign = TextAlign.Center
+        )
 
+        Image(
+            painter = painterResource(id = R.drawable.touch),
+            contentDescription = "allumer la lumière",
+            modifier = Modifier
+                .size(100.dp)
+        )
+    }
+
+    InterrupteurLumiere(
+        clickableWidth = 1F,
+        clickableHeight = 1F,
+        clickableOffset = IntOffset(115, 140),
+        navController = navController)
 }
 
 @Composable
-fun PorteCliquableSalleAfrique(
-    clickableWidth: Float = 0.4F,
-    clickableHeight: Float = 0.5F,
+fun InterrupteurLumiere(
+    clickableWidth: Float = 1F,
+    clickableHeight: Float = 1F,
     clickableOffset: IntOffset = IntOffset.Zero,
     navController: NavController
 ) {
@@ -71,12 +79,11 @@ fun PorteCliquableSalleAfrique(
             .fillMaxWidth(clickableWidth)
             .fillMaxHeight(clickableHeight)
             .offset(clickableOffset.x.dp, clickableOffset.y.dp)
-            .clickable(onClick = { navController.navigate("salle_afrique_sombre")})
+            .clickable(onClick = { navController.navigate("salle_afrique") })
     )
+
+
 }
-
-
-
 
 
 

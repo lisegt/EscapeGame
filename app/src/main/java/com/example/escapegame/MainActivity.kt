@@ -56,7 +56,7 @@ class MainActivity : ComponentActivity() {
 fun MyAppNavHost(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
-    startDestination: String = "accueil",
+    startDestination: String = "salle_afrique_sombre",
     viewModel: MainViewModel
 ) {
     NavHost(
@@ -95,7 +95,13 @@ fun MyAppNavHost(
             reglesJeu_page3(modifier = modifier, navController = navController)
         }
         composable("entree_salle_afrique"){
-            entreeSalleAfrique(modifier = modifier, onClick = {navController.navigate("salle_conseil")})
+            entreeSalleAfrique(modifier = modifier, navController)
+        }
+        composable("salle_afrique_sombre"){
+            salleAfriqueSombre(modifier = modifier, navController)
+        }
+        composable("salle_afrique"){
+            salleAfrique(modifier = modifier, navController)
         }
     }
 }

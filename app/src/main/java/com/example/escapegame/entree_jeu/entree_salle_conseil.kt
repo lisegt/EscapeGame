@@ -40,9 +40,9 @@ fun entreeSalleConseil(
     )
     PoigneeCliquableSalleConseil(
         onClick = { onClick },
-        clickableWidth = 0.13F,
-        clickableHeight = 0.25F,
-        clickableOffset = IntOffset(320, 240),
+        clickableWidth = 0.38F,
+        clickableHeight = 0.82F,
+        clickableOffset = IntOffset(230, 30),
         navController = navController)
 }
 

@@ -40,9 +40,9 @@ fun couloirSalleConseil(
     )
     PorteCliquableSalleConseil(
         onClick = { onClick },
-        clickableWidth = 0.25F,
-        clickableHeight = 0.3F,
-        clickableOffset = IntOffset(115, 140),
+        clickableWidth = 0.15F,
+        clickableHeight = 0.4F,
+        clickableOffset = IntOffset(380, 70),
         navController = navController)
 }
 

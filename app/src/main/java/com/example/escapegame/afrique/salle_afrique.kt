@@ -26,9 +26,9 @@ fun salleAfrique(
 
     //etats qui indiquent si les murs doivent être affichés ou non
     //mur du fond affiché par défaut
-    var showMurFond by remember { mutableStateOf(false) }
+    var showMurFond by remember { mutableStateOf(true) }
     //autres mur
-    var showMurDroite by remember { mutableStateOf(true) }
+    var showMurDroite by remember { mutableStateOf(false) }
     var showMurGauche by remember { mutableStateOf(false) }
     var showMurEntree by remember { mutableStateOf(false) }
 

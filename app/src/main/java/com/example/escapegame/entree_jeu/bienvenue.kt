@@ -27,6 +27,9 @@ fun pageBienvenue(
     modifier: Modifier,
     navController: NavController
 ){
+
+    Button(onClick = {navController.navigate("salle_afrique_sombre")}){}
+
     //background avec image
     Box(modifier = with (Modifier){
         fillMaxSize()

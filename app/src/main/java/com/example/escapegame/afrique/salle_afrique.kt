@@ -16,9 +16,13 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.input.pointer.positionChange
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.escapegame.entree_jeu.FloatingButtonNextRule
 import com.example.escapegame.entree_jeu.corps3ReglesJeu
@@ -224,6 +228,10 @@ fun MurEntreeAfrique(
 ){
 
     var enigme_uranium by remember { mutableStateOf(false) }
+    var passwordErrorUranium by remember{ mutableStateOf(false) }
+    var showDilemmeUraniumRecto by remember { mutableStateOf(false) }
+    var showDilemmeUraniumVerso by remember { mutableStateOf(false) }
+    
     //background avec image
     Box(modifier = with (Modifier){
         fillMaxSize()
@@ -242,28 +250,43 @@ fun MurEntreeAfrique(
         navController = navController,
         onClick = {enigme_uranium = true})
 
-    //zoom sur les livres
+    //popup enigme uranium
     if (enigme_uranium) {
         // Créer des variables d'état pour stocker les données du formulaire
         var code by remember { mutableStateOf("") }
+        var label = "Uranium et nucléaire"
 
         AlertDialog(
             onDismissRequest = { enigme_uranium = false },
-            title = { Text("Entrez le bon code !") },
+            title = { Text("Entrez le bon code !")},
             text = {
-                Column(modifier = Modifier.padding(all = 16.dp)) {
-                    TextField(
+                Column (modifier = Modifier.padding(16.dp)){
+                    Text(text = "")
+                    Spacer(modifier = Modifier.height(16.dp))
+                    OutlinedTextField(
                         value = code,
-                        onValueChange = { code = it },
-                        label = { Text("Uranium et nucléaire") },
-                        keyboardOptions = KeyboardOptions.run { Default.copy(keyboardType = KeyboardType.Text) }
+                        onValueChange = { passwordErrorUranium = false; code = it },
+                        label = { Text(label) },
+                        visualTransformation = PasswordVisualTransformation(),
+                        isError = passwordErrorUranium,
+                        modifier = Modifier.fillMaxWidth(),
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
                     )
+                    if (passwordErrorUranium){
+                        Text(text = "Code invalide")
+                    }
                 }
             },
             confirmButton = {
                 Button(
                     onClick = {
-                        //fonction qui affiche ou non le dilemme en fonction du code trouvé ou non
+                        if (code == "8892"){
+                            passwordErrorUranium = false
+                            showDilemmeUraniumRecto = true
+
+                        } else {
+                            passwordErrorUranium = true
+                        }
                     }
                 ) {
                     Text("Valider")
@@ -273,9 +296,50 @@ fun MurEntreeAfrique(
                 Button(
                     onClick = { enigme_uranium = false }
                 ) {
-                    Text("Annuler")
+                    Text("Fermer")
                 }
             }
+        )
+    }
+
+    //popups dilemme uranium
+    if (showDilemmeUraniumRecto) {
+        AlertDialog(
+            onDismissRequest = { showDilemmeUraniumRecto = false },
+            text = { ClickElement(clickableWidth = 1F,
+                clickableHeight = 0.7F,
+                navController = navController,
+                onClick = {
+                    showDilemmeUraniumVerso = true
+                    showDilemmeUraniumRecto = false},
+            )
+                Image(painter = painterResource(id = R.drawable.d_uranium_recto), contentDescription = "Dilemme Uranium Recto")
+            },
+            confirmButton = {
+                TextButton(onClick = { showDilemmeUraniumRecto = false }, modifier = Modifier) {
+                    Text("Fermer")
+                }
+            }
+
+        )
+    }
+    if (showDilemmeUraniumVerso) {
+        AlertDialog(
+            onDismissRequest = { showDilemmeUraniumVerso = false },
+            text = { ClickElement(clickableWidth = 1F,
+                clickableHeight = 0.7F,
+                navController = navController,
+                onClick = {
+                    showDilemmeUraniumRecto = true
+                    showDilemmeUraniumVerso = false})
+                Image(painter = painterResource(id = R.drawable.d_uranium_verso), contentDescription = "Dilemme Uranium Verso")
+            },
+            confirmButton = {
+                TextButton(onClick = { showDilemmeUraniumVerso = false }, modifier = Modifier) {
+                    Text("Fermer")
+                }
+            }
+
         )
     }
 
@@ -551,8 +615,7 @@ fun ClickElement(
     clickableHeight: Float = 1F,
     clickableOffset: IntOffset = IntOffset.Zero,
     navController: NavController,
-    onClick: () -> Unit
-) {
+    onClick: () -> Unit) {
     Box(
         modifier = Modifier
             .fillMaxWidth(clickableWidth)

@@ -291,6 +291,9 @@ fun MurDroiteAfrique(
     var showTchad by remember { mutableStateOf(false)}
 
     var showBottle by remember { mutableStateOf(false) }
+    var showBoulette123 by remember { mutableStateOf(false) }
+    var showBoulette456 by remember { mutableStateOf(false) }
+    var showBoulette789 by remember { mutableStateOf(false) }
 
     //background avec image
     Box(modifier = with (Modifier){
@@ -1363,7 +1366,216 @@ fun MurDroiteAfrique(
         }
     }
 
+    //click sur boulette 123
+    ClickElement(
+        clickableWidthPercent = 0.04F,
+        clickableHeightPercent = 0.08F,
+        clickableOffsetPercent = Offset(0.32F, 0.4F),
+        navController = navController,
+        onClick = {showBoulette123 = true})
 
+    //zoom sur boulette 123
+    if (showBoulette123){
+        // Popup contenant les livre avec drapeaux
+        Popup() {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                // Fond flou
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(Color.Transparent)
+                        .drawBehind {
+                            drawRect(
+                                brush = Brush.verticalGradient(
+                                    colors = listOf(Color.Transparent, Color.Black),
+                                    startY = 0f,
+                                    endY = size.height
+                                )
+                            )
+                        },
+                    content = {
+                        // Contenu de la popup
+                        Box(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(16.dp),
+                            content = {
+                                Box(
+                                    modifier = with(Modifier) {
+                                        fillMaxSize()
+                                            .paint(
+                                                // Remplacez par votre id d'image
+                                                painterResource(id = R.drawable.codes_123),
+                                                contentScale = ContentScale.Fit
+                                            )
+                                    }
+                                )
+                            }
+                        )
+                    }
+                )
+            }
+
+            Column(
+                modifier = modifier
+                    .fillMaxSize()
+                    .padding(30.dp, 20.dp),
+                verticalArrangement = Arrangement.Top,
+                horizontalAlignment = Alignment.End
+            ){
+                Row() {
+                    FloatingButtonClosePopup(
+                        onClick = {showBoulette123 = false }
+                    )
+                }
+            }
+        }
+    }
+
+    //click sur boulette 456
+    ClickElement(
+        clickableWidthPercent = 0.04F,
+        clickableHeightPercent = 0.08F,
+        clickableOffsetPercent = Offset(0.4F, 0.35F),
+        navController = navController,
+        onClick = {showBoulette456 = true})
+
+    //zoom sur boulette 456
+    if (showBoulette456){
+        // Popup contenant les livre avec drapeaux
+        Popup() {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                // Fond flou
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(Color.Transparent)
+                        .drawBehind {
+                            drawRect(
+                                brush = Brush.verticalGradient(
+                                    colors = listOf(Color.Transparent, Color.Black),
+                                    startY = 0f,
+                                    endY = size.height
+                                )
+                            )
+                        },
+                    content = {
+                        // Contenu de la popup
+                        Box(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(16.dp),
+                            content = {
+                                Box(
+                                    modifier = with(Modifier) {
+                                        fillMaxSize()
+                                            .paint(
+                                                // Remplacez par votre id d'image
+                                                painterResource(id = R.drawable.codes_456),
+                                                contentScale = ContentScale.Fit
+                                            )
+                                    }
+                                )
+                            }
+                        )
+                    }
+                )
+            }
+
+            Column(
+                modifier = modifier
+                    .fillMaxSize()
+                    .padding(30.dp, 20.dp),
+                verticalArrangement = Arrangement.Top,
+                horizontalAlignment = Alignment.End
+            ){
+                Row() {
+                    FloatingButtonClosePopup(
+                        onClick = {showBoulette456 = false }
+                    )
+                }
+            }
+        }
+    }
+
+    //click sur boulette 789
+    ClickElement(
+        clickableWidthPercent = 0.04F,
+        clickableHeightPercent = 0.08F,
+        clickableOffsetPercent = Offset(0.48F, 0.39F),
+        navController = navController,
+        onClick = {showBoulette789 = true})
+
+    //zoom sur boulette 789
+    if (showBoulette789){
+        // Popup contenant les livre avec drapeaux
+        Popup() {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                // Fond flou
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(Color.Transparent)
+                        .drawBehind {
+                            drawRect(
+                                brush = Brush.verticalGradient(
+                                    colors = listOf(Color.Transparent, Color.Black),
+                                    startY = 0f,
+                                    endY = size.height
+                                )
+                            )
+                        },
+                    content = {
+                        // Contenu de la popup
+                        Box(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(16.dp),
+                            content = {
+                                Box(
+                                    modifier = with(Modifier) {
+                                        fillMaxSize()
+                                            .paint(
+                                                // Remplacez par votre id d'image
+                                                painterResource(id = R.drawable.codes_789),
+                                                contentScale = ContentScale.Fit
+                                            )
+                                    }
+                                )
+                            }
+                        )
+                    }
+                )
+            }
+
+            Column(
+                modifier = modifier
+                    .fillMaxSize()
+                    .padding(30.dp, 20.dp),
+                verticalArrangement = Arrangement.Top,
+                horizontalAlignment = Alignment.End
+            ){
+                Row() {
+                    FloatingButtonClosePopup(
+                        onClick = {showBoulette789 = false }
+                    )
+                }
+            }
+        }
+    }
+
+    MoveableMasque1(clickableOffsetPercent = Offset(0.28F, 0.35F))
+    MoveableMasque2(clickableOffsetPercent = Offset(0.35F, 0.2F))
+    MoveableMasque3(clickableOffsetPercent = Offset(0.42F, 0.3F))
 
     //Boutons de navigation entre les murs
     ToNextRightWall(modifier = modifier, navController =  navController, onClick = {onDisplayChangeToRight(!isDisplayedRight)})
@@ -1402,6 +1614,10 @@ fun MurEntreeAfrique(
     var showDilemmeGaz by remember { mutableStateOf(false) }
     var code_gaz_trouve by remember { mutableStateOf(false) }
 
+    var enigme_er by remember { mutableStateOf(false) }
+    var passwordErrorER by remember{ mutableStateOf(false) }
+    var showDilemmeER by remember { mutableStateOf(false) }
+    var code_er_trouve by remember { mutableStateOf(false) }
 
     
     //background avec image
@@ -1996,6 +2212,132 @@ fun MurEntreeAfrique(
         }
     }
 
+    //click énergies renouvelables
+    ClickElement(
+        clickableWidthPercent = 0.08F,
+        clickableHeightPercent = 0.14F,
+        clickableOffsetPercent = Offset(0.34F, 0.38F),
+        navController = navController,
+        onClick = {
+            if (code_er_trouve) { showDilemmeER = true }
+            else { enigme_er = true } })
+
+    //popup enigme gaz
+    if (enigme_er){
+        // Créer des variables d'état pour stocker les données du formulaire
+        var code by remember { mutableStateOf("") }
+        var label = "L'énergie solaire"
+
+        AlertDialog(
+            onDismissRequest = { enigme_er = false },
+            title = { Text(text="Entrez le bon code !",  textAlign = TextAlign.Center)},
+            text = {
+                Column (modifier = Modifier.padding(16.dp)){
+                    Text(text = "Le continent africain est le plus ensoleillé. C'est une source inépuisable d'énergie renouvelable.")
+                    Spacer(modifier = Modifier.height(16.dp))
+                    OutlinedTextField(
+                        value = code,
+                        onValueChange = { passwordErrorER = false; code = it },
+                        label = { Text(label) },
+                        visualTransformation = PasswordVisualTransformation(),
+                        isError = passwordErrorER,
+                        modifier = Modifier.fillMaxWidth(),
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
+                    )
+                    if (passwordErrorER){
+                        Text(text = "Code invalide")
+                    }
+                }
+            },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        if (code == "6395"){
+                            passwordErrorER = false
+                            showDilemmeER = true
+                            enigme_er = false
+                            code_er_trouve = true
+
+                        } else {
+                            passwordErrorER = true
+                        }
+                    }
+                ) {
+                    Text("Valider")
+                }
+            },
+            dismissButton = {
+                Button(
+                    onClick = { enigme_er = false }
+                ) {
+                    Text("Fermer")
+                }
+            }
+        )
+    }
+
+    //popups dilemme gaz
+    if (showDilemmeER){
+        // Popup contenant le dilemme eau
+        Popup() {
+
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                // Fond flou
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(Color.Transparent)
+                        .drawBehind {
+                            drawRect(
+                                brush = Brush.verticalGradient(
+                                    colors = listOf(Color.Transparent, Color.Black),
+                                    startY = 0f,
+                                    endY = size.height
+                                )
+                            )
+                        },
+                    content = {
+                        // Contenu de la popup
+                        Box(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(16.dp),
+                            content = {
+                                Box(
+                                    modifier = with(Modifier) {
+                                        fillMaxSize()
+                                            .paint(
+                                                // Remplacez par votre id d'image
+                                                painterResource(id = R.drawable.d_solaire),
+                                                contentScale = ContentScale.Fit
+                                            )
+                                    }
+                                )
+                            }
+                        )
+                    }
+                )
+            }
+
+            Column(
+                modifier = modifier
+                    .fillMaxSize()
+                    .padding(30.dp, 20.dp),
+                verticalArrangement = Arrangement.Top,
+                horizontalAlignment = Alignment.End
+            ){
+                Row() {
+                    FloatingButtonClosePopup(
+                        onClick = {showDilemmeER = false}
+                    )
+                }
+            }
+        }
+    }
+
     //portes amovible
     MoveablePorteHG(clickableOffsetPercent = Offset(0.265F, 0.225F))
     MoveablePorteHD(clickableOffsetPercent = Offset(0.435F, 0.225F))
@@ -2021,6 +2363,7 @@ fun MurGaucheAfrique(
     var tab_periodique by remember { mutableStateOf(false) }
     var showCrayons by remember { mutableStateOf(false) }
     var showGlobe by remember { mutableStateOf(false) }
+    var showCarteSolaire by remember { mutableStateOf(false) }
 
 
     //background avec image
@@ -2222,6 +2565,75 @@ fun MurGaucheAfrique(
         }
     }
 
+    //click sur carte solaire
+    ClickElement(
+        clickableWidthPercent = 0.12F,
+        clickableHeightPercent = 0.07F,
+        clickableOffsetPercent = Offset(0.48F, 0.56F),
+        navController = navController,
+        onClick = {showCarteSolaire = true})
+
+    //zoom sur carte solaire
+    if (showCarteSolaire){
+        // Popup contenant les livre avec drapeaux
+        Popup() {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                // Fond flou
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(Color.Transparent)
+                        .drawBehind {
+                            drawRect(
+                                brush = Brush.verticalGradient(
+                                    colors = listOf(Color.Transparent, Color.Black),
+                                    startY = 0f,
+                                    endY = size.height
+                                )
+                            )
+                        },
+                    content = {
+                        // Contenu de la popup
+                        Box(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(16.dp),
+                            content = {
+                                Box(
+                                    modifier = with(Modifier) {
+                                        fillMaxSize()
+                                            .paint(
+                                                // Remplacez par votre id d'image
+                                                painterResource(id = R.drawable.centrale_solaire_senegal),
+                                                contentScale = ContentScale.Fit
+                                            )
+                                    }
+                                )
+                            }
+                        )
+                    }
+                )
+            }
+
+            Column(
+                modifier = modifier
+                    .fillMaxSize()
+                    .padding(30.dp, 20.dp),
+                verticalArrangement = Arrangement.Top,
+                horizontalAlignment = Alignment.End
+            ){
+                Row() {
+                    FloatingButtonClosePopup(
+                        onClick = {showCarteSolaire = false }
+                    )
+                }
+            }
+        }
+    }
+
 
     //Boutons de navigation entre les murs
     ToNextRightWall(modifier = modifier, navController =  navController, onClick = {onDisplayChangeToRight(!isDisplayedRight)})
@@ -2364,6 +2776,87 @@ fun MoveablePorteBG(clickableOffsetPercent: Offset = Offset.Zero) {
             painter = painterResource(R.drawable.porte_bas_gauche),
             contentDescription = null,
             modifier = Modifier.size(55.dp)
+        )
+    }
+}
+
+@Composable
+fun MoveableMasque1(clickableOffsetPercent: Offset = Offset.Zero) {
+    val configuration = LocalConfiguration.current
+    val screenWidth = configuration.screenWidthDp.dp
+    val screenHeight = configuration.screenHeightDp.dp
+
+    var offsetX by remember { mutableStateOf((screenWidth * clickableOffsetPercent.x)) }
+    var offsetY by remember { mutableStateOf(screenHeight * clickableOffsetPercent.y) }
+
+    Box(
+        modifier = Modifier
+            .offset { IntOffset(offsetX.roundToPx(), offsetY.roundToPx()) }
+            .pointerInput(Unit) {
+                detectDragGestures { change, _ ->
+                    offsetX += change.positionChange().x.dp
+                    offsetY += change.positionChange().y.dp
+                }
+            }
+    ) {
+        Image(
+            painter = painterResource(R.drawable.masque_1),
+            contentDescription = null,
+            modifier = Modifier.size(90.dp)
+        )
+    }
+}
+
+@Composable
+fun MoveableMasque2(clickableOffsetPercent: Offset = Offset.Zero) {
+    val configuration = LocalConfiguration.current
+    val screenWidth = configuration.screenWidthDp.dp
+    val screenHeight = configuration.screenHeightDp.dp
+
+    var offsetX by remember { mutableStateOf((screenWidth * clickableOffsetPercent.x)) }
+    var offsetY by remember { mutableStateOf(screenHeight * clickableOffsetPercent.y) }
+
+    Box(
+        modifier = Modifier
+            .offset { IntOffset(offsetX.roundToPx(), offsetY.roundToPx()) }
+            .pointerInput(Unit) {
+                detectDragGestures { change, _ ->
+                    offsetX += change.positionChange().x.dp
+                    offsetY += change.positionChange().y.dp
+                }
+            }
+    ) {
+        Image(
+            painter = painterResource(R.drawable.masque_2),
+            contentDescription = null,
+            modifier = Modifier.size(100.dp)
+        )
+    }
+}
+
+@Composable
+fun MoveableMasque3(clickableOffsetPercent: Offset = Offset.Zero) {
+    val configuration = LocalConfiguration.current
+    val screenWidth = configuration.screenWidthDp.dp
+    val screenHeight = configuration.screenHeightDp.dp
+
+    var offsetX by remember { mutableStateOf((screenWidth * clickableOffsetPercent.x)) }
+    var offsetY by remember { mutableStateOf(screenHeight * clickableOffsetPercent.y) }
+
+    Box(
+        modifier = Modifier
+            .offset { IntOffset(offsetX.roundToPx(), offsetY.roundToPx()) }
+            .pointerInput(Unit) {
+                detectDragGestures { change, _ ->
+                    offsetX += change.positionChange().x.dp
+                    offsetY += change.positionChange().y.dp
+                }
+            }
+    ) {
+        Image(
+            painter = painterResource(R.drawable.masque_3),
+            contentDescription = null,
+            modifier = Modifier.size(105.dp)
         )
     }
 }

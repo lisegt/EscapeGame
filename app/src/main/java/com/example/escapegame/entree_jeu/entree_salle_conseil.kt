@@ -40,7 +40,7 @@ fun entreeSalleConseil(
     )
     PoigneeCliquableSalleConseil(
         onClick = { onClick },
-        clickableWidth = 0.38F,
+        clickableWidthPercent = 0.38F,
         clickableHeight = 0.82F,
         clickableOffset = IntOffset(230, 30),
         navController = navController)
@@ -49,14 +49,14 @@ fun entreeSalleConseil(
 @Composable
 fun PoigneeCliquableSalleConseil(
     onClick: () -> Unit,
-    clickableWidth: Float = 0.4F,
+    clickableWidthPercent: Float = 0.4F,
     clickableHeight: Float = 0.5F,
     clickableOffset: IntOffset = IntOffset.Zero,
     navController: NavController
 ) {
     Box(
         modifier = Modifier
-            .fillMaxWidth(clickableWidth)
+            .fillMaxWidth(clickableWidthPercent)
             .fillMaxHeight(clickableHeight)
             .offset(clickableOffset.x.dp, clickableOffset.y.dp)
             .clickable(onClick = {navController.navigate("salle_conseil")})

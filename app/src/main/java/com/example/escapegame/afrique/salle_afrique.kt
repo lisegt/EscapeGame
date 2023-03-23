@@ -10,12 +10,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.draw.paint
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.graphics.painter.BitmapPainter
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.input.pointer.positionChange
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.layout.onSizeChanged
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
@@ -25,6 +30,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.unit.toSize
 import androidx.compose.ui.window.Popup
 import androidx.navigation.NavController
 import com.example.escapegame.entree_jeu.*
@@ -136,11 +142,11 @@ fun MurFondAfrique(
     }
     )
 
-    //click sur telephone
+    //click sur telephone adaptatif
     ClickElement(
-        clickableWidth = 0.07F,
-        clickableHeight = 0.07F,
-        clickableOffset = IntOffset(380, 220),
+        clickableWidthPercent = 0.07F,
+        clickableHeightPercent = 0.07F,
+        clickableOffsetPercent = Offset(0.52F, 0.62F),
         navController = navController,
         onClick = {showPhone = true})
 
@@ -182,7 +188,7 @@ fun MurFondAfrique(
     }
 
     //coussin amovible
-    MoveableCoussin()
+    MoveableCoussin(clickableOffsetPercent = Offset(0.485F, 0.5F))
 
     Button(onClick = {navController.navigate("salle_afrique_sombre")}){}
     //Boutons de navigation entre les murs
@@ -190,6 +196,7 @@ fun MurFondAfrique(
     ToNextLeftWall(modifier = modifier, navController = navController, onClick = {onDisplayChangeToLeft(!isDisplayedLeft)} )
 
 }
+
 
 @Composable
 fun MurDroiteAfrique(
@@ -226,9 +233,9 @@ fun MurDroiteAfrique(
     )
     // click sur tableau cartes des drapeaux
     ClickElement(
-        clickableWidth = 0.16F,
-        clickableHeight = 0.28F,
-        clickableOffset = IntOffset(410, 100),
+        clickableWidthPercent = 0.16F,
+        clickableHeightPercent = 0.28F,
+        clickableOffsetPercent = Offset(0.56f, 0.28f),
         navController = navController,
         onClick = {showTableau = true})
 
@@ -267,20 +274,21 @@ fun MurDroiteAfrique(
 
     // click sur grand livre des drapeaux
     ClickElement(
-        clickableWidth = 0.14F,
-        clickableHeight = 0.07F,
-        clickableOffset = IntOffset(260, 250),
+        clickableWidthPercent = 0.14F,
+        clickableHeightPercent = 0.07F,
+        clickableOffsetPercent = Offset(0.36f, 0.7f),
         navController = navController,
         onClick = {showLivre = true})
+
 
     //zoom sur le livre
     if (showLivre) {
         AlertDialog(
             onDismissRequest = { showLivre = false },
             text = { ClickElement(
-                clickableWidth = 1F,
-                clickableHeight = 1F,
-                clickableOffset = IntOffset(0, 0),
+                clickableWidthPercent = 1F,
+                clickableHeightPercent = 1F,
+                clickableOffsetPercent = Offset(0f, 0f),
                 navController = navController,
                 onClick = {showContenuLivre = true ; showLivre = false})
                 Image(painter = painterResource(id = R.drawable.livre_drapeaux), contentDescription = "Livres Enigme Uranium")
@@ -331,67 +339,68 @@ fun MurDroiteAfrique(
 
             //click Afrique du Sud
             ClickElement(
-                clickableWidth = 0.1F,
-                clickableHeight = 0.15F,
-                clickableOffset = IntOffset(528, 275),
+                clickableWidthPercent = 0.1F,
+                clickableHeightPercent = 0.15F,
+                clickableOffsetPercent= Offset(0.72F, 0.775F),
                 navController = navController,
                 onClick = { showAfriqueSud = true; showAngola = false; showCongo = false ; showEgypte = false; showMauritanie = false; showMozambique = false ; showSoudan = false ; showTchad = false })
 
             //click Angola
             ClickElement(
-                clickableWidth = 0.07F,
-                clickableHeight = 0.15F,
-                clickableOffset = IntOffset(510, 210),
+                clickableWidthPercent = 0.07F,
+                clickableHeightPercent = 0.15F,
+                clickableOffsetPercent= Offset(0.698F, 0.59F),
                 navController = navController,
                 onClick = { showAfriqueSud = false; showAngola = true; showCongo = false ; showEgypte = false; showMauritanie = false; showMozambique = false ; showSoudan = false ; showTchad = false })
 
             //click Congo
             ClickElement(
-                clickableWidth = 0.1F,
-                clickableHeight = 0.15F,
-                clickableOffset = IntOffset(530, 160),
+                clickableWidthPercent = 0.1F,
+                clickableHeightPercent = 0.15F,
+                clickableOffsetPercent= Offset(0.73F, 0.45F),
                 navController = navController,
                 onClick = { showAfriqueSud = false; showAngola = false; showCongo = true ; showEgypte = false; showMauritanie = false; showMozambique = false ; showSoudan = false ; showTchad = false})
 
             //click Egypte
             ClickElement(
-                clickableWidth = 0.06F,
-                clickableHeight = 0.12F,
-                clickableOffset = IntOffset(570, 45),
+                clickableWidthPercent = 0.06F,
+                clickableHeightPercent = 0.12F,
+                clickableOffsetPercent= Offset(0.78F, 0.127F),
                 navController = navController,
                 onClick = { showAfriqueSud = false; showAngola = false; showCongo = false ; showEgypte = true; showMauritanie = false; showMozambique = false ; showSoudan = false ; showTchad = false})
 
             //click Mauritanie
             ClickElement(
-                clickableWidth = 0.07F,
-                clickableHeight = 0.14F,
-                clickableOffset = IntOffset(380, 62),
+                clickableWidthPercent = 0.07F,
+                clickableHeightPercent = 0.14F,
+                clickableOffsetPercent= Offset(0.52F, 0.17F),
                 navController = navController,
                 onClick = { showAfriqueSud = false; showAngola = false; showCongo = false ; showEgypte = false; showMauritanie = true; showMozambique = false ; showSoudan = false ; showTchad = false})
 
             //click Mozambique
             ClickElement(
-                clickableWidth = 0.07F,
-                clickableHeight = 0.2F,
-                clickableOffset = IntOffset(600, 230),
+                clickableWidthPercent = 0.07F,
+                clickableHeightPercent = 0.2F,
+                clickableOffsetPercent= Offset(0.82F, 0.648F),
                 navController = navController,
                 onClick = { showAfriqueSud = false; showAngola = false; showCongo = false ; showEgypte = false; showMauritanie = false; showMozambique = true ; showSoudan = false ; showTchad = false})
 
             //click Soudan
             ClickElement(
-                clickableWidth = 0.09F,
-                clickableHeight = 0.2F,
-                clickableOffset = IntOffset(565, 88),
+                clickableWidthPercent = 0.09F,
+                clickableHeightPercent = 0.2F,
+                clickableOffsetPercent= Offset(0.773F, 0.248F),
                 navController = navController,
                 onClick = { showAfriqueSud = false; showAngola = false; showCongo = false ; showEgypte = false; showMauritanie = false; showMozambique = false ; showSoudan = true ; showTchad = false})
 
             //click Tchad
             ClickElement(
-                clickableWidth = 0.06F,
-                clickableHeight = 0.18F,
-                clickableOffset = IntOffset(520, 84),
+                clickableWidthPercent = 0.06F,
+                clickableHeightPercent = 0.18F,
+                clickableOffsetPercent= Offset(0.71F, 0.24F),
                 navController = navController,
                 onClick = { showAfriqueSud = false; showAngola = false; showCongo = false ; showEgypte = false; showMauritanie = false; showMozambique = false ; showSoudan = false ; showTchad = true})
+
         }
     }
 
@@ -425,74 +434,89 @@ fun MurDroiteAfrique(
             ){
                 Row() {
                     FloatingButtonClosePopup(
-                        onClick = {showAfriqueSud = false ; showContenuLivre = false }
+                        onClick = {showAngola = false ; showContenuLivre = false }
                     )
                 }
             }
 
             //click Afrique du Sud
             ClickElement(
-                clickableWidth = 0.1F,
-                clickableHeight = 0.15F,
-                clickableOffset = IntOffset(528, 275),
+                clickableWidthPercent = 0.1F,
+                clickableHeightPercent = 0.15F,
+                clickableOffsetPercent= Offset(0.72F, 0.775F),
                 navController = navController,
                 onClick = { showAfriqueSud = true; showAngola = false; showCongo = false ; showEgypte = false; showMauritanie = false; showMozambique = false ; showSoudan = false ; showTchad = false })
 
             //click Angola
             ClickElement(
-                clickableWidth = 0.07F,
-                clickableHeight = 0.15F,
-                clickableOffset = IntOffset(510, 210),
+                clickableWidthPercent = 0.07F,
+                clickableHeightPercent = 0.15F,
+                clickableOffsetPercent= Offset(0.698F, 0.59F),
                 navController = navController,
                 onClick = { showAfriqueSud = false; showAngola = true; showCongo = false ; showEgypte = false; showMauritanie = false; showMozambique = false ; showSoudan = false ; showTchad = false })
 
             //click Congo
             ClickElement(
-                clickableWidth = 0.1F,
-                clickableHeight = 0.15F,
-                clickableOffset = IntOffset(530, 160),
+                clickableWidthPercent = 0.1F,
+                clickableHeightPercent = 0.15F,
+                clickableOffsetPercent= Offset(0.73F, 0.45F),
                 navController = navController,
                 onClick = { showAfriqueSud = false; showAngola = false; showCongo = true ; showEgypte = false; showMauritanie = false; showMozambique = false ; showSoudan = false ; showTchad = false})
 
             //click Egypte
             ClickElement(
-                clickableWidth = 0.06F,
-                clickableHeight = 0.12F,
-                clickableOffset = IntOffset(570, 45),
+                clickableWidthPercent = 0.06F,
+                clickableHeightPercent = 0.12F,
+                clickableOffsetPercent= Offset(0.78F, 0.127F),
                 navController = navController,
                 onClick = { showAfriqueSud = false; showAngola = false; showCongo = false ; showEgypte = true; showMauritanie = false; showMozambique = false ; showSoudan = false ; showTchad = false})
 
             //click Mauritanie
             ClickElement(
-                clickableWidth = 0.07F,
-                clickableHeight = 0.14F,
-                clickableOffset = IntOffset(380, 62),
+                clickableWidthPercent = 0.07F,
+                clickableHeightPercent = 0.14F,
+                clickableOffsetPercent= Offset(0.52F, 0.17F),
                 navController = navController,
                 onClick = { showAfriqueSud = false; showAngola = false; showCongo = false ; showEgypte = false; showMauritanie = true; showMozambique = false ; showSoudan = false ; showTchad = false})
 
             //click Mozambique
             ClickElement(
-                clickableWidth = 0.07F,
-                clickableHeight = 0.2F,
-                clickableOffset = IntOffset(600, 230),
+                clickableWidthPercent = 0.07F,
+                clickableHeightPercent = 0.2F,
+                clickableOffsetPercent= Offset(0.82F, 0.648F),
                 navController = navController,
                 onClick = { showAfriqueSud = false; showAngola = false; showCongo = false ; showEgypte = false; showMauritanie = false; showMozambique = true ; showSoudan = false ; showTchad = false})
 
             //click Soudan
             ClickElement(
-                clickableWidth = 0.09F,
-                clickableHeight = 0.2F,
-                clickableOffset = IntOffset(565, 88),
+                clickableWidthPercent = 0.09F,
+                clickableHeightPercent = 0.2F,
+                clickableOffsetPercent= Offset(0.773F, 0.248F),
                 navController = navController,
                 onClick = { showAfriqueSud = false; showAngola = false; showCongo = false ; showEgypte = false; showMauritanie = false; showMozambique = false ; showSoudan = true ; showTchad = false})
 
             //click Tchad
             ClickElement(
-                clickableWidth = 0.06F,
-                clickableHeight = 0.18F,
-                clickableOffset = IntOffset(520, 84),
+                clickableWidthPercent = 0.06F,
+                clickableHeightPercent = 0.18F,
+                clickableOffsetPercent= Offset(0.71F, 0.24F),
                 navController = navController,
                 onClick = { showAfriqueSud = false; showAngola = false; showCongo = false ; showEgypte = false; showMauritanie = false; showMozambique = false ; showSoudan = false ; showTchad = true})
+
+            Column(
+                modifier = modifier
+                    .fillMaxSize()
+                    .padding(30.dp, 20.dp),
+                verticalArrangement = Arrangement.Top,
+                horizontalAlignment = Alignment.End
+            ){
+                Row() {
+                    FloatingButtonClosePopup(
+                        onClick = {showAfriqueSud = false ; showContenuLivre = false }
+                    )
+                }
+            }
+
         }
     }
 
@@ -532,67 +556,68 @@ fun MurDroiteAfrique(
 
             //click Afrique du Sud
             ClickElement(
-                clickableWidth = 0.1F,
-                clickableHeight = 0.15F,
-                clickableOffset = IntOffset(528, 275),
+                clickableWidthPercent = 0.1F,
+                clickableHeightPercent = 0.15F,
+                clickableOffsetPercent= Offset(0.72F, 0.775F),
                 navController = navController,
                 onClick = { showAfriqueSud = true; showAngola = false; showCongo = false ; showEgypte = false; showMauritanie = false; showMozambique = false ; showSoudan = false ; showTchad = false })
 
             //click Angola
             ClickElement(
-                clickableWidth = 0.07F,
-                clickableHeight = 0.15F,
-                clickableOffset = IntOffset(510, 210),
+                clickableWidthPercent = 0.07F,
+                clickableHeightPercent = 0.15F,
+                clickableOffsetPercent= Offset(0.698F, 0.59F),
                 navController = navController,
                 onClick = { showAfriqueSud = false; showAngola = true; showCongo = false ; showEgypte = false; showMauritanie = false; showMozambique = false ; showSoudan = false ; showTchad = false })
 
             //click Congo
             ClickElement(
-                clickableWidth = 0.1F,
-                clickableHeight = 0.15F,
-                clickableOffset = IntOffset(530, 160),
+                clickableWidthPercent = 0.1F,
+                clickableHeightPercent = 0.15F,
+                clickableOffsetPercent= Offset(0.73F, 0.45F),
                 navController = navController,
                 onClick = { showAfriqueSud = false; showAngola = false; showCongo = true ; showEgypte = false; showMauritanie = false; showMozambique = false ; showSoudan = false ; showTchad = false})
 
             //click Egypte
             ClickElement(
-                clickableWidth = 0.06F,
-                clickableHeight = 0.12F,
-                clickableOffset = IntOffset(570, 45),
+                clickableWidthPercent = 0.06F,
+                clickableHeightPercent = 0.12F,
+                clickableOffsetPercent= Offset(0.78F, 0.127F),
                 navController = navController,
                 onClick = { showAfriqueSud = false; showAngola = false; showCongo = false ; showEgypte = true; showMauritanie = false; showMozambique = false ; showSoudan = false ; showTchad = false})
 
             //click Mauritanie
             ClickElement(
-                clickableWidth = 0.07F,
-                clickableHeight = 0.14F,
-                clickableOffset = IntOffset(380, 62),
+                clickableWidthPercent = 0.07F,
+                clickableHeightPercent = 0.14F,
+                clickableOffsetPercent= Offset(0.52F, 0.17F),
                 navController = navController,
                 onClick = { showAfriqueSud = false; showAngola = false; showCongo = false ; showEgypte = false; showMauritanie = true; showMozambique = false ; showSoudan = false ; showTchad = false})
 
             //click Mozambique
             ClickElement(
-                clickableWidth = 0.07F,
-                clickableHeight = 0.2F,
-                clickableOffset = IntOffset(600, 230),
+                clickableWidthPercent = 0.07F,
+                clickableHeightPercent = 0.2F,
+                clickableOffsetPercent= Offset(0.82F, 0.648F),
                 navController = navController,
                 onClick = { showAfriqueSud = false; showAngola = false; showCongo = false ; showEgypte = false; showMauritanie = false; showMozambique = true ; showSoudan = false ; showTchad = false})
 
             //click Soudan
             ClickElement(
-                clickableWidth = 0.09F,
-                clickableHeight = 0.2F,
-                clickableOffset = IntOffset(565, 88),
+                clickableWidthPercent = 0.09F,
+                clickableHeightPercent = 0.2F,
+                clickableOffsetPercent= Offset(0.773F, 0.248F),
                 navController = navController,
                 onClick = { showAfriqueSud = false; showAngola = false; showCongo = false ; showEgypte = false; showMauritanie = false; showMozambique = false ; showSoudan = true ; showTchad = false})
 
             //click Tchad
             ClickElement(
-                clickableWidth = 0.06F,
-                clickableHeight = 0.18F,
-                clickableOffset = IntOffset(520, 84),
+                clickableWidthPercent = 0.06F,
+                clickableHeightPercent = 0.18F,
+                clickableOffsetPercent= Offset(0.71F, 0.24F),
                 navController = navController,
                 onClick = { showAfriqueSud = false; showAngola = false; showCongo = false ; showEgypte = false; showMauritanie = false; showMozambique = false ; showSoudan = false ; showTchad = true})
+
         }
     }
 
@@ -632,67 +657,68 @@ fun MurDroiteAfrique(
 
             //click Afrique du Sud
             ClickElement(
-                clickableWidth = 0.1F,
-                clickableHeight = 0.15F,
-                clickableOffset = IntOffset(528, 275),
+                clickableWidthPercent = 0.1F,
+                clickableHeightPercent = 0.15F,
+                clickableOffsetPercent= Offset(0.72F, 0.775F),
                 navController = navController,
                 onClick = { showAfriqueSud = true; showAngola = false; showCongo = false ; showEgypte = false; showMauritanie = false; showMozambique = false ; showSoudan = false ; showTchad = false })
 
             //click Angola
             ClickElement(
-                clickableWidth = 0.07F,
-                clickableHeight = 0.15F,
-                clickableOffset = IntOffset(510, 210),
+                clickableWidthPercent = 0.07F,
+                clickableHeightPercent = 0.15F,
+                clickableOffsetPercent= Offset(0.698F, 0.59F),
                 navController = navController,
                 onClick = { showAfriqueSud = false; showAngola = true; showCongo = false ; showEgypte = false; showMauritanie = false; showMozambique = false ; showSoudan = false ; showTchad = false })
 
             //click Congo
             ClickElement(
-                clickableWidth = 0.1F,
-                clickableHeight = 0.15F,
-                clickableOffset = IntOffset(530, 160),
+                clickableWidthPercent = 0.1F,
+                clickableHeightPercent = 0.15F,
+                clickableOffsetPercent= Offset(0.73F, 0.45F),
                 navController = navController,
                 onClick = { showAfriqueSud = false; showAngola = false; showCongo = true ; showEgypte = false; showMauritanie = false; showMozambique = false ; showSoudan = false ; showTchad = false})
 
             //click Egypte
             ClickElement(
-                clickableWidth = 0.06F,
-                clickableHeight = 0.12F,
-                clickableOffset = IntOffset(570, 45),
+                clickableWidthPercent = 0.06F,
+                clickableHeightPercent = 0.12F,
+                clickableOffsetPercent= Offset(0.78F, 0.127F),
                 navController = navController,
                 onClick = { showAfriqueSud = false; showAngola = false; showCongo = false ; showEgypte = true; showMauritanie = false; showMozambique = false ; showSoudan = false ; showTchad = false})
 
             //click Mauritanie
             ClickElement(
-                clickableWidth = 0.07F,
-                clickableHeight = 0.14F,
-                clickableOffset = IntOffset(380, 62),
+                clickableWidthPercent = 0.07F,
+                clickableHeightPercent = 0.14F,
+                clickableOffsetPercent= Offset(0.52F, 0.17F),
                 navController = navController,
                 onClick = { showAfriqueSud = false; showAngola = false; showCongo = false ; showEgypte = false; showMauritanie = true; showMozambique = false ; showSoudan = false ; showTchad = false})
 
             //click Mozambique
             ClickElement(
-                clickableWidth = 0.07F,
-                clickableHeight = 0.2F,
-                clickableOffset = IntOffset(600, 230),
+                clickableWidthPercent = 0.07F,
+                clickableHeightPercent = 0.2F,
+                clickableOffsetPercent= Offset(0.82F, 0.648F),
                 navController = navController,
                 onClick = { showAfriqueSud = false; showAngola = false; showCongo = false ; showEgypte = false; showMauritanie = false; showMozambique = true ; showSoudan = false ; showTchad = false})
 
             //click Soudan
             ClickElement(
-                clickableWidth = 0.09F,
-                clickableHeight = 0.2F,
-                clickableOffset = IntOffset(565, 88),
+                clickableWidthPercent = 0.09F,
+                clickableHeightPercent = 0.2F,
+                clickableOffsetPercent= Offset(0.773F, 0.248F),
                 navController = navController,
                 onClick = { showAfriqueSud = false; showAngola = false; showCongo = false ; showEgypte = false; showMauritanie = false; showMozambique = false ; showSoudan = true ; showTchad = false})
 
             //click Tchad
             ClickElement(
-                clickableWidth = 0.06F,
-                clickableHeight = 0.18F,
-                clickableOffset = IntOffset(520, 84),
+                clickableWidthPercent = 0.06F,
+                clickableHeightPercent = 0.18F,
+                clickableOffsetPercent= Offset(0.71F, 0.24F),
                 navController = navController,
                 onClick = { showAfriqueSud = false; showAngola = false; showCongo = false ; showEgypte = false; showMauritanie = false; showMozambique = false ; showSoudan = false ; showTchad = true})
+
         }
     }
 
@@ -732,67 +758,68 @@ fun MurDroiteAfrique(
 
             //click Afrique du Sud
             ClickElement(
-                clickableWidth = 0.1F,
-                clickableHeight = 0.15F,
-                clickableOffset = IntOffset(528, 275),
+                clickableWidthPercent = 0.1F,
+                clickableHeightPercent = 0.15F,
+                clickableOffsetPercent= Offset(0.72F, 0.775F),
                 navController = navController,
                 onClick = { showAfriqueSud = true; showAngola = false; showCongo = false ; showEgypte = false; showMauritanie = false; showMozambique = false ; showSoudan = false ; showTchad = false })
 
             //click Angola
             ClickElement(
-                clickableWidth = 0.07F,
-                clickableHeight = 0.15F,
-                clickableOffset = IntOffset(510, 210),
+                clickableWidthPercent = 0.07F,
+                clickableHeightPercent = 0.15F,
+                clickableOffsetPercent= Offset(0.698F, 0.59F),
                 navController = navController,
                 onClick = { showAfriqueSud = false; showAngola = true; showCongo = false ; showEgypte = false; showMauritanie = false; showMozambique = false ; showSoudan = false ; showTchad = false })
 
             //click Congo
             ClickElement(
-                clickableWidth = 0.1F,
-                clickableHeight = 0.15F,
-                clickableOffset = IntOffset(530, 160),
+                clickableWidthPercent = 0.1F,
+                clickableHeightPercent = 0.15F,
+                clickableOffsetPercent= Offset(0.73F, 0.45F),
                 navController = navController,
                 onClick = { showAfriqueSud = false; showAngola = false; showCongo = true ; showEgypte = false; showMauritanie = false; showMozambique = false ; showSoudan = false ; showTchad = false})
 
             //click Egypte
             ClickElement(
-                clickableWidth = 0.06F,
-                clickableHeight = 0.12F,
-                clickableOffset = IntOffset(570, 45),
+                clickableWidthPercent = 0.06F,
+                clickableHeightPercent = 0.12F,
+                clickableOffsetPercent= Offset(0.78F, 0.127F),
                 navController = navController,
                 onClick = { showAfriqueSud = false; showAngola = false; showCongo = false ; showEgypte = true; showMauritanie = false; showMozambique = false ; showSoudan = false ; showTchad = false})
 
             //click Mauritanie
             ClickElement(
-                clickableWidth = 0.07F,
-                clickableHeight = 0.14F,
-                clickableOffset = IntOffset(380, 62),
+                clickableWidthPercent = 0.07F,
+                clickableHeightPercent = 0.14F,
+                clickableOffsetPercent= Offset(0.52F, 0.17F),
                 navController = navController,
                 onClick = { showAfriqueSud = false; showAngola = false; showCongo = false ; showEgypte = false; showMauritanie = true; showMozambique = false ; showSoudan = false ; showTchad = false})
 
             //click Mozambique
             ClickElement(
-                clickableWidth = 0.07F,
-                clickableHeight = 0.2F,
-                clickableOffset = IntOffset(600, 230),
+                clickableWidthPercent = 0.07F,
+                clickableHeightPercent = 0.2F,
+                clickableOffsetPercent= Offset(0.82F, 0.648F),
                 navController = navController,
                 onClick = { showAfriqueSud = false; showAngola = false; showCongo = false ; showEgypte = false; showMauritanie = false; showMozambique = true ; showSoudan = false ; showTchad = false})
 
             //click Soudan
             ClickElement(
-                clickableWidth = 0.09F,
-                clickableHeight = 0.2F,
-                clickableOffset = IntOffset(565, 88),
+                clickableWidthPercent = 0.09F,
+                clickableHeightPercent = 0.2F,
+                clickableOffsetPercent= Offset(0.773F, 0.248F),
                 navController = navController,
                 onClick = { showAfriqueSud = false; showAngola = false; showCongo = false ; showEgypte = false; showMauritanie = false; showMozambique = false ; showSoudan = true ; showTchad = false})
 
             //click Tchad
             ClickElement(
-                clickableWidth = 0.06F,
-                clickableHeight = 0.18F,
-                clickableOffset = IntOffset(520, 84),
+                clickableWidthPercent = 0.06F,
+                clickableHeightPercent = 0.18F,
+                clickableOffsetPercent= Offset(0.71F, 0.24F),
                 navController = navController,
                 onClick = { showAfriqueSud = false; showAngola = false; showCongo = false ; showEgypte = false; showMauritanie = false; showMozambique = false ; showSoudan = false ; showTchad = true})
+
         }
     }
 
@@ -830,70 +857,70 @@ fun MurDroiteAfrique(
                     )
                 }
             }
-
             //click Afrique du Sud
             ClickElement(
-                clickableWidth = 0.1F,
-                clickableHeight = 0.15F,
-                clickableOffset = IntOffset(528, 275),
+                clickableWidthPercent = 0.1F,
+                clickableHeightPercent = 0.15F,
+                clickableOffsetPercent= Offset(0.72F, 0.775F),
                 navController = navController,
                 onClick = { showAfriqueSud = true; showAngola = false; showCongo = false ; showEgypte = false; showMauritanie = false; showMozambique = false ; showSoudan = false ; showTchad = false })
 
             //click Angola
             ClickElement(
-                clickableWidth = 0.07F,
-                clickableHeight = 0.15F,
-                clickableOffset = IntOffset(510, 210),
+                clickableWidthPercent = 0.07F,
+                clickableHeightPercent = 0.15F,
+                clickableOffsetPercent= Offset(0.698F, 0.59F),
                 navController = navController,
                 onClick = { showAfriqueSud = false; showAngola = true; showCongo = false ; showEgypte = false; showMauritanie = false; showMozambique = false ; showSoudan = false ; showTchad = false })
 
             //click Congo
             ClickElement(
-                clickableWidth = 0.1F,
-                clickableHeight = 0.15F,
-                clickableOffset = IntOffset(530, 160),
+                clickableWidthPercent = 0.1F,
+                clickableHeightPercent = 0.15F,
+                clickableOffsetPercent= Offset(0.73F, 0.45F),
                 navController = navController,
                 onClick = { showAfriqueSud = false; showAngola = false; showCongo = true ; showEgypte = false; showMauritanie = false; showMozambique = false ; showSoudan = false ; showTchad = false})
 
             //click Egypte
             ClickElement(
-                clickableWidth = 0.06F,
-                clickableHeight = 0.12F,
-                clickableOffset = IntOffset(570, 45),
+                clickableWidthPercent = 0.06F,
+                clickableHeightPercent = 0.12F,
+                clickableOffsetPercent= Offset(0.78F, 0.127F),
                 navController = navController,
                 onClick = { showAfriqueSud = false; showAngola = false; showCongo = false ; showEgypte = true; showMauritanie = false; showMozambique = false ; showSoudan = false ; showTchad = false})
 
             //click Mauritanie
             ClickElement(
-                clickableWidth = 0.07F,
-                clickableHeight = 0.14F,
-                clickableOffset = IntOffset(380, 62),
+                clickableWidthPercent = 0.07F,
+                clickableHeightPercent = 0.14F,
+                clickableOffsetPercent= Offset(0.52F, 0.17F),
                 navController = navController,
                 onClick = { showAfriqueSud = false; showAngola = false; showCongo = false ; showEgypte = false; showMauritanie = true; showMozambique = false ; showSoudan = false ; showTchad = false})
 
             //click Mozambique
             ClickElement(
-                clickableWidth = 0.07F,
-                clickableHeight = 0.2F,
-                clickableOffset = IntOffset(600, 230),
+                clickableWidthPercent = 0.07F,
+                clickableHeightPercent = 0.2F,
+                clickableOffsetPercent= Offset(0.82F, 0.648F),
                 navController = navController,
                 onClick = { showAfriqueSud = false; showAngola = false; showCongo = false ; showEgypte = false; showMauritanie = false; showMozambique = true ; showSoudan = false ; showTchad = false})
 
             //click Soudan
             ClickElement(
-                clickableWidth = 0.09F,
-                clickableHeight = 0.2F,
-                clickableOffset = IntOffset(565, 88),
+                clickableWidthPercent = 0.09F,
+                clickableHeightPercent = 0.2F,
+                clickableOffsetPercent= Offset(0.773F, 0.248F),
                 navController = navController,
                 onClick = { showAfriqueSud = false; showAngola = false; showCongo = false ; showEgypte = false; showMauritanie = false; showMozambique = false ; showSoudan = true ; showTchad = false})
 
             //click Tchad
             ClickElement(
-                clickableWidth = 0.06F,
-                clickableHeight = 0.18F,
-                clickableOffset = IntOffset(520, 84),
+                clickableWidthPercent = 0.06F,
+                clickableHeightPercent = 0.18F,
+                clickableOffsetPercent= Offset(0.71F, 0.24F),
                 navController = navController,
                 onClick = { showAfriqueSud = false; showAngola = false; showCongo = false ; showEgypte = false; showMauritanie = false; showMozambique = false ; showSoudan = false ; showTchad = true})
+
         }
     }
 
@@ -930,70 +957,70 @@ fun MurDroiteAfrique(
                     )
                 }
             }
-
             //click Afrique du Sud
             ClickElement(
-                clickableWidth = 0.1F,
-                clickableHeight = 0.15F,
-                clickableOffset = IntOffset(528, 275),
+                clickableWidthPercent = 0.1F,
+                clickableHeightPercent = 0.15F,
+                clickableOffsetPercent= Offset(0.72F, 0.775F),
                 navController = navController,
                 onClick = { showAfriqueSud = true; showAngola = false; showCongo = false ; showEgypte = false; showMauritanie = false; showMozambique = false ; showSoudan = false ; showTchad = false })
 
             //click Angola
             ClickElement(
-                clickableWidth = 0.07F,
-                clickableHeight = 0.15F,
-                clickableOffset = IntOffset(510, 210),
+                clickableWidthPercent = 0.07F,
+                clickableHeightPercent = 0.15F,
+                clickableOffsetPercent= Offset(0.698F, 0.59F),
                 navController = navController,
                 onClick = { showAfriqueSud = false; showAngola = true; showCongo = false ; showEgypte = false; showMauritanie = false; showMozambique = false ; showSoudan = false ; showTchad = false })
 
             //click Congo
             ClickElement(
-                clickableWidth = 0.1F,
-                clickableHeight = 0.15F,
-                clickableOffset = IntOffset(530, 160),
+                clickableWidthPercent = 0.1F,
+                clickableHeightPercent = 0.15F,
+                clickableOffsetPercent= Offset(0.73F, 0.45F),
                 navController = navController,
                 onClick = { showAfriqueSud = false; showAngola = false; showCongo = true ; showEgypte = false; showMauritanie = false; showMozambique = false ; showSoudan = false ; showTchad = false})
 
             //click Egypte
             ClickElement(
-                clickableWidth = 0.06F,
-                clickableHeight = 0.12F,
-                clickableOffset = IntOffset(570, 45),
+                clickableWidthPercent = 0.06F,
+                clickableHeightPercent = 0.12F,
+                clickableOffsetPercent= Offset(0.78F, 0.127F),
                 navController = navController,
                 onClick = { showAfriqueSud = false; showAngola = false; showCongo = false ; showEgypte = true; showMauritanie = false; showMozambique = false ; showSoudan = false ; showTchad = false})
 
             //click Mauritanie
             ClickElement(
-                clickableWidth = 0.07F,
-                clickableHeight = 0.14F,
-                clickableOffset = IntOffset(380, 62),
+                clickableWidthPercent = 0.07F,
+                clickableHeightPercent = 0.14F,
+                clickableOffsetPercent= Offset(0.52F, 0.17F),
                 navController = navController,
                 onClick = { showAfriqueSud = false; showAngola = false; showCongo = false ; showEgypte = false; showMauritanie = true; showMozambique = false ; showSoudan = false ; showTchad = false})
 
             //click Mozambique
             ClickElement(
-                clickableWidth = 0.07F,
-                clickableHeight = 0.2F,
-                clickableOffset = IntOffset(600, 230),
+                clickableWidthPercent = 0.07F,
+                clickableHeightPercent = 0.2F,
+                clickableOffsetPercent= Offset(0.82F, 0.648F),
                 navController = navController,
                 onClick = { showAfriqueSud = false; showAngola = false; showCongo = false ; showEgypte = false; showMauritanie = false; showMozambique = true ; showSoudan = false ; showTchad = false})
 
             //click Soudan
             ClickElement(
-                clickableWidth = 0.09F,
-                clickableHeight = 0.2F,
-                clickableOffset = IntOffset(565, 88),
+                clickableWidthPercent = 0.09F,
+                clickableHeightPercent = 0.2F,
+                clickableOffsetPercent= Offset(0.773F, 0.248F),
                 navController = navController,
                 onClick = { showAfriqueSud = false; showAngola = false; showCongo = false ; showEgypte = false; showMauritanie = false; showMozambique = false ; showSoudan = true ; showTchad = false})
 
             //click Tchad
             ClickElement(
-                clickableWidth = 0.06F,
-                clickableHeight = 0.18F,
-                clickableOffset = IntOffset(520, 84),
+                clickableWidthPercent = 0.06F,
+                clickableHeightPercent = 0.18F,
+                clickableOffsetPercent= Offset(0.71F, 0.24F),
                 navController = navController,
                 onClick = { showAfriqueSud = false; showAngola = false; showCongo = false ; showEgypte = false; showMauritanie = false; showMozambique = false ; showSoudan = false ; showTchad = true})
+
         }
     }
 
@@ -1030,70 +1057,70 @@ fun MurDroiteAfrique(
                     )
                 }
             }
-
             //click Afrique du Sud
             ClickElement(
-                clickableWidth = 0.1F,
-                clickableHeight = 0.15F,
-                clickableOffset = IntOffset(528, 275),
+                clickableWidthPercent = 0.1F,
+                clickableHeightPercent = 0.15F,
+                clickableOffsetPercent= Offset(0.72F, 0.775F),
                 navController = navController,
                 onClick = { showAfriqueSud = true; showAngola = false; showCongo = false ; showEgypte = false; showMauritanie = false; showMozambique = false ; showSoudan = false ; showTchad = false })
 
             //click Angola
             ClickElement(
-                clickableWidth = 0.07F,
-                clickableHeight = 0.15F,
-                clickableOffset = IntOffset(510, 210),
+                clickableWidthPercent = 0.07F,
+                clickableHeightPercent = 0.15F,
+                clickableOffsetPercent= Offset(0.698F, 0.59F),
                 navController = navController,
                 onClick = { showAfriqueSud = false; showAngola = true; showCongo = false ; showEgypte = false; showMauritanie = false; showMozambique = false ; showSoudan = false ; showTchad = false })
 
             //click Congo
             ClickElement(
-                clickableWidth = 0.1F,
-                clickableHeight = 0.15F,
-                clickableOffset = IntOffset(530, 160),
+                clickableWidthPercent = 0.1F,
+                clickableHeightPercent = 0.15F,
+                clickableOffsetPercent= Offset(0.73F, 0.45F),
                 navController = navController,
                 onClick = { showAfriqueSud = false; showAngola = false; showCongo = true ; showEgypte = false; showMauritanie = false; showMozambique = false ; showSoudan = false ; showTchad = false})
 
             //click Egypte
             ClickElement(
-                clickableWidth = 0.06F,
-                clickableHeight = 0.12F,
-                clickableOffset = IntOffset(570, 45),
+                clickableWidthPercent = 0.06F,
+                clickableHeightPercent = 0.12F,
+                clickableOffsetPercent= Offset(0.78F, 0.127F),
                 navController = navController,
                 onClick = { showAfriqueSud = false; showAngola = false; showCongo = false ; showEgypte = true; showMauritanie = false; showMozambique = false ; showSoudan = false ; showTchad = false})
 
             //click Mauritanie
             ClickElement(
-                clickableWidth = 0.07F,
-                clickableHeight = 0.14F,
-                clickableOffset = IntOffset(380, 62),
+                clickableWidthPercent = 0.07F,
+                clickableHeightPercent = 0.14F,
+                clickableOffsetPercent= Offset(0.52F, 0.17F),
                 navController = navController,
                 onClick = { showAfriqueSud = false; showAngola = false; showCongo = false ; showEgypte = false; showMauritanie = true; showMozambique = false ; showSoudan = false ; showTchad = false})
 
             //click Mozambique
             ClickElement(
-                clickableWidth = 0.07F,
-                clickableHeight = 0.2F,
-                clickableOffset = IntOffset(600, 230),
+                clickableWidthPercent = 0.07F,
+                clickableHeightPercent = 0.2F,
+                clickableOffsetPercent= Offset(0.82F, 0.648F),
                 navController = navController,
                 onClick = { showAfriqueSud = false; showAngola = false; showCongo = false ; showEgypte = false; showMauritanie = false; showMozambique = true ; showSoudan = false ; showTchad = false})
 
             //click Soudan
             ClickElement(
-                clickableWidth = 0.09F,
-                clickableHeight = 0.2F,
-                clickableOffset = IntOffset(565, 88),
+                clickableWidthPercent = 0.09F,
+                clickableHeightPercent = 0.2F,
+                clickableOffsetPercent= Offset(0.773F, 0.248F),
                 navController = navController,
                 onClick = { showAfriqueSud = false; showAngola = false; showCongo = false ; showEgypte = false; showMauritanie = false; showMozambique = false ; showSoudan = true ; showTchad = false})
 
             //click Tchad
             ClickElement(
-                clickableWidth = 0.06F,
-                clickableHeight = 0.18F,
-                clickableOffset = IntOffset(520, 84),
+                clickableWidthPercent = 0.06F,
+                clickableHeightPercent = 0.18F,
+                clickableOffsetPercent= Offset(0.71F, 0.24F),
                 navController = navController,
                 onClick = { showAfriqueSud = false; showAngola = false; showCongo = false ; showEgypte = false; showMauritanie = false; showMozambique = false ; showSoudan = false ; showTchad = true})
+
         }
     }
 
@@ -1131,68 +1158,67 @@ fun MurDroiteAfrique(
                     )
                 }
             }
-
             //click Afrique du Sud
             ClickElement(
-                clickableWidth = 0.1F,
-                clickableHeight = 0.15F,
-                clickableOffset = IntOffset(528, 275),
+                clickableWidthPercent = 0.1F,
+                clickableHeightPercent = 0.15F,
+                clickableOffsetPercent= Offset(0.72F, 0.775F),
                 navController = navController,
                 onClick = { showAfriqueSud = true; showAngola = false; showCongo = false ; showEgypte = false; showMauritanie = false; showMozambique = false ; showSoudan = false ; showTchad = false })
 
             //click Angola
             ClickElement(
-                clickableWidth = 0.07F,
-                clickableHeight = 0.15F,
-                clickableOffset = IntOffset(510, 210),
+                clickableWidthPercent = 0.07F,
+                clickableHeightPercent = 0.15F,
+                clickableOffsetPercent= Offset(0.698F, 0.59F),
                 navController = navController,
                 onClick = { showAfriqueSud = false; showAngola = true; showCongo = false ; showEgypte = false; showMauritanie = false; showMozambique = false ; showSoudan = false ; showTchad = false })
 
             //click Congo
             ClickElement(
-                clickableWidth = 0.1F,
-                clickableHeight = 0.15F,
-                clickableOffset = IntOffset(530, 160),
+                clickableWidthPercent = 0.1F,
+                clickableHeightPercent = 0.15F,
+                clickableOffsetPercent= Offset(0.73F, 0.45F),
                 navController = navController,
                 onClick = { showAfriqueSud = false; showAngola = false; showCongo = true ; showEgypte = false; showMauritanie = false; showMozambique = false ; showSoudan = false ; showTchad = false})
 
             //click Egypte
             ClickElement(
-                clickableWidth = 0.06F,
-                clickableHeight = 0.12F,
-                clickableOffset = IntOffset(570, 45),
+                clickableWidthPercent = 0.06F,
+                clickableHeightPercent = 0.12F,
+                clickableOffsetPercent= Offset(0.78F, 0.127F),
                 navController = navController,
                 onClick = { showAfriqueSud = false; showAngola = false; showCongo = false ; showEgypte = true; showMauritanie = false; showMozambique = false ; showSoudan = false ; showTchad = false})
 
             //click Mauritanie
             ClickElement(
-                clickableWidth = 0.07F,
-                clickableHeight = 0.14F,
-                clickableOffset = IntOffset(380, 62),
+                clickableWidthPercent = 0.07F,
+                clickableHeightPercent = 0.14F,
+                clickableOffsetPercent= Offset(0.52F, 0.17F),
                 navController = navController,
                 onClick = { showAfriqueSud = false; showAngola = false; showCongo = false ; showEgypte = false; showMauritanie = true; showMozambique = false ; showSoudan = false ; showTchad = false})
 
             //click Mozambique
             ClickElement(
-                clickableWidth = 0.07F,
-                clickableHeight = 0.2F,
-                clickableOffset = IntOffset(600, 230),
+                clickableWidthPercent = 0.07F,
+                clickableHeightPercent = 0.2F,
+                clickableOffsetPercent= Offset(0.82F, 0.648F),
                 navController = navController,
                 onClick = { showAfriqueSud = false; showAngola = false; showCongo = false ; showEgypte = false; showMauritanie = false; showMozambique = true ; showSoudan = false ; showTchad = false})
 
             //click Soudan
             ClickElement(
-                clickableWidth = 0.09F,
-                clickableHeight = 0.2F,
-                clickableOffset = IntOffset(565, 88),
+                clickableWidthPercent = 0.09F,
+                clickableHeightPercent = 0.2F,
+                clickableOffsetPercent= Offset(0.773F, 0.248F),
                 navController = navController,
                 onClick = { showAfriqueSud = false; showAngola = false; showCongo = false ; showEgypte = false; showMauritanie = false; showMozambique = false ; showSoudan = true ; showTchad = false})
 
             //click Tchad
             ClickElement(
-                clickableWidth = 0.06F,
-                clickableHeight = 0.18F,
-                clickableOffset = IntOffset(520, 84),
+                clickableWidthPercent = 0.06F,
+                clickableHeightPercent = 0.18F,
+                clickableOffsetPercent= Offset(0.71F, 0.24F),
                 navController = navController,
                 onClick = { showAfriqueSud = false; showAngola = false; showCongo = false ; showEgypte = false; showMauritanie = false; showMozambique = false ; showSoudan = false ; showTchad = true})
         }
@@ -1200,9 +1226,9 @@ fun MurDroiteAfrique(
 
     //click sur la bouteille d'eeau
     ClickElement(
-        clickableWidth = 0.05F,
-        clickableHeight = 0.17F,
-        clickableOffset = IntOffset(270, 175),
+        clickableWidthPercent = 0.05F,
+        clickableHeightPercent = 0.17F,
+        clickableOffsetPercent = Offset(0.37F, 0.49F),
         navController = navController,
         onClick = {showBottle = true})
 
@@ -1268,6 +1294,7 @@ fun MurDroiteAfrique(
     }
 
 
+
     //Boutons de navigation entre les murs
     ToNextRightWall(modifier = modifier, navController =  navController, onClick = {onDisplayChangeToRight(!isDisplayedRight)})
     ToNextLeftWall(modifier = modifier, navController = navController, onClick = {onDisplayChangeToLeft(!isDisplayedLeft)} )
@@ -1314,9 +1341,9 @@ fun MurEntreeAfrique(
 
     //click uranium
     ClickElement(
-        clickableWidth = 0.07F,
-        clickableHeight = 0.12F,
-        clickableOffset = IntOffset(250, 85),
+        clickableWidthPercent = 0.07F,
+        clickableHeightPercent = 0.12F,
+        clickableOffsetPercent = Offset(0.34F, 0.24F),
         navController = navController,
         onClick = {
             if (code_uranium_trouve) { showDilemmeUraniumRecto = true }
@@ -1382,9 +1409,9 @@ fun MurEntreeAfrique(
         Popup() {
 
             ClickElement(
-                clickableWidth = 1F,
-                clickableHeight = 1F,
-                clickableOffset = IntOffset(0, 0),
+                clickableWidthPercent = 1F,
+                clickableHeightPercent = 1F,
+                clickableOffsetPercent = Offset(0F, 0F),
                 navController = navController,
                 onClick = {showDilemmeUraniumRecto = false
                     showDilemmeUraniumVerso = true}
@@ -1452,9 +1479,9 @@ fun MurEntreeAfrique(
         Popup() {
 
             ClickElement(
-                clickableWidth = 1F,
-                clickableHeight = 1F,
-                clickableOffset = IntOffset(0, 0),
+                clickableWidthPercent = 1F,
+                clickableHeightPercent = 1F,
+                clickableOffsetPercent = Offset(0F, 0F),
                 navController = navController,
                 onClick = {showDilemmeUraniumRecto = true ; showDilemmeUraniumVerso = false}
             )
@@ -1518,9 +1545,9 @@ fun MurEntreeAfrique(
 
     //click diamant
     ClickElement(
-        clickableWidth = 0.07F,
-        clickableHeight = 0.12F,
-        clickableOffset = IntOffset(190, 140),
+        clickableWidthPercent = 0.07F,
+        clickableHeightPercent = 0.12F,
+        clickableOffsetPercent = Offset(0.26F, 0.395F),
         navController = navController,
         onClick = {
             if (code_diamant_trouve) { showDilemmeDiamant = true }
@@ -1644,9 +1671,9 @@ fun MurEntreeAfrique(
 
     //click eau
     ClickElement(
-        clickableWidth = 0.07F,
-        clickableHeight = 0.14F,
-        clickableOffset = IntOffset(190, 190),
+        clickableWidthPercent = 0.07F,
+        clickableHeightPercent = 0.14F,
+        clickableOffsetPercent = Offset(0.26F, 0.535F),
         navController = navController,
         onClick = {
             if (code_eau_trouve) { showDilemmeEau = true }
@@ -1769,10 +1796,10 @@ fun MurEntreeAfrique(
     }
 
     //portes amovible
-    MoveablePorteHG()
-    MoveablePorteHD()
-    MoveablePorteBG()
-    MoveablePorteBD()
+    MoveablePorteHG(clickableOffsetPercent = Offset(0.265F, 0.225F))
+    MoveablePorteHD(clickableOffsetPercent = Offset(0.435F, 0.225F))
+    MoveablePorteBG(clickableOffsetPercent = Offset(0.265F, 0.667F))
+    MoveablePorteBD(clickableOffsetPercent = Offset(0.435F, 0.667F))
 
     //Boutons de navigation entre les murs
     ToNextRightWall(modifier = modifier, navController =  navController, onClick = {onDisplayChangeToRight(!isDisplayedRight)})
@@ -1805,17 +1832,17 @@ fun MurGaucheAfrique(
     )
     //click livres
     ClickElement(
-        clickableWidth = 0.19F,
-        clickableHeight = 0.18F,
-        clickableOffset = IntOffset(200, 90),
+        clickableWidthPercent = 0.19F,
+        clickableHeightPercent = 0.18F,
+        clickableOffsetPercent = Offset(0.27F, 0.25F),
         navController = navController,
         onClick = { showBooks = true })
 
     //click crayons
     ClickElement(
-        clickableWidth = 0.08F,
-        clickableHeight = 0.15F,
-        clickableOffset = IntOffset(400, 130),
+        clickableWidthPercent = 0.08F,
+        clickableHeightPercent = 0.15F,
+        clickableOffsetPercent = Offset(0.547F, 0.366F),
         navController = navController,
         onClick = { showCrayons = true })
 
@@ -1823,9 +1850,9 @@ fun MurGaucheAfrique(
     if (showBooks) {
         AlertDialog(
             onDismissRequest = { showBooks = false },
-            text = { ClickElement(clickableWidth = 0.2F,
-                                    clickableHeight = 0.7F,
-                                    clickableOffset = IntOffset(60, 10),
+            text = { ClickElement(clickableWidthPercent = 0.04F,
+                                    clickableHeightPercent = 0.35F,
+                                    clickableOffsetPercent = Offset(0.082F, 0.028F),
                                     navController = navController,
                                     onClick = {tab_periodique = true ; showBooks = false})
                     Image(painter = painterResource(id = R.drawable.livres), contentDescription = "Livres Enigme Uranium")
@@ -1931,17 +1958,24 @@ fun MurGaucheAfrique(
 }
 
 @Composable
-fun MoveableCoussin() {
-    var offsetX by remember { mutableStateOf(950f) }
-    var offsetY by remember { mutableStateOf(470f) }
+fun MoveableCoussin(
+    clickableOffsetPercent: Offset = Offset.Zero
+) {
+
+    val configuration = LocalConfiguration.current
+    val screenWidth = configuration.screenWidthDp.dp
+    val screenHeight = configuration.screenHeightDp.dp
+
+    var offsetX by remember { mutableStateOf((screenWidth * clickableOffsetPercent.x)) }
+    var offsetY by remember { mutableStateOf(screenHeight * clickableOffsetPercent.y) }
 
     Box(
-        Modifier
-            .offset { IntOffset(offsetX.roundToInt(), offsetY.roundToInt()) }
+        modifier = Modifier
+            .offset { IntOffset(offsetX.roundToPx(), offsetY.roundToPx()) }
             .pointerInput(Unit) {
                 detectDragGestures { change, _ ->
-                    offsetX += change.positionChange().x
-                    offsetY += change.positionChange().y
+                    offsetX += change.positionChange().x.dp
+                    offsetY += change.positionChange().y.dp
                 }
             }
     ) {
@@ -1954,17 +1988,22 @@ fun MoveableCoussin() {
 }
 
 @Composable
-fun MoveablePorteHG() {
-    var offsetX by remember { mutableStateOf(497f) }
-    var offsetY by remember { mutableStateOf(214f) }
+fun MoveablePorteHG(clickableOffsetPercent: Offset = Offset.Zero) {
+
+    val configuration = LocalConfiguration.current
+    val screenWidth = configuration.screenWidthDp.dp
+    val screenHeight = configuration.screenHeightDp.dp
+
+    var offsetX by remember { mutableStateOf((screenWidth * clickableOffsetPercent.x)) }
+    var offsetY by remember { mutableStateOf(screenHeight * clickableOffsetPercent.y) }
 
     Box(
-        Modifier
-            .offset { IntOffset(offsetX.roundToInt(), offsetY.roundToInt()) }
+        modifier = Modifier
+            .offset { IntOffset(offsetX.roundToPx(), offsetY.roundToPx()) }
             .pointerInput(Unit) {
                 detectDragGestures { change, _ ->
-                    offsetX += change.positionChange().x
-                    offsetY += change.positionChange().y
+                    offsetX += change.positionChange().x.dp
+                    offsetY += change.positionChange().y.dp
                 }
             }
     ) {
@@ -1977,17 +2016,21 @@ fun MoveablePorteHG() {
 }
 
 @Composable
-fun MoveablePorteHD() {
-    var offsetX by remember { mutableStateOf(825f) }
-    var offsetY by remember { mutableStateOf(214f) }
+fun MoveablePorteHD(clickableOffsetPercent: Offset = Offset.Zero) {
+    val configuration = LocalConfiguration.current
+    val screenWidth = configuration.screenWidthDp.dp
+    val screenHeight = configuration.screenHeightDp.dp
+
+    var offsetX by remember { mutableStateOf((screenWidth * clickableOffsetPercent.x)) }
+    var offsetY by remember { mutableStateOf(screenHeight * clickableOffsetPercent.y) }
 
     Box(
-        Modifier
-            .offset { IntOffset(offsetX.roundToInt(), offsetY.roundToInt()) }
+        modifier = Modifier
+            .offset { IntOffset(offsetX.roundToPx(), offsetY.roundToPx()) }
             .pointerInput(Unit) {
                 detectDragGestures { change, _ ->
-                    offsetX += change.positionChange().x
-                    offsetY += change.positionChange().y
+                    offsetX += change.positionChange().x.dp
+                    offsetY += change.positionChange().y.dp
                 }
             }
     ) {
@@ -2000,17 +2043,21 @@ fun MoveablePorteHD() {
 }
 
 @Composable
-fun MoveablePorteBD() {
-    var offsetX by remember { mutableStateOf(822f) }
-    var offsetY by remember { mutableStateOf(640f) }
+fun MoveablePorteBD(clickableOffsetPercent: Offset = Offset.Zero) {
+    val configuration = LocalConfiguration.current
+    val screenWidth = configuration.screenWidthDp.dp
+    val screenHeight = configuration.screenHeightDp.dp
+
+    var offsetX by remember { mutableStateOf((screenWidth * clickableOffsetPercent.x)) }
+    var offsetY by remember { mutableStateOf(screenHeight * clickableOffsetPercent.y) }
 
     Box(
-        Modifier
-            .offset { IntOffset(offsetX.roundToInt(), offsetY.roundToInt()) }
+        modifier = Modifier
+            .offset { IntOffset(offsetX.roundToPx(), offsetY.roundToPx()) }
             .pointerInput(Unit) {
                 detectDragGestures { change, _ ->
-                    offsetX += change.positionChange().x
-                    offsetY += change.positionChange().y
+                    offsetX += change.positionChange().x.dp
+                    offsetY += change.positionChange().y.dp
                 }
             }
     ) {
@@ -2023,17 +2070,21 @@ fun MoveablePorteBD() {
 }
 
 @Composable
-fun MoveablePorteBG() {
-    var offsetX by remember { mutableStateOf(495f) }
-    var offsetY by remember { mutableStateOf(640f) }
+fun MoveablePorteBG(clickableOffsetPercent: Offset = Offset.Zero) {
+    val configuration = LocalConfiguration.current
+    val screenWidth = configuration.screenWidthDp.dp
+    val screenHeight = configuration.screenHeightDp.dp
+
+    var offsetX by remember { mutableStateOf((screenWidth * clickableOffsetPercent.x)) }
+    var offsetY by remember { mutableStateOf(screenHeight * clickableOffsetPercent.y) }
 
     Box(
-        Modifier
-            .offset { IntOffset(offsetX.roundToInt(), offsetY.roundToInt()) }
+        modifier = Modifier
+            .offset { IntOffset(offsetX.roundToPx(), offsetY.roundToPx()) }
             .pointerInput(Unit) {
                 detectDragGestures { change, _ ->
-                    offsetX += change.positionChange().x
-                    offsetY += change.positionChange().y
+                    offsetX += change.positionChange().x.dp
+                    offsetY += change.positionChange().y.dp
                 }
             }
     ) {
@@ -2117,16 +2168,23 @@ fun FloatingButtonNextLeftWall(onClick: () -> Unit) {
 
 @Composable
 fun ClickElement(
-    clickableWidth: Float = 1F,
-    clickableHeight: Float = 1F,
-    clickableOffset: IntOffset = IntOffset.Zero,
+    clickableWidthPercent: Float = 1F,
+    clickableHeightPercent: Float = 1F,
+    clickableOffsetPercent: Offset = Offset.Zero,
     navController: NavController,
-    onClick: () -> Unit) {
+    onClick: () -> Unit
+) {
+    val configuration = LocalConfiguration.current
+    val screenWidth = configuration.screenWidthDp.dp
+    val screenHeight = configuration.screenHeightDp.dp
+
     Box(
         modifier = Modifier
-            .fillMaxWidth(clickableWidth)
-            .fillMaxHeight(clickableHeight)
-            .offset(clickableOffset.x.dp, clickableOffset.y.dp)
+            .size(screenWidth * clickableWidthPercent, screenHeight * clickableHeightPercent)
+            .offset(
+                x = screenWidth * clickableOffsetPercent.x,
+                y = screenHeight * clickableOffsetPercent.y
+            )
             .clickable(onClick = onClick)
     )
 }

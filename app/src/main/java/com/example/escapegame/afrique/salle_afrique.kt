@@ -1,17 +1,18 @@
 package com.example.escapegame
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.*
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.draw.paint
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.input.pointer.positionChange
 import androidx.compose.ui.layout.ContentScale
@@ -135,7 +136,7 @@ fun MurFondAfrique(
     }
     )
 
-    //click sur un objet de la pièce
+    //click sur telephone
     ClickElement(
         clickableWidth = 0.07F,
         clickableHeight = 0.07F,
@@ -143,9 +144,6 @@ fun MurFondAfrique(
         navController = navController,
         onClick = {showPhone = true})
 
-    //"Le cobalt (présent dans les batteries de nos téléphones portables) et l'uranium sont toutes deux des ressources extraites sur le continent africain.\n" +
-    //                        "L'extraction de cobalt a lieu dans des mines où la teneur en uranium est souvent élevée, et donc très dangereuse et hautement toxique.\n" +
-    //                        "Un téléphone à touches est souvent pratique pour convertir des lettres en chiffres."
     //zoom sur téléphone
     if (showPhone){
         // Popup contenant les livre avec drapeaux
@@ -214,6 +212,8 @@ fun MurDroiteAfrique(
     var showMozambique by remember { mutableStateOf(false)}
     var showSoudan by remember { mutableStateOf(false)}
     var showTchad by remember { mutableStateOf(false)}
+
+    var showBottle by remember { mutableStateOf(false) }
 
     //background avec image
     Box(modifier = with (Modifier){
@@ -1198,6 +1198,76 @@ fun MurDroiteAfrique(
         }
     }
 
+    //click sur la bouteille d'eeau
+    ClickElement(
+        clickableWidth = 0.05F,
+        clickableHeight = 0.17F,
+        clickableOffset = IntOffset(270, 175),
+        navController = navController,
+        onClick = {showBottle = true})
+
+    if (showBottle){
+        // Pop contenant le labyrinthe
+        Popup() {
+
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                // Fond flou
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(Color.Transparent)
+                        .drawBehind {
+                            drawRect(
+                                brush = Brush.verticalGradient(
+                                    colors = listOf(Color.Transparent, Color.Black),
+                                    startY = 0f,
+                                    endY = size.height
+                                )
+                            )
+                        },
+                    content = {
+                        // Contenu de la popup
+                        Box(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(16.dp),
+                            content = {
+                                Box(
+                                    modifier = with(Modifier) {
+                                        fillMaxSize()
+                                            .paint(
+                                                // Remplacez par votre id d'image
+                                                painterResource(id = R.drawable.etiquette_bouteille),
+                                                contentScale = ContentScale.Fit
+                                            )
+                                    }
+                                )
+                            }
+                        )
+                    }
+                )
+            }
+
+            Column(
+                modifier = modifier
+                    .fillMaxSize()
+                    .padding(30.dp, 20.dp),
+                verticalArrangement = Arrangement.Top,
+                horizontalAlignment = Alignment.End
+            ){
+                Row() {
+                    FloatingButtonClosePopup(
+                        onClick = {showBottle = false}
+                    )
+                }
+            }
+        }
+    }
+
+
     //Boutons de navigation entre les murs
     ToNextRightWall(modifier = modifier, navController =  navController, onClick = {onDisplayChangeToRight(!isDisplayedRight)})
     ToNextLeftWall(modifier = modifier, navController = navController, onClick = {onDisplayChangeToLeft(!isDisplayedLeft)} )
@@ -1218,10 +1288,18 @@ fun MurEntreeAfrique(
     var passwordErrorUranium by remember{ mutableStateOf(false) }
     var showDilemmeUraniumRecto by remember { mutableStateOf(false) }
     var showDilemmeUraniumVerso by remember { mutableStateOf(false) }
+    var code_uranium_trouve by remember { mutableStateOf(false) }
 
     var enigme_diamant by remember { mutableStateOf(false) }
     var passwordErrorDiamant by remember{ mutableStateOf(false) }
     var showDilemmeDiamant by remember { mutableStateOf(false) }
+    var code_diamant_trouve by remember { mutableStateOf(false) }
+
+    var enigme_eau by remember { mutableStateOf(false) }
+    var passwordErrorEau by remember{ mutableStateOf(false) }
+    var showDilemmeEau by remember { mutableStateOf(false) }
+    var code_eau_trouve by remember { mutableStateOf(false) }
+
 
     
     //background avec image
@@ -1240,7 +1318,9 @@ fun MurEntreeAfrique(
         clickableHeight = 0.12F,
         clickableOffset = IntOffset(250, 85),
         navController = navController,
-        onClick = {enigme_uranium = true})
+        onClick = {
+            if (code_uranium_trouve) { showDilemmeUraniumRecto = true }
+            else { enigme_uranium = true }})
 
     //popup enigme uranium
     if (enigme_uranium) {
@@ -1276,6 +1356,7 @@ fun MurEntreeAfrique(
                             passwordErrorUranium = false
                             showDilemmeUraniumRecto = true
                             enigme_uranium = false
+                            code_uranium_trouve = true
 
                         } else {
                             passwordErrorUranium = true
@@ -1299,15 +1380,6 @@ fun MurEntreeAfrique(
     if (showDilemmeUraniumRecto){
         // Popup contenant le recto du dilemme uranium
         Popup() {
-            //background avec image
-            Box(modifier = with (Modifier){
-                fillMaxSize()
-                    .paint(
-                        // Replace with your image id
-                        painterResource(id = R.drawable.fond_noir_regles_jeu),
-                        contentScale = ContentScale.FillBounds)
-            }
-            )
 
             ClickElement(
                 clickableWidth = 1F,
@@ -1318,20 +1390,44 @@ fun MurEntreeAfrique(
                     showDilemmeUraniumVerso = true}
             )
 
-            Column(
-                modifier = modifier
-                    .fillMaxSize()
-                    .padding(10.dp, 10.dp),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
             ) {
-                Box(modifier = with (Modifier){
-                    fillMaxSize()
-                        .paint(
-                            // Replace with your image id
-                            painterResource(id = R.drawable.d_uranium_recto),
-                            contentScale = ContentScale.FillBounds)
-                }
+                // Fond flou
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(Color.Transparent)
+                        .drawBehind {
+                            drawRect(
+                                brush = Brush.verticalGradient(
+                                    colors = listOf(Color.Transparent, Color.Black),
+                                    startY = 0f,
+                                    endY = size.height
+                                )
+                            )
+                        },
+                    content = {
+                        // Contenu de la popup
+                        Box(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(16.dp),
+                            content = {
+                                Box(
+                                    modifier = with(Modifier) {
+                                        fillMaxSize()
+                                            .paint(
+                                                // Remplacez par votre id d'image
+                                                painterResource(id = R.drawable.d_uranium_recto),
+                                                contentScale = ContentScale.Fit
+                                            )
+                                    }
+                                )
+                            }
+                        )
+                    }
                 )
             }
 
@@ -1354,15 +1450,6 @@ fun MurEntreeAfrique(
     if (showDilemmeUraniumVerso){
         // Popup contenant le verso du dilemme uranium
         Popup() {
-            //background avec image
-            Box(modifier = with (Modifier){
-                fillMaxSize()
-                    .paint(
-                        // Replace with your image id
-                        painterResource(id = R.drawable.fond_noir_regles_jeu),
-                        contentScale = ContentScale.FillBounds)
-            }
-            )
 
             ClickElement(
                 clickableWidth = 1F,
@@ -1372,22 +1459,45 @@ fun MurEntreeAfrique(
                 onClick = {showDilemmeUraniumRecto = true ; showDilemmeUraniumVerso = false}
             )
 
-            Column(
-                modifier = modifier
-                    .fillMaxSize()
-                    .padding(10.dp, 10.dp),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
             ) {
-                Box(modifier = with (Modifier){
-                    fillMaxSize()
-                        .paint(
-                            // Replace with your image id
-                            painterResource(id = R.drawable.d_uranium_verso),
-                            contentScale = ContentScale.FillBounds)
-                }
+                // Fond flou
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(Color.Transparent)
+                        .drawBehind {
+                            drawRect(
+                                brush = Brush.verticalGradient(
+                                    colors = listOf(Color.Transparent, Color.Black),
+                                    startY = 0f,
+                                    endY = size.height
+                                )
+                            )
+                        },
+                    content = {
+                        // Contenu de la popup
+                        Box(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(16.dp),
+                            content = {
+                                Box(
+                                    modifier = with(Modifier) {
+                                        fillMaxSize()
+                                            .paint(
+                                                // Remplacez par votre id d'image
+                                                painterResource(id = R.drawable.d_uranium_verso),
+                                                contentScale = ContentScale.Fit
+                                            )
+                                    }
+                                )
+                            }
+                        )
+                    }
                 )
-
             }
 
             Column(
@@ -1412,10 +1522,12 @@ fun MurEntreeAfrique(
         clickableHeight = 0.12F,
         clickableOffset = IntOffset(190, 140),
         navController = navController,
-        onClick = {enigme_diamant = true})
+        onClick = {
+            if (code_diamant_trouve) { showDilemmeDiamant = true }
+            else { enigme_diamant = true }})
 
     //popup enigme diamant
-    if (enigme_diamant) {
+    if (enigme_diamant){
         // Créer des variables d'état pour stocker les données du formulaire
         var code by remember { mutableStateOf("") }
         var label = "Diamants du conflit"
@@ -1448,6 +1560,7 @@ fun MurEntreeAfrique(
                             passwordErrorDiamant = false
                             showDilemmeDiamant = true
                             enigme_diamant = false
+                            code_diamant_trouve = true
 
                         } else {
                             passwordErrorDiamant = true
@@ -1471,15 +1584,47 @@ fun MurEntreeAfrique(
     if (showDilemmeDiamant){
         // Popup contenant le recto du dilemme uranium
         Popup() {
-            //background avec image
-            Box(modifier = with (Modifier){
-                fillMaxSize()
-                    .paint(
-                        // Replace with your image id
-                        painterResource(id = R.drawable.dilemme_diamants),
-                        contentScale = ContentScale.FillBounds)
+
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                // Fond flou
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(Color.Transparent)
+                        .drawBehind {
+                            drawRect(
+                                brush = Brush.verticalGradient(
+                                    colors = listOf(Color.Transparent, Color.Black),
+                                    startY = 0f,
+                                    endY = size.height
+                                )
+                            )
+                        },
+                    content = {
+                        // Contenu de la popup
+                        Box(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(16.dp),
+                            content = {
+                                Box(
+                                    modifier = with(Modifier) {
+                                        fillMaxSize()
+                                            .paint(
+                                                // Remplacez par votre id d'image
+                                                painterResource(id = R.drawable.dilemme_diamants),
+                                                contentScale = ContentScale.Fit
+                                            )
+                                    }
+                                )
+                            }
+                        )
+                    }
+                )
             }
-            )
 
             Column(
                 modifier = modifier
@@ -1491,6 +1636,132 @@ fun MurEntreeAfrique(
                 Row() {
                     FloatingButtonClosePopup(
                         onClick = {showDilemmeDiamant = false}
+                    )
+                }
+            }
+        }
+    }
+
+    //click eau
+    ClickElement(
+        clickableWidth = 0.07F,
+        clickableHeight = 0.14F,
+        clickableOffset = IntOffset(190, 190),
+        navController = navController,
+        onClick = {
+            if (code_eau_trouve) { showDilemmeEau = true }
+            else { enigme_eau = true } })
+
+    //popup enigme eau
+    if (enigme_eau){
+        // Créer des variables d'état pour stocker les données du formulaire
+        var code by remember { mutableStateOf("") }
+        var label = "Accès à l'eau potable"
+
+        AlertDialog(
+            onDismissRequest = { enigme_diamant = false },
+            title = { Text(text="Entrez le bon code !",  textAlign = TextAlign.Center)},
+            text = {
+                Column (modifier = Modifier.padding(16.dp)){
+                    Text(text = "L'eau est abondante en Afrique. Mais son acheminement et son traitement sont insuffisants pour subvenir aux besoins des populations.")
+                    Spacer(modifier = Modifier.height(16.dp))
+                    OutlinedTextField(
+                        value = code,
+                        onValueChange = { passwordErrorEau = false; code = it },
+                        label = { Text(label) },
+                        visualTransformation = PasswordVisualTransformation(),
+                        isError = passwordErrorEau,
+                        modifier = Modifier.fillMaxWidth(),
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
+                    )
+                    if (passwordErrorEau){
+                        Text(text = "Code invalide")
+                    }
+                }
+            },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        if (code == "3800"){
+                            passwordErrorEau = false
+                            showDilemmeEau = true
+                            enigme_eau = false
+                            code_eau_trouve = true
+
+                        } else {
+                            passwordErrorEau = true
+                        }
+                    }
+                ) {
+                    Text("Valider")
+                }
+            },
+            dismissButton = {
+                Button(
+                    onClick = { enigme_eau = false }
+                ) {
+                    Text("Fermer")
+                }
+            }
+        )
+    }
+
+    //popups dilemme eau
+    if (showDilemmeEau){
+        // Popup contenant le dilemme eau
+        Popup() {
+
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                // Fond flou
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(Color.Transparent)
+                        .drawBehind {
+                            drawRect(
+                                brush = Brush.verticalGradient(
+                                    colors = listOf(Color.Transparent, Color.Black),
+                                    startY = 0f,
+                                    endY = size.height
+                                )
+                            )
+                        },
+                    content = {
+                        // Contenu de la popup
+                        Box(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(16.dp),
+                            content = {
+                                Box(
+                                    modifier = with(Modifier) {
+                                        fillMaxSize()
+                                            .paint(
+                                                // Remplacez par votre id d'image
+                                                painterResource(id = R.drawable.d_eau_potable),
+                                                contentScale = ContentScale.Fit
+                                            )
+                                    }
+                                )
+                            }
+                        )
+                    }
+                )
+            }
+
+            Column(
+                modifier = modifier
+                    .fillMaxSize()
+                    .padding(30.dp, 20.dp),
+                verticalArrangement = Arrangement.Top,
+                horizontalAlignment = Alignment.End
+            ){
+                Row() {
+                    FloatingButtonClosePopup(
+                        onClick = {showDilemmeEau = false}
                     )
                 }
             }

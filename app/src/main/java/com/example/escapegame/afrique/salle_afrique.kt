@@ -131,6 +131,7 @@ fun MurFondAfrique(
     onDisplayChangeToLeft: (Boolean) -> Unit
 ){
     var showPhone by remember { mutableStateOf(false) }
+    var showTabPetrole by remember { mutableStateOf(false) }
 
     //background avec image
     Box(modifier = with (Modifier){
@@ -181,6 +182,75 @@ fun MurFondAfrique(
                 Row() {
                     FloatingButtonClosePopup(
                         onClick = {showPhone = false }
+                    )
+                }
+            }
+        }
+    }
+
+    //click sur tableau pétrole
+    ClickElement(
+        clickableWidthPercent = 0.26F,
+        clickableHeightPercent = 0.28F,
+        clickableOffsetPercent = Offset(0.35F, 0.21F),
+        navController = navController,
+        onClick = {showTabPetrole = true})
+
+    //zoom sur tableau pétrole
+    if (showTabPetrole){
+        // Popup contenant les livre avec drapeaux
+        Popup() {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                // Fond flou
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(Color.Transparent)
+                        .drawBehind {
+                            drawRect(
+                                brush = Brush.verticalGradient(
+                                    colors = listOf(Color.Transparent, Color.Black),
+                                    startY = 0f,
+                                    endY = size.height
+                                )
+                            )
+                        },
+                    content = {
+                        // Contenu de la popup
+                        Box(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(16.dp),
+                            content = {
+                                Box(
+                                    modifier = with(Modifier) {
+                                        fillMaxSize()
+                                            .paint(
+                                                // Remplacez par votre id d'image
+                                                painterResource(id = R.drawable.tableau_total),
+                                                contentScale = ContentScale.Fit
+                                            )
+                                    }
+                                )
+                            }
+                        )
+                    }
+                )
+            }
+
+            Column(
+                modifier = modifier
+                    .fillMaxSize()
+                    .padding(30.dp, 20.dp),
+                verticalArrangement = Arrangement.Top,
+                horizontalAlignment = Alignment.End
+            ){
+                Row() {
+                    FloatingButtonClosePopup(
+                        onClick = {showTabPetrole = false }
                     )
                 }
             }
@@ -1327,6 +1397,11 @@ fun MurEntreeAfrique(
     var showDilemmeEau by remember { mutableStateOf(false) }
     var code_eau_trouve by remember { mutableStateOf(false) }
 
+    var enigme_gaz by remember { mutableStateOf(false) }
+    var passwordErrorGaz by remember{ mutableStateOf(false) }
+    var showDilemmeGaz by remember { mutableStateOf(false) }
+    var code_gaz_trouve by remember { mutableStateOf(false) }
+
 
     
     //background avec image
@@ -1686,7 +1761,7 @@ fun MurEntreeAfrique(
         var label = "Accès à l'eau potable"
 
         AlertDialog(
-            onDismissRequest = { enigme_diamant = false },
+            onDismissRequest = { enigme_eau = false },
             title = { Text(text="Entrez le bon code !",  textAlign = TextAlign.Center)},
             text = {
                 Column (modifier = Modifier.padding(16.dp)){
@@ -1795,6 +1870,132 @@ fun MurEntreeAfrique(
         }
     }
 
+    //click gaz
+    ClickElement(
+        clickableWidthPercent = 0.07F,
+        clickableHeightPercent = 0.14F,
+        clickableOffsetPercent = Offset(0.43F, 0.53F),
+        navController = navController,
+        onClick = {
+            if (code_gaz_trouve) { showDilemmeGaz = true }
+            else { enigme_gaz = true } })
+
+    //popup enigme gaz
+    if (enigme_gaz){
+        // Créer des variables d'état pour stocker les données du formulaire
+        var code by remember { mutableStateOf("") }
+        var label = "Les ressources en gaz"
+
+        AlertDialog(
+            onDismissRequest = { enigme_gaz = false },
+            title = { Text(text="Entrez le bon code !",  textAlign = TextAlign.Center)},
+            text = {
+                Column (modifier = Modifier.padding(16.dp)){
+                    Text(text = "Les ressources fossiles, en particulier le gaz, sont nombreuses en Afrique.")
+                    Spacer(modifier = Modifier.height(16.dp))
+                    OutlinedTextField(
+                        value = code,
+                        onValueChange = { passwordErrorGaz = false; code = it },
+                        label = { Text(label) },
+                        visualTransformation = PasswordVisualTransformation(),
+                        isError = passwordErrorGaz,
+                        modifier = Modifier.fillMaxWidth(),
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
+                    )
+                    if (passwordErrorGaz){
+                        Text(text = "Code invalide")
+                    }
+                }
+            },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        if (code == "3422"){
+                            passwordErrorGaz = false
+                            showDilemmeGaz = true
+                            enigme_gaz = false
+                            code_gaz_trouve = true
+
+                        } else {
+                            passwordErrorGaz = true
+                        }
+                    }
+                ) {
+                    Text("Valider")
+                }
+            },
+            dismissButton = {
+                Button(
+                    onClick = { enigme_gaz = false }
+                ) {
+                    Text("Fermer")
+                }
+            }
+        )
+    }
+
+    //popups dilemme gaz
+    if (showDilemmeGaz){
+        // Popup contenant le dilemme eau
+        Popup() {
+
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                // Fond flou
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(Color.Transparent)
+                        .drawBehind {
+                            drawRect(
+                                brush = Brush.verticalGradient(
+                                    colors = listOf(Color.Transparent, Color.Black),
+                                    startY = 0f,
+                                    endY = size.height
+                                )
+                            )
+                        },
+                    content = {
+                        // Contenu de la popup
+                        Box(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(16.dp),
+                            content = {
+                                Box(
+                                    modifier = with(Modifier) {
+                                        fillMaxSize()
+                                            .paint(
+                                                // Remplacez par votre id d'image
+                                                painterResource(id = R.drawable.d_gaz),
+                                                contentScale = ContentScale.Fit
+                                            )
+                                    }
+                                )
+                            }
+                        )
+                    }
+                )
+            }
+
+            Column(
+                modifier = modifier
+                    .fillMaxSize()
+                    .padding(30.dp, 20.dp),
+                verticalArrangement = Arrangement.Top,
+                horizontalAlignment = Alignment.End
+            ){
+                Row() {
+                    FloatingButtonClosePopup(
+                        onClick = {showDilemmeGaz = false}
+                    )
+                }
+            }
+        }
+    }
+
     //portes amovible
     MoveablePorteHG(clickableOffsetPercent = Offset(0.265F, 0.225F))
     MoveablePorteHD(clickableOffsetPercent = Offset(0.435F, 0.225F))
@@ -1819,6 +2020,7 @@ fun MurGaucheAfrique(
     var showBooks by remember { mutableStateOf(false) }
     var tab_periodique by remember { mutableStateOf(false) }
     var showCrayons by remember { mutableStateOf(false) }
+    var showGlobe by remember { mutableStateOf(false) }
 
 
     //background avec image
@@ -1950,6 +2152,76 @@ fun MurGaucheAfrique(
             }
         }
     }
+
+    //click sur globe
+    ClickElement(
+        clickableWidthPercent = 0.09F,
+        clickableHeightPercent = 0.2F,
+        clickableOffsetPercent = Offset(0.64F, 0.3F),
+        navController = navController,
+        onClick = {showGlobe = true})
+
+    //zoom sur socle globe
+    if (showGlobe){
+        // Popup contenant les livre avec drapeaux
+        Popup() {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                // Fond flou
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(Color.Black)
+                        .drawBehind {
+                            drawRect(
+                                brush = Brush.verticalGradient(
+                                    colors = listOf(Color.Transparent, Color.Black),
+                                    startY = 0f,
+                                    endY = size.height
+                                )
+                            )
+                        },
+                    content = {
+                        // Contenu de la popup
+                        Box(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(16.dp),
+                            content = {
+                                Box(
+                                    modifier = with(Modifier) {
+                                        fillMaxSize()
+                                            .paint(
+                                                // Remplacez par votre id d'image
+                                                painterResource(id = R.drawable.socle_mape_monde),
+                                                contentScale = ContentScale.Fit
+                                            )
+                                    }
+                                )
+                            }
+                        )
+                    }
+                )
+            }
+
+            Column(
+                modifier = modifier
+                    .fillMaxSize()
+                    .padding(30.dp, 20.dp),
+                verticalArrangement = Arrangement.Top,
+                horizontalAlignment = Alignment.End
+            ){
+                Row() {
+                    FloatingButtonClosePopup(
+                        onClick = {showGlobe = false }
+                    )
+                }
+            }
+        }
+    }
+
 
     //Boutons de navigation entre les murs
     ToNextRightWall(modifier = modifier, navController =  navController, onClick = {onDisplayChangeToRight(!isDisplayedRight)})

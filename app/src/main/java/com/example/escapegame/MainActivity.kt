@@ -103,6 +103,12 @@ fun MyAppNavHost(
         composable("salle_afrique"){
             salleAfrique(modifier = modifier, navController)
         }
+        composable("couloir"){
+            couloirSalleConseilOuverte(modifier = modifier, onClick = {navController.navigate("entree_salle_conseil")}, navController = navController)
+        }
+        composable("salle_conseil_dilemmes"){
+            salleConseilDilemmes(modifier = modifier, onClick = {navController.navigate("accueil")}, navController = navController)
+        }
     }
 }
 

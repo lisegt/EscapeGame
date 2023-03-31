@@ -18,10 +18,12 @@ import com.example.escapegame.R
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
+import com.example.escapegame.ClickElement
 import com.example.escapegame.pageBienvenue
 import com.example.escapegame.ui.theme.EscapeGameTheme
 
@@ -47,102 +49,121 @@ fun reglesJeu_page3(
     }
     )
 
-    // Pop contenant les règles du jeu
-    Popup(
-    ) {
-        //background avec image
-        Box(modifier = with (Modifier){
-            fillMaxSize()
-                .paint(
-                    // Replace with your image id
-                    painterResource(id = R.drawable.fond_noir_regles_jeu),
-                    contentScale = ContentScale.FillBounds)
-        }
-        )
-
-        Column(
-            modifier = modifier
-                .fillMaxSize()
-                .padding(60.dp, 60.dp),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally,
-
-            ) {
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Text(
-                    text = titreReglesJeu_page3,
-                    color = Color(48, 165, 232),
-                    textAlign = TextAlign.Center,
-                    fontSize = 25.sp
-                )
-                Text(
-                    text = soustitreReglesJeu_page3,
-                    color = Color(48, 165, 232),
-                    textAlign = TextAlign.Center,
-                    fontSize = 18.sp
-                )
+    // Pop contenant les règles du jeu en fonction du mode de jeu
+    if (ModeJoueur.mode === "1joueur") {
+        Popup() {
+            //background avec image
+            Box(modifier = with (Modifier){
+                fillMaxSize()
+                    .paint(
+                        // Replace with your image id
+                        painterResource(id = R.drawable.contribution_jeu_1joueur),
+                        contentScale = ContentScale.FillBounds)
             }
+            )
 
-            Column(modifier = modifier.padding(0.dp, 20.dp, 0.dp, 0.dp)) {
-                Text(
-                    text = corps1ReglesJeu_page3,
-                    fontSize = 14.sp,
-                    textAlign = TextAlign.Center,
-                    color = Color.White
-                )
-            }
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Text(
-                    text = corps2ReglesJeu_page3,
-                    fontSize = 14.sp,
-                    textAlign = TextAlign.Center,
-                    color = Color.White
-                )
-                Text(
-                    text = corps3ReglesJeu_page3,
-                    fontSize = 14.sp,
-                    textAlign = TextAlign.Center,
-                    color = Color.White
-                )
-                Row(modifier = modifier.padding(0.dp, 20.dp)) {
-                    Text(
-                        text = corps4ReglesJeu_page3,
-                        fontSize = 14.sp,
-                        textAlign = TextAlign.Center,
-                        color = Color.Red,
-                        modifier = modifier.padding(0.dp, 13.dp, 20.dp, 0.dp)
+            Column(
+                modifier = modifier
+                    .fillMaxSize()
+                    .padding(70.dp, 45.dp),
+                verticalArrangement = Arrangement.Bottom,
+                horizontalAlignment = Alignment.Start
+            ){
+                Row() {
+                    FloatingButtonPreviousRule(
+                        onClick = { navController.navigate("regles_du_jeu_2") }
                     )
-                    BoutonVersSalleAfrique(navController)
                 }
 
             }
+
+            //click vers couloir 3
+            ClickElement(
+                clickableWidthPercent = 0.09F,
+                clickableHeightPercent = 0.13F,
+                clickableOffsetPercent = Offset(0.75F, 0.67F),
+                navController = navController,
+                onClick = {navController.navigate("entree_salle_afrique")})
         }
+    }
 
+    if (ModeJoueur.mode === "1equipe") {
+        Popup() {
+            //background avec image
+            Box(modifier = with (Modifier){
+                fillMaxSize()
+                    .paint(
+                        // Replace with your image id
+                        painterResource(id = R.drawable.contribution_jeu_1equipe),
+                        contentScale = ContentScale.FillBounds)
+            }
+            )
 
-        Column(
-            modifier = modifier
-                .fillMaxSize()
-                .padding(70.dp, 45.dp),
-            verticalArrangement = Arrangement.Bottom,
-            horizontalAlignment = Alignment.Start
-        ){
-            Row() {
-                FloatingButtonPreviousRule(
-                    onClick = { navController.navigate("regles_du_jeu_2") }
-                )
-                Text(
-                    text = texte_fleche_page3,
-                    color = Color.White,
-                    modifier = Modifier.padding(20.dp, 20.dp)
-                )
-
-
+            Column(
+                modifier = modifier
+                    .fillMaxSize()
+                    .padding(70.dp, 45.dp),
+                verticalArrangement = Arrangement.Bottom,
+                horizontalAlignment = Alignment.Start
+            ){
+                Row() {
+                    FloatingButtonPreviousRule(
+                        onClick = { navController.navigate("regles_du_jeu_2") }
+                    )
+                }
 
             }
 
+            //click vers couloir 3
+            ClickElement(
+                clickableWidthPercent = 0.09F,
+                clickableHeightPercent = 0.13F,
+                clickableOffsetPercent = Offset(0.75F, 0.67F),
+                navController = navController,
+                onClick = {navController.navigate("entree_salle_afrique")})
         }
     }
+
+    if (ModeJoueur.mode === "2equipes") {
+        Popup() {
+            //background avec image
+            Box(modifier = with (Modifier){
+                fillMaxSize()
+                    .paint(
+                        // Replace with your image id
+                        painterResource(id = R.drawable.contribution_jeu_2equipes),
+                        contentScale = ContentScale.FillBounds)
+            }
+            )
+
+            Column(
+                modifier = modifier
+                    .fillMaxSize()
+                    .padding(70.dp, 45.dp),
+                verticalArrangement = Arrangement.Bottom,
+                horizontalAlignment = Alignment.Start
+            ){
+                Row() {
+                    FloatingButtonPreviousRule(
+                        onClick = { navController.navigate("regles_du_jeu_2") }
+                    )
+                }
+
+            }
+
+            //click vers couloir 3
+            ClickElement(
+                clickableWidthPercent = 0.09F,
+                clickableHeightPercent = 0.13F,
+                clickableOffsetPercent = Offset(0.75F, 0.67F),
+                navController = navController,
+                onClick = {navController.navigate("entree_salle_afrique")})
+
+        }
+    }
+
 }
+
 
 @Composable
 private fun BoutonVersSalleAfrique(navController: NavController) {

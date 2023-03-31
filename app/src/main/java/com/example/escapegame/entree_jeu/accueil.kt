@@ -13,6 +13,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.example.escapegame.entree_jeu.ModeJoueur
 import com.example.escapegame.ui.theme.EscapeGameTheme
 
 @Composable
@@ -36,17 +37,58 @@ fun pageAccueil(
         horizontalAlignment = Alignment.CenterHorizontally
     )  {
         Text("L'aventure des Ingénieurs vert-U-eux")
-        BoutonVersBienvenue(navController)
+        
+        Row(
+            horizontalArrangement = Arrangement.SpaceAround
+        ) {
+            BoutonVersBienvenue_1joueur(navController)
+            BoutonVersBienvenue_1equipe(navController)
+            BoutonVersBienvenue_2equipes(navController)
+        }
+        
     }
 }
 
 @Composable
-private fun BoutonVersBienvenue(navController: NavController) {
+private fun BoutonVersBienvenue_1joueur(navController: NavController) {
+    Button(
+        modifier = Modifier
+            .padding(vertical = 24.dp)
+            .padding(end = 30.dp),
+        onClick = {
+            navController.navigate("bienvenue")
+            ModeJoueur.mode = "1joueur"
+        }
+    ) {
+        Text(text = "Mode 1 joueur")
+    }
+}
+
+@Composable
+private fun BoutonVersBienvenue_1equipe(navController: NavController) {
+    Button(
+        modifier = Modifier
+            .padding(vertical = 24.dp)
+            .padding(end = 30.dp),
+        onClick = {
+            navController.navigate("bienvenue")
+            ModeJoueur.mode = "1equipe"
+        }
+    ) {
+        Text(text = "Mode 1 équipe")
+    }
+}
+
+@Composable
+private fun BoutonVersBienvenue_2equipes(navController: NavController) {
     Button(
         modifier = Modifier.padding(vertical = 24.dp),
-        onClick = { navController.navigate("bienvenue") }
+        onClick = {
+            navController.navigate("bienvenue")
+            ModeJoueur.mode = "2equipes"
+        }
     ) {
-        Text(text = "Entrer")
+        Text(text = "Mode 2 équipes")
     }
 }
 

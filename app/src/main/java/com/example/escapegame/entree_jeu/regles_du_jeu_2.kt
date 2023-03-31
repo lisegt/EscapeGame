@@ -48,99 +48,91 @@ fun reglesJeu_page2(
     }
     )
 
-    // Pop contenant les règle du jeu
-    Popup(
-    ) {
-        //background avec image
-        Box(modifier = with (Modifier){
-            fillMaxSize()
-                .paint(
-                    // Replace with your image id
-                    painterResource(id = R.drawable.fond_noir_regles_jeu),
-                    contentScale = ContentScale.FillBounds)
-        }
-        )
-
-        Column(
-            modifier = modifier
-                .fillMaxSize()
-                .padding(60.dp, 60.dp),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally,
-
-        ) {
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Text(
-                    text = titreReglesJeu_page2,
-                    color = Color(48, 165, 232),
-                    textAlign = TextAlign.Center,
-                    fontSize = 25.sp
-                )
-                Text(
-                    text = soustitreReglesJeu_page2,
-                    color = Color(48, 165, 232),
-                    textAlign = TextAlign.Center,
-                    fontSize = 18.sp
-                )
+    // Pop contenant les règles du jeu en fonction du mode de jeu
+    if (ModeJoueur.mode === "1joueur") {
+        Popup() {
+            //background avec image
+            Box(modifier = with (Modifier){
+                fillMaxSize()
+                    .paint(
+                        // Replace with your image id
+                        painterResource(id = R.drawable.mission_jeu_1joueur),
+                        contentScale = ContentScale.FillBounds)
             }
+            )
 
-            Column(modifier = modifier.padding(0.dp, 20.dp)) {
-                Text(
-                    text = corps1ReglesJeu_page2,
-                    fontSize = 14.sp,
-                    textAlign = TextAlign.Start,
-                    color = Color.White
-                )
-                Text(
-                    text = corps2ReglesJeu_page2,
-                    fontSize = 14.sp,
-                    textAlign = TextAlign.Start,
-                    color = Color.White
-                )
-                Text(
-                    text = AnnotatedString.Builder(corps3ReglesJeu_page2)
-                        .apply {
-                            addStyle(SpanStyle(color =Color(48, 165, 232),), 57, 70)
-                        }
-                        .toAnnotatedString(),
-                    fontSize = 14.sp,
-                    textAlign = TextAlign.Start,
-                    color = Color.White
-                )
-                Text(
-                    text = AnnotatedString.Builder(corps4ReglesJeu_page2)
-                        .apply {
-                            addStyle(SpanStyle(color = Color.Red), 21, 25)
-                        }
-                        .toAnnotatedString(),
-                    fontSize = 14.sp,
-                    textAlign = TextAlign.Start,
-                    color = Color.White
-                )
+            Column(
+                modifier = modifier
+                    .fillMaxSize()
+                    .padding(70.dp, 45.dp),
+                verticalArrangement = Arrangement.Bottom,
+                horizontalAlignment = Alignment.End
+            ){
+                Row() {
+                    FloatingButtonNextRule(
+                        onClick = { navController.navigate("regles_du_jeu_3") }
+                    )
+                }
+
             }
         }
+    }
 
+    if (ModeJoueur.mode === "1equipe") {
+        Popup() {
+            //background avec image
+            Box(modifier = with (Modifier){
+                fillMaxSize()
+                    .paint(
+                        // Replace with your image id
+                        painterResource(id = R.drawable.mission_jeu_1equipe),
+                        contentScale = ContentScale.FillBounds)
+            }
+            )
 
-        Column(
-            modifier = modifier
-                .fillMaxSize()
-                .padding(70.dp, 45.dp),
-            verticalArrangement = Arrangement.Bottom,
-            horizontalAlignment = Alignment.End
-        ){
-            Row() {
-                Text(
-                    text = texte_fleche_page2,
-                    color = Color.White,
-                    modifier = Modifier.padding(20.dp, 20.dp)
-                )
-
-                FloatingButtonNextRule(
-                    onClick = { navController.navigate("regles_du_jeu_3") }
-                )
+            Column(
+                modifier = modifier
+                    .fillMaxSize()
+                    .padding(70.dp, 45.dp),
+                verticalArrangement = Arrangement.Bottom,
+                horizontalAlignment = Alignment.End
+            ){
+                Row() {
+                    FloatingButtonNextRule(
+                        onClick = { navController.navigate("regles_du_jeu_3") }
+                    )
+                }
 
             }
+        }
+    }
 
+    if (ModeJoueur.mode === "2equipes") {
+        Popup() {
+            //background avec image
+            Box(modifier = with (Modifier){
+                fillMaxSize()
+                    .paint(
+                        // Replace with your image id
+                        painterResource(id = R.drawable.mission_jeu_2equipes),
+                        contentScale = ContentScale.FillBounds)
+            }
+            )
+
+            Column(
+                modifier = modifier
+                    .fillMaxSize()
+                    .padding(70.dp, 45.dp),
+                verticalArrangement = Arrangement.Bottom,
+                horizontalAlignment = Alignment.End
+            ){
+                Row() {
+                    FloatingButtonNextRule(
+                        onClick = { navController.navigate("regles_du_jeu_3") }
+                    )
+                }
+
+            }
         }
     }
 }

@@ -1595,8 +1595,7 @@ fun MurEntreeAfrique(
     //enigme uranium
     var enigme_uranium by remember { mutableStateOf(false) }
     var passwordErrorUranium by remember{ mutableStateOf(false) }
-    var showDilemmeUraniumRecto by remember { mutableStateOf(false) }
-    var showDilemmeUraniumVerso by remember { mutableStateOf(false) }
+    var showDilemmeUranium by remember { mutableStateOf(false) }
     var code_uranium_trouve by remember { mutableStateOf(false) }
 
     var enigme_diamant by remember { mutableStateOf(false) }
@@ -1637,7 +1636,7 @@ fun MurEntreeAfrique(
         clickableOffsetPercent = Offset(0.34F, 0.24F),
         navController = navController,
         onClick = {
-            if (code_uranium_trouve) { showDilemmeUraniumRecto = true }
+            if (code_uranium_trouve) { showDilemmeUranium = true }
             else { enigme_uranium = true }})
 
     //popup enigme uranium
@@ -1672,7 +1671,7 @@ fun MurEntreeAfrique(
                     onClick = {
                         if (code == "8892"){
                             passwordErrorUranium = false
-                            showDilemmeUraniumRecto = true
+                            showDilemmeUranium = true
                             enigme_uranium = false
                             code_uranium_trouve = true
 
@@ -1695,19 +1694,9 @@ fun MurEntreeAfrique(
     }
 
     //popups dilemme uranium
-    if (showDilemmeUraniumRecto){
+    if (showDilemmeUranium){
         // Popup contenant le recto du dilemme uranium
         Popup() {
-
-            ClickElement(
-                clickableWidthPercent = 1F,
-                clickableHeightPercent = 1F,
-                clickableOffsetPercent = Offset(0F, 0F),
-                navController = navController,
-                onClick = {showDilemmeUraniumRecto = false
-                    showDilemmeUraniumVerso = true}
-            )
-
             Box(
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
@@ -1738,7 +1727,7 @@ fun MurEntreeAfrique(
                                         fillMaxSize()
                                             .paint(
                                                 // Remplacez par votre id d'image
-                                                painterResource(id = R.drawable.d_uranium_recto),
+                                                painterResource(id = R.drawable.d_uranium),
                                                 contentScale = ContentScale.Fit
                                             )
                                     }
@@ -1758,76 +1747,7 @@ fun MurEntreeAfrique(
             ){
                 Row() {
                     FloatingButtonClosePopup(
-                        onClick = {showDilemmeUraniumRecto = false}
-                    )
-                }
-            }
-        }
-    }
-
-    if (showDilemmeUraniumVerso){
-        // Popup contenant le verso du dilemme uranium
-        Popup() {
-
-            ClickElement(
-                clickableWidthPercent = 1F,
-                clickableHeightPercent = 1F,
-                clickableOffsetPercent = Offset(0F, 0F),
-                navController = navController,
-                onClick = {showDilemmeUraniumRecto = true ; showDilemmeUraniumVerso = false}
-            )
-
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ) {
-                // Fond flou
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(Color.Transparent)
-                        .drawBehind {
-                            drawRect(
-                                brush = Brush.verticalGradient(
-                                    colors = listOf(Color.Transparent, Color.Black),
-                                    startY = 0f,
-                                    endY = size.height
-                                )
-                            )
-                        },
-                    content = {
-                        // Contenu de la popup
-                        Box(
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .padding(16.dp),
-                            content = {
-                                Box(
-                                    modifier = with(Modifier) {
-                                        fillMaxSize()
-                                            .paint(
-                                                // Remplacez par votre id d'image
-                                                painterResource(id = R.drawable.d_uranium_verso),
-                                                contentScale = ContentScale.Fit
-                                            )
-                                    }
-                                )
-                            }
-                        )
-                    }
-                )
-            }
-
-            Column(
-                modifier = modifier
-                    .fillMaxSize()
-                    .padding(30.dp, 20.dp),
-                verticalArrangement = Arrangement.Top,
-                horizontalAlignment = Alignment.End
-            ){
-                Row() {
-                    FloatingButtonClosePopup(
-                        onClick = {showDilemmeUraniumVerso = false ; enigme_uranium = false}
+                        onClick = {showDilemmeUranium = false}
                     )
                 }
             }

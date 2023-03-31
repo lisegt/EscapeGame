@@ -1,5 +1,5 @@
 package com.example.escapegame.entree_jeu
 
-object ModeJoueur {
+object VariableGlobale {
     var mode:String = ""
 }

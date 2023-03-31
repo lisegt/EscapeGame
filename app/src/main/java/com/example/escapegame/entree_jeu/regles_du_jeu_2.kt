@@ -49,7 +49,7 @@ fun reglesJeu_page2(
     )
 
     // Pop contenant les règles du jeu en fonction du mode de jeu
-    if (ModeJoueur.mode === "1joueur") {
+    if (VariableGlobale.mode === "1joueur") {
         Popup() {
             //background avec image
             Box(modifier = with (Modifier){
@@ -78,7 +78,7 @@ fun reglesJeu_page2(
         }
     }
 
-    if (ModeJoueur.mode === "1equipe") {
+    if (VariableGlobale.mode === "1equipe") {
         Popup() {
             //background avec image
             Box(modifier = with (Modifier){
@@ -107,7 +107,7 @@ fun reglesJeu_page2(
         }
     }
 
-    if (ModeJoueur.mode === "2equipes") {
+    if (VariableGlobale.mode === "2equipes") {
         Popup() {
             //background avec image
             Box(modifier = with (Modifier){

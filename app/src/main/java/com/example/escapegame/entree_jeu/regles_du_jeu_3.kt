@@ -27,14 +27,6 @@ import com.example.escapegame.ClickElement
 import com.example.escapegame.pageBienvenue
 import com.example.escapegame.ui.theme.EscapeGameTheme
 
-var titreReglesJeu_page3 = "Les règles du jeu : votre contribution"
-var soustitreReglesJeu_page3 = "Une fois sortis de la salle africaine, vous avez gagné l'Escape game."
-var corps1ReglesJeu_page3 = "Mais votre rôle ne s'arrête pas là."
-var corps2ReglesJeu_page3 = "Les experts attendent vos solutions aux dilemmes."
-var corps3ReglesJeu_page3 = "Vous pourrez alors prendre votre temps, utiliser des ressourceset envoyer le résultat de vos réflexions au conseil."
-var corps4ReglesJeu_page3 = "Prêt à démarrez ? Retournez dans le couloir n° 3"
-var texte_fleche_page3 = "Page précédente"
-
 @Composable
 fun reglesJeu_page3(
     modifier: Modifier,
@@ -50,7 +42,7 @@ fun reglesJeu_page3(
     )
 
     // Pop contenant les règles du jeu en fonction du mode de jeu
-    if (ModeJoueur.mode === "1joueur") {
+    if (VariableGlobale.mode === "1joueur") {
         Popup() {
             //background avec image
             Box(modifier = with (Modifier){
@@ -87,7 +79,7 @@ fun reglesJeu_page3(
         }
     }
 
-    if (ModeJoueur.mode === "1equipe") {
+    if (VariableGlobale.mode === "1equipe") {
         Popup() {
             //background avec image
             Box(modifier = with (Modifier){
@@ -124,7 +116,7 @@ fun reglesJeu_page3(
         }
     }
 
-    if (ModeJoueur.mode === "2equipes") {
+    if (VariableGlobale.mode === "2equipes") {
         Popup() {
             //background avec image
             Box(modifier = with (Modifier){
@@ -162,18 +154,6 @@ fun reglesJeu_page3(
         }
     }
 
-}
-
-
-@Composable
-private fun BoutonVersSalleAfrique(navController: NavController) {
-    Button(
-        modifier = Modifier.padding(),
-        onClick = { navController.navigate("entree_salle_afrique")
-        }
-    ) {
-        Text(text = "Couloir n°3")
-    }
 }
 
 @Composable

@@ -9,9 +9,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.paint
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Velocity
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.escapegame.entree_jeu.VariableGlobale
@@ -37,7 +38,7 @@ fun pageAccueil(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     )  {
-        Text("L'aventure des Ingénieurs vert-U-eux")
+        Text(text = "L'aventure des Ingénieurs vert-U-eux", fontSize = 25.sp, fontWeight = FontWeight.Bold )
         
         Row(
             horizontalArrangement = Arrangement.SpaceAround

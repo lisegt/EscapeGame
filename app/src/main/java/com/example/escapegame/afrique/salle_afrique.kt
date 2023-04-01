@@ -143,7 +143,7 @@ fun MurFondAfrique(
     }
     )
 
-    //click sur telephone adaptatif
+    //click sur le telephone
     ClickElement(
         clickableWidthPercent = 0.07F,
         clickableHeightPercent = 0.07F,
@@ -260,7 +260,8 @@ fun MurFondAfrique(
     //coussin amovible
     MoveableCoussin(clickableOffsetPercent = Offset(0.485F, 0.5F))
 
-    Button(onClick = {navController.navigate("salle_afrique_sombre")}){}
+    Button(onClick = {navController.navigate("couloir")}){}
+
     //Boutons de navigation entre les murs
     ToNextRightWall(modifier = modifier, navController =  navController, onClick = {onDisplayChangeToRight(!isDisplayedRight)})
     ToNextLeftWall(modifier = modifier, navController = navController, onClick = {onDisplayChangeToLeft(!isDisplayedLeft)} )
@@ -1308,7 +1309,6 @@ fun MurDroiteAfrique(
     if (showBottle){
         // Pop contenant le labyrinthe
         Popup() {
-
             Box(
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
@@ -1338,7 +1338,6 @@ fun MurDroiteAfrique(
                                     modifier = with(Modifier) {
                                         fillMaxSize()
                                             .paint(
-                                                // Remplacez par votre id d'image
                                                 painterResource(id = R.drawable.etiquette_bouteille),
                                                 contentScale = ContentScale.Fit
                                             )
@@ -1349,7 +1348,6 @@ fun MurDroiteAfrique(
                     }
                 )
             }
-
             Column(
                 modifier = modifier
                     .fillMaxSize()
@@ -1617,6 +1615,11 @@ fun MurEntreeAfrique(
     var passwordErrorER by remember{ mutableStateOf(false) }
     var showDilemmeER by remember { mutableStateOf(false) }
     var code_er_trouve by remember { mutableStateOf(false) }
+
+    var enigme_sortie by remember { mutableStateOf(false) }
+    var passwordErrorSortie by remember{ mutableStateOf(false) }
+    var showCouloirSalleConseil by remember { mutableStateOf(false) }
+    var code_sortie_trouve by remember { mutableStateOf(false) }
 
     
     //background avec image
@@ -2256,6 +2259,71 @@ fun MurEntreeAfrique(
                 }
             }
         }
+    }
+
+    //click sortie
+    ClickElement(
+        clickableWidthPercent = 0.05F,
+        clickableHeightPercent = 0.1F,
+        clickableOffsetPercent = Offset(0.635F, 0.5F),
+        navController = navController,
+        onClick = { enigme_sortie = true })
+
+    //popup enigme sortie
+    if (enigme_sortie){
+        // Créer des variables d'état pour stocker les données du formulaire
+        var code by remember { mutableStateOf("") }
+        var label = "Courez en salle du conseil !"
+
+        AlertDialog(
+            onDismissRequest = { enigme_sortie = false },
+            title = { Text(text="Ze final code !",  textAlign = TextAlign.Center)},
+            text = {
+                Column (modifier = Modifier.padding(16.dp)){
+                    Text(text = "")
+                    Spacer(modifier = Modifier.height(16.dp))
+                    OutlinedTextField(
+                        value = code,
+                        onValueChange = { passwordErrorSortie = false; code = it },
+                        label = { Text(label) },
+                        visualTransformation = PasswordVisualTransformation(),
+                        isError = passwordErrorSortie,
+                        modifier = Modifier.fillMaxWidth(),
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
+                    )
+                    if (passwordErrorSortie){
+                        Text(text = "Code invalide")
+                    }
+                }
+            },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        if (code == "ecologie"){
+                            passwordErrorSortie = false
+                            showCouloirSalleConseil = true
+                            enigme_sortie = false
+
+                        } else {
+                            passwordErrorSortie = true
+                        }
+                    }
+                ) {
+                    Text("Valider")
+                }
+            },
+            dismissButton = {
+                Button(
+                    onClick = { enigme_sortie = false }
+                ) {
+                    Text("Fermer")
+                }
+            }
+        )
+    }
+    //sortie de la salle afrique
+    if (showCouloirSalleConseil){
+        navController.navigate("couloir")
     }
 
     //portes amovible

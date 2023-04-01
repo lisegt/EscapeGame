@@ -44,8 +44,7 @@ fun couloirSalleAfrique(
     )  {
         Text(
             text = titre1CouloirSalleAfrique,
-            color = Color.White,
-            style = TextStyle(background = Color.Black.copy(alpha = 0.5F))
+            color = Color.White
         )
         Text(
             text = corpsCouloirSalleAfrique,

@@ -10,6 +10,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.paint
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
@@ -34,35 +35,18 @@ fun couloirSalleConseilOuverte(
         fillMaxSize()
             .paint(
                 // Replace with your image id
-                painterResource(id = R.drawable.couloir_salle_conseil),
+                painterResource(id = R.drawable.salle_conseil_ouverte),
                 contentScale = ContentScale.FillBounds)
     }
     )
+    //click sur la porte
+    ClickElement(
+        clickableWidthPercent = 0.12F,
+        clickableHeightPercent = 0.23F,
+        clickableOffsetPercent = Offset(0.22F, 0.43F),
+        navController = navController,
+        onClick = onClick )
 
-    PorteCliquableSalleConseilOuverte(
-        onClick = { onClick },
-        clickableWidth = 0.15F,
-        clickableHeight = 0.4F,
-        clickableOffset = IntOffset(380, 70),
-        navController = navController)
-
-}
-
-@Composable
-fun PorteCliquableSalleConseilOuverte(
-    onClick: () -> Unit,
-    clickableWidth: Float = 0.4F,
-    clickableHeight: Float = 0.5F,
-    clickableOffset: IntOffset = IntOffset.Zero,
-    navController: NavController
-) {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth(clickableWidth)
-            .fillMaxHeight(clickableHeight)
-            .offset(clickableOffset.x.dp, clickableOffset.y.dp)
-            .clickable(onClick = {navController.navigate("salle_conseil_dilemmes")})
-    )
 }
 
 

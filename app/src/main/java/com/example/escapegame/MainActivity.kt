@@ -32,19 +32,6 @@ class MainActivity : ComponentActivity() {
                 val navController = rememberNavController()
 
                 MyAppNavHost(modifier = Modifier, navController, "accueil",viewModel)
-                /*
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colors.background
-                ) {
-                    //Greeting("Android")
-                    Image(
-                        painter = painterResource(R.drawable.isis_ext),
-                        contentDescription = "Photo extérieur ISIS",
-                        modifier = Modifier.fillMaxSize())
-                }
-                */
 
             }
         }
@@ -56,7 +43,7 @@ class MainActivity : ComponentActivity() {
 fun MyAppNavHost(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
-    startDestination: String = "salle_afrique_sombre",
+    startDestination: String = "accueil",
     viewModel: MainViewModel
 ) {
     NavHost(
@@ -104,15 +91,16 @@ fun MyAppNavHost(
             salleAfrique(modifier = modifier, navController)
         }
         composable("couloir"){
-            couloirSalleConseilOuverte(modifier = modifier, onClick = {navController.navigate("entree_salle_conseil")}, navController = navController)
+            couloirSalleConseilOuverte(modifier = modifier, onClick = {navController.navigate("salle_conseil_gagne")}, navController = navController)
+        }
+        composable("salle_conseil_gagne"){
+            salleConseilGagne(modifier = modifier, onClick = {navController.navigate("salle_conseil_dilemmes")}, navController = navController)
         }
         composable("salle_conseil_dilemmes"){
             salleConseilDilemmes(modifier = modifier, onClick = {navController.navigate("accueil")}, navController = navController)
         }
     }
 }
-
-
 
 @Preview(showBackground = true, widthDp = 320, heightDp = 320)
 @ExperimentalAnimationApi
@@ -125,16 +113,6 @@ fun OnboardingPreview() {
         MyAppNavHost(modifier = Modifier, navController, "accueil", viewModel)
     }
 }
-/*
-@Preview(showBackground = true, name = "Text Preview", widthDp = 320)
-@Composable
-fun GreetingsPreview() {
-    EscapeGameTheme {
-        Greetings()
-    }
-}
- */
-
 
 @Preview(showBackground = true, name = "Text Preview", widthDp = 320)
 @Composable
@@ -147,48 +125,3 @@ fun MyAppPreview() {
         MyAppNavHost(Modifier.fillMaxSize(),navController, "accueil", viewModel)
     }
 }
-
-/*
-@Composable
-fun Greetings(
-    modifier: Modifier = Modifier,
-    names: List<String> = listOf("World", "Compose")){
-
-    Column(modifier = Modifier.padding(vertical = 4.dp)) {
-        for (name in names) {
-            Greeting(name = name)
-        }
-    }
-}
-
-@Composable
-fun Greeting(name: String) {
-
-    val expanded = remember { mutableStateOf(false) }
-
-    val extraPadding = if (expanded.value) 48.dp else 0.dp
-
-    Surface(
-        color = MaterialTheme.colors.primary,
-        modifier = Modifier.padding(vertical = 4.dp, horizontal = 8.dp)
-    ) {
-        Row(modifier = Modifier.padding(24.dp)) {
-            Column(
-                modifier = Modifier
-                    .weight(1f)
-                    .padding(bottom = extraPadding)
-
-            ) {
-                Text(text = "Hello,")
-                Text(text = name)
-            }
-            Button(onClick = { expanded.value = !expanded.value }) {
-                Text(if (expanded.value) "Show less" else "Show more")
-            }
-        }
-
-
-    }
-
-}
- */

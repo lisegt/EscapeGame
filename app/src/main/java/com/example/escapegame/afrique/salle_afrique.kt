@@ -1891,6 +1891,8 @@ fun MurEntreeAfrique(
     var showDilemmePoubelle by remember { mutableStateOf(false) }
     var code_poubelle_trouve by remember { mutableStateOf(false) }
 
+    var showTips by remember { mutableStateOf(false) }
+
     var enigme_sortie by remember { mutableStateOf(false) }
     var passwordErrorSortie by remember{ mutableStateOf(false) }
     var showCouloirSalleConseil by remember { mutableStateOf(false) }
@@ -2914,6 +2916,28 @@ fun MurEntreeAfrique(
         }
     }
 
+    //click logo
+    ClickElement(
+        clickableWidthPercent = 0.05F,
+        clickableHeightPercent = 0.09F,
+        clickableOffsetPercent = Offset(0.51F, 0.4F),
+        navController = navController,
+        onClick = { showTips = true })
+
+    //tips
+    if (showTips) {
+        AlertDialog(
+            onDismissRequest = { showTips = false },
+            text = {Text("Promenez vous dans la salle.\n" +
+                    "Pour trouver des objets, placez vous devant le mur contre lequel ils sont posés.")},
+            confirmButton = {
+                TextButton(onClick = { showTips = false }, modifier = Modifier) {
+                    Text("Fermer")
+                }
+            }
+
+        )
+    }
 
     //click sortie
     ClickElement(
@@ -3630,7 +3654,6 @@ fun MurGaucheAfrique(
             }
         }
     }
-
 
     //Boutons de navigation entre les murs
     ToNextRightWall(modifier = modifier, navController =  navController, onClick = {onDisplayChangeToRight(!isDisplayedRight)})

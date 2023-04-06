@@ -63,7 +63,7 @@ fun salleAfriqueSombre(
     InterrupteurLumiere(
         clickableWidth = 1F,
         clickableHeight = 1F,
-        clickableOffset = IntOffset(115, 140),
+        clickableOffset = IntOffset(0, 0),
         navController = navController)
 }
 

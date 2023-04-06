@@ -295,6 +295,8 @@ fun MurDroiteAfrique(
     var showBoulette123 by remember { mutableStateOf(false) }
     var showBoulette456 by remember { mutableStateOf(false) }
     var showBoulette789 by remember { mutableStateOf(false) }
+    var showJournalP1 by remember { mutableStateOf(false) }
+    var showJournalP2 by remember { mutableStateOf(false) }
 
     //background avec image
     Box(modifier = with (Modifier){
@@ -1298,7 +1300,7 @@ fun MurDroiteAfrique(
         }
     }
 
-    //click sur la bouteille d'eeau
+    //click sur la bouteille d'eau
     ClickElement(
         clickableWidthPercent = 0.05F,
         clickableHeightPercent = 0.17F,
@@ -1571,6 +1573,158 @@ fun MurDroiteAfrique(
         }
     }
 
+    // click sur journal
+    ClickElement(
+        clickableWidthPercent = 0.14F,
+        clickableHeightPercent = 0.07F,
+        clickableOffsetPercent = Offset(0.5f, 0.7f),
+        navController = navController,
+        onClick = { showJournalP1 = true })
+
+    //zoom sur le journal
+    if (showJournalP1){
+        // Pop contenant le journal
+        Popup() {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                // Fond flou
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(Color.Transparent)
+                        .drawBehind {
+                            drawRect(
+                                brush = Brush.verticalGradient(
+                                    colors = listOf(Color.Transparent, Color.Black),
+                                    startY = 0f,
+                                    endY = size.height
+                                )
+                            )
+                        },
+                    content = {
+                        // Contenu de la popup
+                        Box(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(16.dp),
+                            content = {
+                                Box(
+                                    modifier = with(Modifier) {
+                                        fillMaxSize()
+                                            .paint(
+                                                painterResource(id = R.drawable.le_monde_pollution_page_1),
+                                                contentScale = ContentScale.Fit
+                                            )
+                                    }
+                                )
+                            }
+                        )
+                    }
+                )
+            }
+            Column(
+                modifier = modifier
+                    .fillMaxSize()
+                    .padding(30.dp, 20.dp),
+                verticalArrangement = Arrangement.Top,
+                horizontalAlignment = Alignment.End
+            ){
+                Row() {
+                    FloatingButtonClosePopup(
+                        onClick = {showJournalP1 = false}
+                    )
+                }
+            }
+            Column(
+                modifier = modifier
+                    .fillMaxSize()
+                    .padding(30.dp, 20.dp),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.End
+            ){
+                Row() {
+                    FloatingButtonNextPopup(
+                        onClick = {showJournalP1 = false ; showJournalP2 = true}
+                    )
+                }
+            }
+        }
+    }
+
+    //zoom sur le journal page 2
+    if (showJournalP2){
+        // Pop contenant le journal
+        Popup() {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                // Fond flou
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(Color.Transparent)
+                        .drawBehind {
+                            drawRect(
+                                brush = Brush.verticalGradient(
+                                    colors = listOf(Color.Transparent, Color.Black),
+                                    startY = 0f,
+                                    endY = size.height
+                                )
+                            )
+                        },
+                    content = {
+                        // Contenu de la popup
+                        Box(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(16.dp),
+                            content = {
+                                Box(
+                                    modifier = with(Modifier) {
+                                        fillMaxSize()
+                                            .paint(
+                                                painterResource(id = R.drawable.le_monde_pollution_page_2),
+                                                contentScale = ContentScale.Fit
+                                            )
+                                    }
+                                )
+                            }
+                        )
+                    }
+                )
+            }
+            Column(
+                modifier = modifier
+                    .fillMaxSize()
+                    .padding(30.dp, 20.dp),
+                verticalArrangement = Arrangement.Top,
+                horizontalAlignment = Alignment.End
+            ){
+                Row() {
+                    FloatingButtonClosePopup(
+                        onClick = {showJournalP2 = false}
+                    )
+                }
+            }
+            Column(
+                modifier = modifier
+                    .fillMaxSize()
+                    .padding(30.dp, 20.dp),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.Start
+            ){
+                Row() {
+                    FloatingButtonPreviousPopup(
+                        onClick = {showJournalP2 = false ; showJournalP1 = true}
+                    )
+                }
+            }
+        }
+    }
+
     MoveableMasque1(clickableOffsetPercent = Offset(0.28F, 0.35F))
     MoveableMasque2(clickableOffsetPercent = Offset(0.35F, 0.2F))
     MoveableMasque3(clickableOffsetPercent = Offset(0.42F, 0.3F))
@@ -1615,6 +1769,11 @@ fun MurEntreeAfrique(
     var passwordErrorER by remember{ mutableStateOf(false) }
     var showDilemmeER by remember { mutableStateOf(false) }
     var code_er_trouve by remember { mutableStateOf(false) }
+
+    var enigme_pollution by remember { mutableStateOf(false) }
+    var passwordErrorPollution by remember{ mutableStateOf(false) }
+    var showDilemmePollution by remember { mutableStateOf(false) }
+    var code_pollution_trouve by remember { mutableStateOf(false) }
 
     var enigme_sortie by remember { mutableStateOf(false) }
     var passwordErrorSortie by remember{ mutableStateOf(false) }
@@ -2145,7 +2304,7 @@ fun MurEntreeAfrique(
             if (code_er_trouve) { showDilemmeER = true }
             else { enigme_er = true } })
 
-    //popup enigme gaz
+    //popup enigme énergies renouvelables
     if (enigme_er){
         // Créer des variables d'état pour stocker les données du formulaire
         var code by remember { mutableStateOf("") }
@@ -2199,7 +2358,7 @@ fun MurEntreeAfrique(
         )
     }
 
-    //popups dilemme gaz
+    //popups dilemme énergies renouvelables
     if (showDilemmeER){
         // Popup contenant le dilemme eau
         Popup() {
@@ -2260,6 +2419,133 @@ fun MurEntreeAfrique(
             }
         }
     }
+
+    //click pollution
+    ClickElement(
+        clickableWidthPercent = 0.08F,
+        clickableHeightPercent = 0.14F,
+        clickableOffsetPercent = Offset(0.34F, 0.535F),
+        navController = navController,
+        onClick = {
+            if (code_pollution_trouve) { showDilemmePollution = true }
+            else { enigme_pollution = true } })
+
+    //popup enigme pollution
+    if (enigme_pollution){
+        // Créer des variables d'état pour stocker les données du formulaire
+        var code by remember { mutableStateOf("") }
+        var label = "La pollution industrielle"
+
+        AlertDialog(
+            onDismissRequest = { enigme_pollution = false },
+            title = { Text(text="Entrez le bon code !",  textAlign = TextAlign.Center)},
+            text = {
+                Column (modifier = Modifier.padding(16.dp)){
+                    Text(text = "La pollution industrielle, due en partie aux transports routiers, cause des dégâts énormes sur la santé de la population, la biodiversité et les sols.")
+                    Spacer(modifier = Modifier.height(16.dp))
+                    OutlinedTextField(
+                        value = code,
+                        onValueChange = { passwordErrorPollution = false; code = it },
+                        label = { Text(label) },
+                        visualTransformation = PasswordVisualTransformation(),
+                        isError = passwordErrorPollution,
+                        modifier = Modifier.fillMaxWidth(),
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
+                    )
+                    if (passwordErrorPollution){
+                        Text(text = "Code invalide")
+                    }
+                }
+            },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        if (code == "3358"){
+                            passwordErrorPollution = false
+                            showDilemmePollution = true
+                            enigme_pollution = false
+                            code_pollution_trouve = true
+
+                        } else {
+                            passwordErrorPollution = true
+                        }
+                    }
+                ) {
+                    Text("Valider")
+                }
+            },
+            dismissButton = {
+                Button(
+                    onClick = { enigme_pollution = false }
+                ) {
+                    Text("Fermer")
+                }
+            }
+        )
+    }
+
+    //popups dilemme pollution
+    if (showDilemmePollution){
+        // Popup contenant le dilemme pollution
+        Popup() {
+
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                // Fond flou
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(Color.Transparent)
+                        .drawBehind {
+                            drawRect(
+                                brush = Brush.verticalGradient(
+                                    colors = listOf(Color.Transparent, Color.Black),
+                                    startY = 0f,
+                                    endY = size.height
+                                )
+                            )
+                        },
+                    content = {
+                        // Contenu de la popup
+                        Box(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(16.dp),
+                            content = {
+                                Box(
+                                    modifier = with(Modifier) {
+                                        fillMaxSize()
+                                            .paint(
+                                                // Remplacez par votre id d'image
+                                                painterResource(id = R.drawable.d_pollution),
+                                                contentScale = ContentScale.Fit
+                                            )
+                                    }
+                                )
+                            }
+                        )
+                    }
+                )
+            }
+
+            Column(
+                modifier = modifier
+                    .fillMaxSize()
+                    .padding(30.dp, 20.dp),
+                verticalArrangement = Arrangement.Top,
+                horizontalAlignment = Alignment.End
+            ){
+                Row() {
+                    FloatingButtonClosePopup(
+                        onClick = {showDilemmePollution = false}
+                    )
+                }
+            }
+        }
+    }
+
 
     //click sortie
     ClickElement(
@@ -2352,6 +2638,7 @@ fun MurGaucheAfrique(
     var showCrayons by remember { mutableStateOf(false) }
     var showGlobe by remember { mutableStateOf(false) }
     var showCarteSolaire by remember { mutableStateOf(false) }
+    var showOrdi by remember { mutableStateOf(false) }
 
 
     //background avec image
@@ -2448,7 +2735,7 @@ fun MurGaucheAfrique(
 
     //zoom sur les livres
     if (showCrayons){
-        // Popup contenant les livre avec drapeaux
+        // Popup contenant les crayons
         Popup() {
 
             Column(
@@ -2616,6 +2903,75 @@ fun MurGaucheAfrique(
                 Row() {
                     FloatingButtonClosePopup(
                         onClick = {showCarteSolaire = false }
+                    )
+                }
+            }
+        }
+    }
+
+    //click sur ordi
+    ClickElement(
+        clickableWidthPercent = 0.12F,
+        clickableHeightPercent = 0.2F,
+        clickableOffsetPercent = Offset(0.35F, 0.45F),
+        navController = navController,
+        onClick = {showOrdi = true})
+
+    //zoom sur ordi
+    if (showOrdi){
+        // Popup contenant les livre avec drapeaux
+        Popup() {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                // Fond flou
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(Color.Transparent)
+                        .drawBehind {
+                            drawRect(
+                                brush = Brush.verticalGradient(
+                                    colors = listOf(Color.Transparent, Color.Black),
+                                    startY = 0f,
+                                    endY = size.height
+                                )
+                            )
+                        },
+                    content = {
+                        // Contenu de la popup
+                        Box(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(16.dp),
+                            content = {
+                                Box(
+                                    modifier = with(Modifier) {
+                                        fillMaxSize()
+                                            .paint(
+                                                // Remplacez par votre id d'image
+                                                painterResource(id = R.drawable.indice_ordi),
+                                                contentScale = ContentScale.Fit
+                                            )
+                                    }
+                                )
+                            }
+                        )
+                    }
+                )
+            }
+
+            Column(
+                modifier = modifier
+                    .fillMaxSize()
+                    .padding(30.dp, 20.dp),
+                verticalArrangement = Arrangement.Top,
+                horizontalAlignment = Alignment.End
+            ){
+                Row() {
+                    FloatingButtonClosePopup(
+                        onClick = {showOrdi = false }
                     )
                 }
             }
@@ -2961,3 +3317,40 @@ fun FloatingButtonClosePopup(onClick: () -> Unit) {
     }
 }
 
+@Composable
+fun FloatingButtonNextPopup(onClick: () -> Unit) {
+    Box(
+
+    ){
+        FloatingActionButton(
+            onClick = onClick,
+            backgroundColor = Color.Gray,
+            contentColor = Color.White,
+            content = {
+                Icon(
+                    painter = painterResource(id = R.drawable.forward),
+                    contentDescription = "Next Page"
+                )
+            }
+        )
+    }
+}
+
+@Composable
+fun FloatingButtonPreviousPopup(onClick: () -> Unit) {
+    Box(
+
+    ){
+        FloatingActionButton(
+            onClick = onClick,
+            backgroundColor = Color.Gray,
+            contentColor = Color.White,
+            content = {
+                Icon(
+                    painter = painterResource(id = R.drawable.backward),
+                    contentDescription = "Previous Page"
+                )
+            }
+        )
+    }
+}

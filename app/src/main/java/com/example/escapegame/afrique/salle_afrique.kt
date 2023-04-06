@@ -1886,6 +1886,10 @@ fun MurEntreeAfrique(
     var showDilemmeSec by remember { mutableStateOf(false) }
     var code_sec_trouve by remember { mutableStateOf(false) }
 
+    var enigme_poubelle by remember { mutableStateOf(false) }
+    var passwordErrorPoubelle by remember{ mutableStateOf(false) }
+    var showDilemmePoubelle by remember { mutableStateOf(false) }
+    var code_poubelle_trouve by remember { mutableStateOf(false) }
 
     var enigme_sortie by remember { mutableStateOf(false) }
     var passwordErrorSortie by remember{ mutableStateOf(false) }
@@ -2784,6 +2788,132 @@ fun MurEntreeAfrique(
         }
     }
 
+    //click poubelle
+    ClickElement(
+        clickableWidthPercent = 0.07F,
+        clickableHeightPercent = 0.14F,
+        clickableOffsetPercent = Offset(0.43F, 0.38F),
+        navController = navController,
+        onClick = {
+            if (code_poubelle_trouve) { showDilemmePoubelle = true }
+            else { enigme_poubelle = true } })
+
+    //popup enigme poubelle
+    if (enigme_poubelle){
+        // Créer des variables d'état pour stocker les données du formulaire
+        var code by remember { mutableStateOf("") }
+        var label = "Les déchetteries urbaines"
+
+        AlertDialog(
+            onDismissRequest = { enigme_poubelle = false },
+            title = { Text(text="Entrez le bon code !",  textAlign = TextAlign.Center)},
+            text = {
+                Column (modifier = Modifier.padding(16.dp)){
+                    Text(text = "L'Afrique est en passe de devenir la poubelle du monde, les déchetteries urbaines se multiplient dans les grands villes du continent.")
+                    Spacer(modifier = Modifier.height(16.dp))
+                    OutlinedTextField(
+                        value = code,
+                        onValueChange = { passwordErrorPoubelle = false; code = it },
+                        label = { Text(label) },
+                        visualTransformation = PasswordVisualTransformation(),
+                        isError = passwordErrorPoubelle,
+                        modifier = Modifier.fillMaxWidth(),
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
+                    )
+                    if (passwordErrorPoubelle){
+                        Text(text = "Code invalide")
+                    }
+                }
+            },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        if (code == "8091"){
+                            passwordErrorPoubelle = false
+                            showDilemmePoubelle = true
+                            enigme_poubelle = false
+                            code_poubelle_trouve = true
+
+                        } else {
+                            passwordErrorPoubelle = true
+                        }
+                    }
+                ) {
+                    Text("Valider")
+                }
+            },
+            dismissButton = {
+                Button(
+                    onClick = { enigme_poubelle = false }
+                ) {
+                    Text("Fermer")
+                }
+            }
+        )
+    }
+
+    //popups dilemme poubelle
+    if (showDilemmePoubelle){
+        // Popup contenant le dilemme eau
+        Popup() {
+
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                // Fond flou
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(Color.Transparent)
+                        .drawBehind {
+                            drawRect(
+                                brush = Brush.verticalGradient(
+                                    colors = listOf(Color.Transparent, Color.Black),
+                                    startY = 0f,
+                                    endY = size.height
+                                )
+                            )
+                        },
+                    content = {
+                        // Contenu de la popup
+                        Box(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(16.dp),
+                            content = {
+                                Box(
+                                    modifier = with(Modifier) {
+                                        fillMaxSize()
+                                            .paint(
+                                                // Remplacez par votre id d'image
+                                                painterResource(id = R.drawable.d_d_chets),
+                                                contentScale = ContentScale.Fit
+                                            )
+                                    }
+                                )
+                            }
+                        )
+                    }
+                )
+            }
+
+            Column(
+                modifier = modifier
+                    .fillMaxSize()
+                    .padding(30.dp, 20.dp),
+                verticalArrangement = Arrangement.Top,
+                horizontalAlignment = Alignment.End
+            ){
+                Row() {
+                    FloatingButtonClosePopup(
+                        onClick = {showDilemmePoubelle = false}
+                    )
+                }
+            }
+        }
+    }
+
 
     //click sortie
     ClickElement(
@@ -2877,7 +3007,12 @@ fun MurGaucheAfrique(
     var showGlobe by remember { mutableStateOf(false) }
     var showCarteSolaire by remember { mutableStateOf(false) }
     var showOrdi by remember { mutableStateOf(false) }
+    var showPoubelle by remember { mutableStateOf(false) }
+    var showChipsEntier by remember { mutableStateOf(false) }
+    var showChipsHaut by remember { mutableStateOf(false) }
+    var showChipsBas by remember { mutableStateOf(false) }
 
+    val context = LocalContext.current
 
     //background avec image
     Box(modifier = with (Modifier){
@@ -3210,6 +3345,286 @@ fun MurGaucheAfrique(
                 Row() {
                     FloatingButtonClosePopup(
                         onClick = {showOrdi = false }
+                    )
+                }
+            }
+        }
+    }
+
+    //click sur poubelle
+    ClickElement(
+        clickableWidthPercent = 0.13F,
+        clickableHeightPercent = 0.25F,
+        clickableOffsetPercent = Offset(0.17F, 0.62F),
+        navController = navController,
+        onClick = {showPoubelle = true})
+
+    //zoom sur poubelle
+    if (showPoubelle){
+        // Popup contenant les livre avec drapeaux
+        Popup() {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                // Fond flou
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(Color.Transparent)
+                        .drawBehind {
+                            drawRect(
+                                brush = Brush.verticalGradient(
+                                    colors = listOf(Color.Transparent, Color.Black),
+                                    startY = 0f,
+                                    endY = size.height
+                                )
+                            )
+                        },
+                    content = {
+                        // Contenu de la popup
+                        Box(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(16.dp),
+                            content = {
+                                Box(
+                                    modifier = with(Modifier) {
+                                        fillMaxSize()
+                                            .paint(
+                                                // Remplacez par votre id d'image
+                                                painterResource(id = R.drawable.poubelle_renvers_e),
+                                                contentScale = ContentScale.Fit
+                                            )
+                                    }
+                                )
+                            }
+                        )
+                        ClickElement(
+                            clickableWidthPercent = 0.13F,
+                            clickableHeightPercent = 0.25F,
+                            clickableOffsetPercent = Offset(0.31F, 0.62F),
+                            navController = navController,
+                            onClick = { showPoubelle = false ; showChipsEntier = true })
+                    }
+                )
+            }
+
+            Column(
+                modifier = modifier
+                    .fillMaxSize()
+                    .padding(30.dp, 20.dp),
+                verticalArrangement = Arrangement.Top,
+                horizontalAlignment = Alignment.End
+            ){
+                Row() {
+                    FloatingButtonClosePopup(
+                        onClick = {showPoubelle = false }
+                    )
+                }
+            }
+        }
+    }
+
+    //zoom sur paquet de chips entier
+    if (showChipsEntier){
+        // Popup contenant les livre avec drapeaux
+        Popup() {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                // Fond flou
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(Color.Transparent)
+                        .drawBehind {
+                            drawRect(
+                                brush = Brush.verticalGradient(
+                                    colors = listOf(Color.Transparent, Color.Black),
+                                    startY = 0f,
+                                    endY = size.height
+                                )
+                            )
+                        },
+                    content = {
+                        // Contenu de la popup
+                        Box(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(16.dp),
+                            content = {
+                                Box(
+                                    modifier = with(Modifier) {
+                                        fillMaxSize()
+                                            .paint(
+                                                // Remplacez par votre id d'image
+                                                painterResource(id = R.drawable.chips),
+                                                contentScale = ContentScale.Fit
+                                            )
+                                    }
+                                )
+                            }
+                        )
+                        //clic sur le haut du paquet
+                        ClickElement(
+                            clickableWidthPercent = 0.45F,
+                            clickableHeightPercent = 0.4F,
+                            clickableOffsetPercent = Offset(0.28F, 0.1F),
+                            navController = navController,
+                            onClick = { showChipsHaut = true })
+
+                        //clic sur le bas du paquet
+                        ClickElement(
+                            clickableWidthPercent = 0.45F,
+                            clickableHeightPercent = 0.4F,
+                            clickableOffsetPercent = Offset(0.28F, 0.5F),
+                            navController = navController,
+                            onClick = { showChipsBas = true})
+                    }
+                )
+            }
+
+            Column(
+                modifier = modifier
+                    .fillMaxSize()
+                    .padding(30.dp, 20.dp),
+                verticalArrangement = Arrangement.Top,
+                horizontalAlignment = Alignment.End
+            ){
+                Row() {
+                    FloatingButtonClosePopup(
+                        onClick = {showChipsEntier = false }
+                    )
+                }
+            }
+        }
+    }
+
+    //zoom sur paquet de chips haut
+    if (showChipsHaut){
+        // Popup contenant les livre avec drapeaux
+        Popup() {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                // Fond flou
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(Color.Transparent)
+                        .drawBehind {
+                            drawRect(
+                                brush = Brush.verticalGradient(
+                                    colors = listOf(Color.Transparent, Color.Black),
+                                    startY = 0f,
+                                    endY = size.height
+                                )
+                            )
+                        },
+                    content = {
+                        // Contenu de la popup
+                        Box(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(16.dp),
+                            content = {
+                                Box(
+                                    modifier = with(Modifier) {
+                                        fillMaxSize()
+                                            .paint(
+                                                // Remplacez par votre id d'image
+                                                painterResource(id = R.drawable.chips_haut),
+                                                contentScale = ContentScale.Fit
+                                            )
+                                    }
+                                )
+                            }
+                        )
+                    }
+                )
+            }
+
+            Column(
+                modifier = modifier
+                    .fillMaxSize()
+                    .padding(30.dp, 20.dp),
+                verticalArrangement = Arrangement.Top,
+                horizontalAlignment = Alignment.End
+            ){
+                Row() {
+                    FloatingButtonClosePopup(
+                        onClick = {showChipsHaut = false ; showChipsEntier = true }
+                    )
+                }
+            }
+        }
+    }
+
+    //zoom sur paquet de chips bas
+    if (showChipsBas){
+        // Popup contenant les livre avec drapeaux
+        Popup() {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                // Fond flou
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(Color.Transparent)
+                        .drawBehind {
+                            drawRect(
+                                brush = Brush.verticalGradient(
+                                    colors = listOf(Color.Transparent, Color.Black),
+                                    startY = 0f,
+                                    endY = size.height
+                                )
+                            )
+                        },
+                    content = {
+                        // Contenu de la popup
+                        Box(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(16.dp),
+                            content = {
+                                Box(
+                                    modifier = with(Modifier) {
+                                        fillMaxSize()
+                                            .paint(
+                                                // Remplacez par votre id d'image
+                                                painterResource(id = R.drawable.chips_bas),
+                                                contentScale = ContentScale.Fit
+                                            )
+                                    }
+                                )
+                            }
+                        )
+                        ClickElement(
+                            clickableWidthPercent = 0.29F,
+                            clickableHeightPercent = 0.07F,
+                            clickableOffsetPercent = Offset(0.36F, 0.57F),
+                            navController = navController,
+                            onClick = { val intent = Intent(Intent.ACTION_VIEW, "https://www.jigsawplanet.com/?rc=play&pid=0e0478bc305d".toUri())
+                                context.startActivity(intent) })
+                    }
+                )
+            }
+
+            Column(
+                modifier = modifier
+                    .fillMaxSize()
+                    .padding(30.dp, 20.dp),
+                verticalArrangement = Arrangement.Top,
+                horizontalAlignment = Alignment.End
+            ){
+                Row() {
+                    FloatingButtonClosePopup(
+                        onClick = {showChipsBas = false ; showChipsEntier = true }
                     )
                 }
             }

@@ -1,4 +1,5 @@
 package com.example.escapegame
+import android.content.Intent
 import androidx.compose.foundation.*
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.*
@@ -21,6 +22,7 @@ import androidx.compose.ui.input.pointer.positionChange
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
@@ -32,6 +34,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.unit.toSize
 import androidx.compose.ui.window.Popup
+import androidx.core.net.toUri
 import androidx.navigation.NavController
 import com.example.escapegame.entree_jeu.*
 import kotlin.math.roundToInt
@@ -132,6 +135,10 @@ fun MurFondAfrique(
 ){
     var showPhone by remember { mutableStateOf(false) }
     var showTabPetrole by remember { mutableStateOf(false) }
+    var showJournal by remember { mutableStateOf(false) }
+    var showMotsFleches by remember { mutableStateOf(false) }
+
+    val context = LocalContext.current
 
     //background avec image
     Box(modifier = with (Modifier){
@@ -251,6 +258,105 @@ fun MurFondAfrique(
                 Row() {
                     FloatingButtonClosePopup(
                         onClick = {showTabPetrole = false }
+                    )
+                }
+            }
+        }
+    }
+
+    //click sur journal
+    ClickElement(
+        clickableWidthPercent = 0.1F,
+        clickableHeightPercent = 0.1F,
+        clickableOffsetPercent = Offset(0.63F, 0.7F),
+        navController = navController,
+        onClick = { showJournal= true })
+
+    //zoom sur journal
+    if (showJournal){
+        // Popup contenant le journal le monde
+        Popup() {
+            Column(
+                modifier = modifier
+                    .fillMaxSize()
+                    .padding(10.dp, 10.dp),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Box(modifier = Modifier.fillMaxSize()) {
+                    Box(modifier = with (Modifier){
+                        fillMaxSize()
+                            .paint(
+                                // Replace with your image id
+                                painterResource(id = R.drawable.monde_afrique_somalie),
+                                contentScale = ContentScale.FillBounds)
+                    })
+
+                    ClickElement(
+                        clickableWidthPercent = 0.34F,
+                        clickableHeightPercent = 0.1F,
+                        clickableOffsetPercent = Offset(0.63F, 0.84F),
+                        navController = navController,
+                        onClick = { showMotsFleches = true ; showJournal = false })
+                }
+            }
+
+            Column(
+                modifier = modifier
+                    .fillMaxSize()
+                    .padding(30.dp, 20.dp),
+                verticalArrangement = Arrangement.Top,
+                horizontalAlignment = Alignment.End
+            ){
+                Row() {
+                    FloatingButtonClosePopup(
+                        onClick = {showJournal = false }
+                    )
+                }
+            }
+        }
+    }
+
+    //mots fléchés
+    if (showMotsFleches){
+        // Popup contenant les mots fléchés
+        Popup() {
+            Column(
+                modifier = modifier
+                    .fillMaxSize()
+                    .padding(10.dp, 10.dp),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Box(modifier = Modifier.fillMaxSize()) {
+                    Box(modifier = with (Modifier){
+                        fillMaxSize()
+                            .paint(
+                                // Replace with your image id
+                                painterResource(id = R.drawable.mots_crois_s),
+                                contentScale = ContentScale.FillBounds)
+                    })
+
+                    ClickElement(
+                        clickableWidthPercent = 0.5F,
+                        clickableHeightPercent = 0.07F,
+                        clickableOffsetPercent = Offset(0.27F, 0.66F),
+                        navController = navController,
+                        onClick = { val intent = Intent(Intent.ACTION_VIEW, "https://learningapps.org/watch?v=py2zukgy523".toUri())
+                                        context.startActivity(intent) })
+                }
+            }
+
+            Column(
+                modifier = modifier
+                    .fillMaxSize()
+                    .padding(30.dp, 20.dp),
+                verticalArrangement = Arrangement.Top,
+                horizontalAlignment = Alignment.End
+            ){
+                Row() {
+                    FloatingButtonClosePopup(
+                        onClick = {showMotsFleches = false }
                     )
                 }
             }
@@ -1775,6 +1881,12 @@ fun MurEntreeAfrique(
     var showDilemmePollution by remember { mutableStateOf(false) }
     var code_pollution_trouve by remember { mutableStateOf(false) }
 
+    var enigme_sec by remember { mutableStateOf(false) }
+    var passwordErrorSec by remember{ mutableStateOf(false) }
+    var showDilemmeSec by remember { mutableStateOf(false) }
+    var code_sec_trouve by remember { mutableStateOf(false) }
+
+
     var enigme_sortie by remember { mutableStateOf(false) }
     var passwordErrorSortie by remember{ mutableStateOf(false) }
     var showCouloirSalleConseil by remember { mutableStateOf(false) }
@@ -2540,6 +2652,132 @@ fun MurEntreeAfrique(
                 Row() {
                     FloatingButtonClosePopup(
                         onClick = {showDilemmePollution = false}
+                    )
+                }
+            }
+        }
+    }
+
+    //click secheresse
+    ClickElement(
+        clickableWidthPercent = 0.08F,
+        clickableHeightPercent = 0.14F,
+        clickableOffsetPercent = Offset(0.34F, 0.68F),
+        navController = navController,
+        onClick = {
+            if (code_sec_trouve) { showDilemmeSec = true }
+            else { enigme_sec = true } })
+
+    //popup enigme secheresse
+    if (enigme_sec){
+        // Créer des variables d'état pour stocker les données du formulaire
+        var code by remember { mutableStateOf("") }
+        var label = "Impact des sécheresses"
+
+        AlertDialog(
+            onDismissRequest = { enigme_sec = false },
+            title = { Text(text="Entrez le bon code !",  textAlign = TextAlign.Center)},
+            text = {
+                Column (modifier = Modifier.padding(16.dp)){
+                    Text(text = "Les sécheresses, de plus en plus récurrentes et importantes, diminuent le rendement des récoltes.")
+                    Spacer(modifier = Modifier.height(16.dp))
+                    OutlinedTextField(
+                        value = code,
+                        onValueChange = { passwordErrorSec = false; code = it },
+                        label = { Text(label) },
+                        visualTransformation = PasswordVisualTransformation(),
+                        isError = passwordErrorSec,
+                        modifier = Modifier.fillMaxWidth(),
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
+                    )
+                    if (passwordErrorSec){
+                        Text(text = "Code invalide")
+                    }
+                }
+            },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        if (code == "1953"){
+                            passwordErrorSec = false
+                            showDilemmeSec = true
+                            enigme_sec = false
+                            code_sec_trouve = true
+
+                        } else {
+                            passwordErrorSec = true
+                        }
+                    }
+                ) {
+                    Text("Valider")
+                }
+            },
+            dismissButton = {
+                Button(
+                    onClick = { enigme_sec = false }
+                ) {
+                    Text("Fermer")
+                }
+            }
+        )
+    }
+
+    //popups dilemme secheresse
+    if (showDilemmeSec){
+        // Popup contenant le dilemme secheresse
+        Popup() {
+
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                // Fond flou
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(Color.Transparent)
+                        .drawBehind {
+                            drawRect(
+                                brush = Brush.verticalGradient(
+                                    colors = listOf(Color.Transparent, Color.Black),
+                                    startY = 0f,
+                                    endY = size.height
+                                )
+                            )
+                        },
+                    content = {
+                        // Contenu de la popup
+                        Box(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(16.dp),
+                            content = {
+                                Box(
+                                    modifier = with(Modifier) {
+                                        fillMaxSize()
+                                            .paint(
+                                                // Remplacez par votre id d'image
+                                                painterResource(id = R.drawable.d_secheresse),
+                                                contentScale = ContentScale.Fit
+                                            )
+                                    }
+                                )
+                            }
+                        )
+                    }
+                )
+            }
+
+            Column(
+                modifier = modifier
+                    .fillMaxSize()
+                    .padding(30.dp, 20.dp),
+                verticalArrangement = Arrangement.Top,
+                horizontalAlignment = Alignment.End
+            ){
+                Row() {
+                    FloatingButtonClosePopup(
+                        onClick = {showDilemmeSec = false}
                     )
                 }
             }

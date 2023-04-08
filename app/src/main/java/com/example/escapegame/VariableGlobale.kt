@@ -15,5 +15,6 @@ object VariableGlobale {
     var code_pollution_trouve: Boolean = false
     var code_sec_trouve: Boolean = false
     var code_poubelle_trouve: Boolean = false
+    var code_sortie_trouve: Boolean = false
 
 }

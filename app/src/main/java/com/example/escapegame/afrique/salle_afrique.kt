@@ -24,11 +24,15 @@ import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -365,8 +369,6 @@ fun MurFondAfrique(
 
     //coussin amovible
     MoveableCoussin(clickableOffsetPercent = Offset(0.485F, 0.5F))
-
-    Button(onClick = {navController.navigate("couloir")}){}
 
     //Boutons de navigation entre les murs
     ToNextRightWall(modifier = modifier, navController =  navController, onClick = {onDisplayChangeToRight(!isDisplayedRight)})
@@ -1884,11 +1886,11 @@ fun MurEntreeAfrique(
     var showDilemmePoubelle by remember { mutableStateOf(false) }
 
     var showTips by remember { mutableStateOf(false) }
+    var showIndiceDeesse by remember { mutableStateOf(false) }
 
     var enigme_sortie by remember { mutableStateOf(false) }
     var passwordErrorSortie by remember{ mutableStateOf(false) }
     var showCouloirSalleConseil by remember { mutableStateOf(false) }
-    var code_sortie_trouve by remember { mutableStateOf(false) }
 
     
     //background avec image
@@ -2931,23 +2933,68 @@ fun MurEntreeAfrique(
         )
     }
 
+    //click deesse
+    ClickElement(
+        clickableWidthPercent = 0.1F,
+        clickableHeightPercent = 0.7F,
+        clickableOffsetPercent = Offset(0.15F, 0.2F),
+        navController = navController,
+        onClick = { showIndiceDeesse = true })
+
+    //indice deesse
+    if (showIndiceDeesse) {
+        AlertDialog(
+            onDismissRequest = { showIndiceDeesse = false },
+            text = {Text(
+                buildAnnotatedString {
+                    append("Africa est la ")
+                    withStyle(
+                        style = SpanStyle(
+                            fontWeight = FontWeight.Bold
+                        )
+                    ) {
+                        append("D")
+                    }
+                    append("ée")
+                    withStyle(
+                        style = SpanStyle(
+                            fontWeight = FontWeight.Bold
+                        )
+                    ) {
+                        append("S")
+                    }
+                    append("se de l'Afrique")
+                }
+                    )
+                   },
+            confirmButton = {
+                TextButton(onClick = { showIndiceDeesse = false }, modifier = Modifier) {
+                    Text("Fermer")
+                }
+            }
+
+        )
+    }
+
     //click sortie
     ClickElement(
         clickableWidthPercent = 0.05F,
         clickableHeightPercent = 0.1F,
         clickableOffsetPercent = Offset(0.635F, 0.5F),
         navController = navController,
-        onClick = { enigme_sortie = true })
+        onClick = {
+            if (VariableGlobale.code_sortie_trouve) { showCouloirSalleConseil = true }
+            else { enigme_sortie = true } })
 
     //popup enigme sortie
     if (enigme_sortie){
         // Créer des variables d'état pour stocker les données du formulaire
         var code by remember { mutableStateOf("") }
-        var label = "Courez en salle du conseil !"
+        var label = "Ze Final Code !"
 
         AlertDialog(
             onDismissRequest = { enigme_sortie = false },
-            title = { Text(text="Ze final code !",  textAlign = TextAlign.Center)},
+            title = { Text(text="Courez en salle du conseil !",  textAlign = TextAlign.Center)},
             text = {
                 Column (modifier = Modifier.padding(16.dp)){
                     Text(text = "")
@@ -2971,8 +3018,9 @@ fun MurEntreeAfrique(
                     onClick = {
                         if (code == "ecologie"){
                             passwordErrorSortie = false
-                            showCouloirSalleConseil = true
                             enigme_sortie = false
+                            VariableGlobale.code_sortie_trouve = true
+                            showCouloirSalleConseil = true
 
                         } else {
                             passwordErrorSortie = true
@@ -2991,9 +3039,32 @@ fun MurEntreeAfrique(
             }
         )
     }
+
     //sortie de la salle afrique
     if (showCouloirSalleConseil){
-        navController.navigate("couloir")
+        AlertDialog(
+            onDismissRequest = { showCouloirSalleConseil = false },
+            title = { Text(text="Félicitations !",  textAlign = TextAlign.Center)},
+            text = {
+                Column (modifier = Modifier.padding(16.dp)){
+                    Text(text = "Félicitations pour avoir terminé l'Escape Game avec succès ! Vous avez montré une grande perspicacité pour résoudre les énigmes et vous échapper de la salle. Vous pouvez être fier de vous pour cette réalisation impressionnante. Maintenant courez en salle du conseil !")
+                }
+            },
+            confirmButton = {
+                Button(
+                    onClick = { showCouloirSalleConseil = false ; navController.navigate("couloir") }
+                ) {
+                    Text("Aller en salle du conseil")
+                }
+            },
+            dismissButton = {
+                Button(
+                    onClick = { showCouloirSalleConseil = false }
+                ) {
+                    Text("Revenir dans la salle Afrique")
+                }
+            }
+        )
     }
 
     //portes amovible

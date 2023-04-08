@@ -34,6 +34,8 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.geometry.Offset
+import com.example.escapegame.ClickElement
 
 @Composable
 fun entreeSalleAfrique(
@@ -49,30 +51,15 @@ fun entreeSalleAfrique(
                 contentScale = ContentScale.FillBounds)
     }
     )
+    //clic entree salle afrique
+    ClickElement(
+        clickableWidthPercent = 0.4F,
+        clickableHeightPercent = 0.9F,
+        clickableOffsetPercent = Offset(0.32F, 0.1F),
+        navController = navController,
+        onClick = { navController.navigate("salle_afrique_sombre") })
 
-    PorteCliquableSalleAfrique(
-        clickableWidth = 0.4F,
-        clickableHeight = 0.9F,
-        clickableOffset = IntOffset(240, 40),
-        navController = navController
-    )
 
-}
-
-@Composable
-fun PorteCliquableSalleAfrique(
-    clickableWidth: Float = 0.4F,
-    clickableHeight: Float = 0.5F,
-    clickableOffset: IntOffset = IntOffset.Zero,
-    navController: NavController
-) {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth(clickableWidth)
-            .fillMaxHeight(clickableHeight)
-            .offset(clickableOffset.x.dp, clickableOffset.y.dp)
-            .clickable(onClick = { navController.navigate("salle_afrique_sombre")})
-    )
 }
 
 

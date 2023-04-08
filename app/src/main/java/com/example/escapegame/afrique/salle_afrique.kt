@@ -129,8 +129,7 @@ fun salleAfrique(
 
     //minuteur d'1 h
     if (VariableGlobale.mode == "1equipe" || VariableGlobale.mode == "2equipes"){
-        //Timer(minuteur = 3600000L)
-        Timer(minuteur = 60000L)
+        Timer(minuteur = 3600000L)
     }
 
     //minuteur de 2
@@ -1896,6 +1895,8 @@ fun MurEntreeAfrique(
     var passwordErrorPoubelle by remember{ mutableStateOf(false) }
     var showDilemmePoubelle by remember { mutableStateOf(false) }
 
+    var showParchemin by remember { mutableStateOf(false) }
+    var showChameau by remember { mutableStateOf(false) }
     var showTips by remember { mutableStateOf(false) }
     var showIndiceDeesse by remember { mutableStateOf(false) }
 
@@ -2915,6 +2916,146 @@ fun MurEntreeAfrique(
                 Row() {
                     FloatingButtonClosePopup(
                         onClick = {showDilemmePoubelle = false}
+                    )
+                }
+            }
+        }
+    }
+
+    //click parchemin
+    ClickElement(
+        clickableWidthPercent = 0.07F,
+        clickableHeightPercent = 0.12F,
+        clickableOffsetPercent = Offset(0.26F, 0.24F),
+        navController = navController,
+        onClick = { showParchemin = true })
+
+    //parchemin
+    if (showParchemin){
+        // Popup contenant le parchemin
+        Popup() {
+
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                // Fond flou
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(Color.Transparent)
+                        .drawBehind {
+                            drawRect(
+                                brush = Brush.verticalGradient(
+                                    colors = listOf(Color.Transparent, Color.Black),
+                                    startY = 0f,
+                                    endY = size.height
+                                )
+                            )
+                        },
+                    content = {
+                        // Contenu de la popup
+                        Box(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(16.dp),
+                            content = {
+                                Box(
+                                    modifier = with(Modifier) {
+                                        fillMaxSize()
+                                            .paint(
+                                                // Remplacez par votre id d'image
+                                                painterResource(id = R.drawable.code_cesar),
+                                                contentScale = ContentScale.Fit
+                                            )
+                                    }
+                                )
+                            }
+                        )
+                    }
+                )
+            }
+
+            Column(
+                modifier = modifier
+                    .fillMaxSize()
+                    .padding(30.dp, 20.dp),
+                verticalArrangement = Arrangement.Top,
+                horizontalAlignment = Alignment.End
+            ){
+                Row() {
+                    FloatingButtonClosePopup(
+                        onClick = {showParchemin = false}
+                    )
+                }
+            }
+        }
+    }
+
+    //click chameau
+    ClickElement(
+        clickableWidthPercent = 0.07F,
+        clickableHeightPercent = 0.14F,
+        clickableOffsetPercent = Offset(0.43F, 0.24F),
+        navController = navController,
+        onClick = { showChameau = true })
+
+    //chameau
+    if (showChameau){
+        // Popup contenant le chameau
+        Popup() {
+
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                // Fond flou
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(Color.Transparent)
+                        .drawBehind {
+                            drawRect(
+                                brush = Brush.verticalGradient(
+                                    colors = listOf(Color.Transparent, Color.Black),
+                                    startY = 0f,
+                                    endY = size.height
+                                )
+                            )
+                        },
+                    content = {
+                        // Contenu de la popup
+                        Box(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(16.dp),
+                            content = {
+                                Box(
+                                    modifier = with(Modifier) {
+                                        fillMaxSize()
+                                            .paint(
+                                                // Remplacez par votre id d'image
+                                                painterResource(id = R.drawable.chameau),
+                                                contentScale = ContentScale.Fit
+                                            )
+                                    }
+                                )
+                            }
+                        )
+                    }
+                )
+            }
+
+            Column(
+                modifier = modifier
+                    .fillMaxSize()
+                    .padding(30.dp, 20.dp),
+                verticalArrangement = Arrangement.Top,
+                horizontalAlignment = Alignment.End
+            ){
+                Row() {
+                    FloatingButtonClosePopup(
+                        onClick = {showChameau = false}
                     )
                 }
             }

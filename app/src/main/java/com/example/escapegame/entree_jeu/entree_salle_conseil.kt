@@ -10,6 +10,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.paint
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
@@ -38,29 +39,14 @@ fun entreeSalleConseil(
                 contentScale = ContentScale.FillBounds)
     }
     )
-    PoigneeCliquableSalleConseil(
-        onClick = { onClick },
+
+    //clic vers entree salle conseil
+    ClickElement(
         clickableWidthPercent = 0.38F,
-        clickableHeight = 0.82F,
-        clickableOffset = IntOffset(230, 30),
-        navController = navController)
-}
+        clickableHeightPercent = 0.82F,
+        clickableOffsetPercent = Offset(0.32F, 0.1F),
+        navController = navController,
+        onClick = { navController.navigate("salle_conseil") })
 
-@Composable
-fun PoigneeCliquableSalleConseil(
-    onClick: () -> Unit,
-    clickableWidthPercent: Float = 0.4F,
-    clickableHeight: Float = 0.5F,
-    clickableOffset: IntOffset = IntOffset.Zero,
-    navController: NavController
-) {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth(clickableWidthPercent)
-            .fillMaxHeight(clickableHeight)
-            .offset(clickableOffset.x.dp, clickableOffset.y.dp)
-            .clickable(onClick = {navController.navigate("salle_conseil")})
-    )
 }
-
 

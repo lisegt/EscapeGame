@@ -10,6 +10,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.paint
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
@@ -38,29 +39,14 @@ fun couloirSalleConseil(
                 contentScale = ContentScale.FillBounds)
     }
     )
-    PorteCliquableSalleConseil(
-        onClick = { onClick },
-        clickableWidth = 0.15F,
-        clickableHeight = 0.4F,
-        clickableOffset = IntOffset(380, 70),
-        navController = navController)
-}
 
-@Composable
-fun PorteCliquableSalleConseil(
-    onClick: () -> Unit,
-    clickableWidth: Float = 0.4F,
-    clickableHeight: Float = 0.5F,
-    clickableOffset: IntOffset = IntOffset.Zero,
-    navController: NavController
-) {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth(clickableWidth)
-            .fillMaxHeight(clickableHeight)
-            .offset(clickableOffset.x.dp, clickableOffset.y.dp)
-            .clickable(onClick = {navController.navigate("entree_salle_conseil")})
-    )
+    //clic vers salle conseil
+    ClickElement(
+        clickableWidthPercent = 0.15F,
+        clickableHeightPercent = 0.4F,
+        clickableOffsetPercent = Offset(0.52F, 0.2F),
+        navController = navController,
+        onClick = { navController.navigate("entree_salle_conseil") })
 }
 
 

@@ -1,6 +1,7 @@
 package com.example.escapegame
 
 import androidx.compose.animation.core.spring
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
 import androidx.compose.material.Text
@@ -28,7 +29,7 @@ fun pageBienvenue(
     navController: NavController
 ){
 
-    Button(onClick = {navController.navigate("salle_afrique")}){}
+    //Button(onClick = {navController.navigate("salle_afrique")}){}
 
     //background avec image
     Box(modifier = with (Modifier){
@@ -39,29 +40,75 @@ fun pageBienvenue(
                 contentScale = ContentScale.FillBounds)
     }
     )
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        verticalArrangement = Arrangement.Bottom,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
 
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(IntrinsicSize.Min)
+                .background(Color.Black.copy(alpha = 0.5f))
+        ) {
+            Column() {
+                Row(
+                    modifier = Modifier.padding(16.dp)
+                ) {
+                    Text(
+                        text = titre,
+                        color = Color.White,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.weight(1f)
+                    )
+                }
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(12.dp, 0.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(
+                        text = corps,
+                        color = Color.White,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.weight(1f)
+                    )
+                    BoutonVersHallAccueil(navController)
+                }
+            }
+
+        }
+    }
+    /*
     Column(
         modifier = modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
+        verticalArrangement = Arrangement.Bottom,
         horizontalAlignment = Alignment.CenterHorizontally
+
     )  {
         Text(titre, color = Color.White)
         Text(
             text = corps,
-            fontSize = 10.sp,
+            fontSize = 14.sp,
             textAlign = TextAlign.Center,
             color = Color.White)
         BoutonVersHallAccueil(navController)
     }
+
+     */
 }
 
 @Composable
 private fun BoutonVersHallAccueil(navController: NavController) {
     Button(
-        modifier = Modifier.padding(vertical = 24.dp),
+        modifier = Modifier.padding(vertical = 10.dp),
         onClick = { navController.navigate("hall_accueil") }
     ) {
-        Text(text = "Entrer dans hall d'accueil")
+        Text(text = "Entrer")
     }
 }
 

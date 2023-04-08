@@ -1854,42 +1854,34 @@ fun MurEntreeAfrique(
     var enigme_uranium by remember { mutableStateOf(false) }
     var passwordErrorUranium by remember{ mutableStateOf(false) }
     var showDilemmeUranium by remember { mutableStateOf(false) }
-    var code_uranium_trouve by remember { mutableStateOf(false) }
 
     var enigme_diamant by remember { mutableStateOf(false) }
     var passwordErrorDiamant by remember{ mutableStateOf(false) }
     var showDilemmeDiamant by remember { mutableStateOf(false) }
-    var code_diamant_trouve by remember { mutableStateOf(false) }
 
     var enigme_eau by remember { mutableStateOf(false) }
     var passwordErrorEau by remember{ mutableStateOf(false) }
     var showDilemmeEau by remember { mutableStateOf(false) }
-    var code_eau_trouve by remember { mutableStateOf(false) }
 
     var enigme_gaz by remember { mutableStateOf(false) }
     var passwordErrorGaz by remember{ mutableStateOf(false) }
     var showDilemmeGaz by remember { mutableStateOf(false) }
-    var code_gaz_trouve by remember { mutableStateOf(false) }
 
     var enigme_er by remember { mutableStateOf(false) }
     var passwordErrorER by remember{ mutableStateOf(false) }
     var showDilemmeER by remember { mutableStateOf(false) }
-    var code_er_trouve by remember { mutableStateOf(false) }
 
     var enigme_pollution by remember { mutableStateOf(false) }
     var passwordErrorPollution by remember{ mutableStateOf(false) }
     var showDilemmePollution by remember { mutableStateOf(false) }
-    var code_pollution_trouve by remember { mutableStateOf(false) }
 
     var enigme_sec by remember { mutableStateOf(false) }
     var passwordErrorSec by remember{ mutableStateOf(false) }
     var showDilemmeSec by remember { mutableStateOf(false) }
-    var code_sec_trouve by remember { mutableStateOf(false) }
 
     var enigme_poubelle by remember { mutableStateOf(false) }
     var passwordErrorPoubelle by remember{ mutableStateOf(false) }
     var showDilemmePoubelle by remember { mutableStateOf(false) }
-    var code_poubelle_trouve by remember { mutableStateOf(false) }
 
     var showTips by remember { mutableStateOf(false) }
 
@@ -1916,7 +1908,7 @@ fun MurEntreeAfrique(
         clickableOffsetPercent = Offset(0.34F, 0.24F),
         navController = navController,
         onClick = {
-            if (code_uranium_trouve) { showDilemmeUranium = true }
+            if (VariableGlobale.code_uranium_trouve) { showDilemmeUranium = true }
             else { enigme_uranium = true }})
 
     //popup enigme uranium
@@ -1953,7 +1945,7 @@ fun MurEntreeAfrique(
                             passwordErrorUranium = false
                             showDilemmeUranium = true
                             enigme_uranium = false
-                            code_uranium_trouve = true
+                            VariableGlobale.code_uranium_trouve = true
 
                         } else {
                             passwordErrorUranium = true
@@ -2041,7 +2033,7 @@ fun MurEntreeAfrique(
         clickableOffsetPercent = Offset(0.26F, 0.395F),
         navController = navController,
         onClick = {
-            if (code_diamant_trouve) { showDilemmeDiamant = true }
+            if (VariableGlobale.code_diamant_trouve) { showDilemmeDiamant = true }
             else { enigme_diamant = true }})
 
     //popup enigme diamant
@@ -2078,7 +2070,7 @@ fun MurEntreeAfrique(
                             passwordErrorDiamant = false
                             showDilemmeDiamant = true
                             enigme_diamant = false
-                            code_diamant_trouve = true
+                            VariableGlobale.code_diamant_trouve = true
 
                         } else {
                             passwordErrorDiamant = true
@@ -2167,7 +2159,7 @@ fun MurEntreeAfrique(
         clickableOffsetPercent = Offset(0.26F, 0.535F),
         navController = navController,
         onClick = {
-            if (code_eau_trouve) { showDilemmeEau = true }
+            if (VariableGlobale.code_eau_trouve) { showDilemmeEau = true }
             else { enigme_eau = true } })
 
     //popup enigme eau
@@ -2204,7 +2196,7 @@ fun MurEntreeAfrique(
                             passwordErrorEau = false
                             showDilemmeEau = true
                             enigme_eau = false
-                            code_eau_trouve = true
+                            VariableGlobale.code_eau_trouve = true
 
                         } else {
                             passwordErrorEau = true
@@ -2293,7 +2285,7 @@ fun MurEntreeAfrique(
         clickableOffsetPercent = Offset(0.43F, 0.53F),
         navController = navController,
         onClick = {
-            if (code_gaz_trouve) { showDilemmeGaz = true }
+            if (VariableGlobale.code_gaz_trouve) { showDilemmeGaz = true }
             else { enigme_gaz = true } })
 
     //popup enigme gaz
@@ -2330,7 +2322,7 @@ fun MurEntreeAfrique(
                             passwordErrorGaz = false
                             showDilemmeGaz = true
                             enigme_gaz = false
-                            code_gaz_trouve = true
+                            VariableGlobale.code_gaz_trouve = true
 
                         } else {
                             passwordErrorGaz = true
@@ -2419,7 +2411,7 @@ fun MurEntreeAfrique(
         clickableOffsetPercent = Offset(0.34F, 0.38F),
         navController = navController,
         onClick = {
-            if (code_er_trouve) { showDilemmeER = true }
+            if (VariableGlobale.code_er_trouve) { showDilemmeER = true }
             else { enigme_er = true } })
 
     //popup enigme énergies renouvelables
@@ -2456,7 +2448,7 @@ fun MurEntreeAfrique(
                             passwordErrorER = false
                             showDilemmeER = true
                             enigme_er = false
-                            code_er_trouve = true
+                            VariableGlobale.code_er_trouve = true
 
                         } else {
                             passwordErrorER = true
@@ -2545,7 +2537,7 @@ fun MurEntreeAfrique(
         clickableOffsetPercent = Offset(0.34F, 0.535F),
         navController = navController,
         onClick = {
-            if (code_pollution_trouve) { showDilemmePollution = true }
+            if (VariableGlobale.code_pollution_trouve) { showDilemmePollution = true }
             else { enigme_pollution = true } })
 
     //popup enigme pollution
@@ -2582,7 +2574,7 @@ fun MurEntreeAfrique(
                             passwordErrorPollution = false
                             showDilemmePollution = true
                             enigme_pollution = false
-                            code_pollution_trouve = true
+                            VariableGlobale.code_pollution_trouve = true
 
                         } else {
                             passwordErrorPollution = true
@@ -2671,7 +2663,7 @@ fun MurEntreeAfrique(
         clickableOffsetPercent = Offset(0.34F, 0.68F),
         navController = navController,
         onClick = {
-            if (code_sec_trouve) { showDilemmeSec = true }
+            if (VariableGlobale.code_sec_trouve) { showDilemmeSec = true }
             else { enigme_sec = true } })
 
     //popup enigme secheresse
@@ -2708,7 +2700,7 @@ fun MurEntreeAfrique(
                             passwordErrorSec = false
                             showDilemmeSec = true
                             enigme_sec = false
-                            code_sec_trouve = true
+                            VariableGlobale.code_sec_trouve = true
 
                         } else {
                             passwordErrorSec = true
@@ -2797,7 +2789,7 @@ fun MurEntreeAfrique(
         clickableOffsetPercent = Offset(0.43F, 0.38F),
         navController = navController,
         onClick = {
-            if (code_poubelle_trouve) { showDilemmePoubelle = true }
+            if (VariableGlobale.code_poubelle_trouve) { showDilemmePoubelle = true }
             else { enigme_poubelle = true } })
 
     //popup enigme poubelle
@@ -2834,7 +2826,7 @@ fun MurEntreeAfrique(
                             passwordErrorPoubelle = false
                             showDilemmePoubelle = true
                             enigme_poubelle = false
-                            code_poubelle_trouve = true
+                            VariableGlobale.code_poubelle_trouve = true
 
                         } else {
                             passwordErrorPoubelle = true

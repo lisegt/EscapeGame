@@ -33,15 +33,15 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
-import androidx.compose.ui.unit.IntOffset
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import androidx.compose.ui.unit.toSize
+import androidx.compose.ui.unit.*
 import androidx.compose.ui.window.Popup
 import androidx.core.net.toUri
 import androidx.navigation.NavController
 import com.example.escapegame.entree_jeu.*
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
+import androidx.compose.ui.unit.dp
 
 @Composable
 fun salleAfrique(
@@ -125,6 +125,17 @@ fun salleAfrique(
                 showMurEntree = !showMurEntree
             }
         )
+    }
+
+    //minuteur d'1 h
+    if (VariableGlobale.mode == "1equipe" || VariableGlobale.mode == "2equipes"){
+        //Timer(minuteur = 3600000L)
+        Timer(minuteur = 60000L)
+    }
+
+    //minuteur de 2
+    if (VariableGlobale.mode == "1joueur"){
+        Timer(minuteur = 7200000L)
     }
 }
 
@@ -4092,4 +4103,81 @@ fun FloatingButtonPreviousPopup(onClick: () -> Unit) {
             }
         )
     }
+}
+
+@Composable
+fun Timer(minuteur : Long) {
+    var remainingTime by remember { mutableStateOf(minuteur) }
+    var timerRunning by remember { mutableStateOf(true) }
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(10.dp),
+        horizontalAlignment = Alignment.End,
+        verticalArrangement = Arrangement.Top
+
+    ) {
+        if (timerRunning) {
+            if (remainingTime > 600000) {
+                Text(
+                    text = formatElapsedTime(remainingTime),
+                    color = Color.Black,
+                    fontSize = 24.sp
+                )
+            } else {
+                BlinkingText(
+                    text = formatElapsedTime(remainingTime),
+                    color = Color.Red
+                )
+            }
+        } else {
+            Text(
+                text = formatElapsedTime(remainingTime),
+                color = Color.Red,
+                fontSize = 24.sp
+            )
+        }
+
+
+    }
+
+    LaunchedEffect(Unit) {
+        while (true) {
+            delay(1000)
+            if (timerRunning && remainingTime > 0) {
+                remainingTime -= 1000
+            } else {
+                timerRunning = false
+                remainingTime += 1000
+            }
+        }
+    }
+
+}
+
+@Composable
+fun BlinkingText(text: String, color: Color) {
+    var visible by remember { mutableStateOf(true) }
+
+    LaunchedEffect(Unit) {
+        while (true) {
+            delay(500)
+            visible = !visible
+        }
+    }
+
+    if (visible) {
+        Text(
+            text = text,
+            color = color,
+            fontSize = 24.sp
+        )
+    }
+}
+fun formatElapsedTime(elapsedTime: Long): String {
+    val hours = (elapsedTime / 3600000).toString().padStart(2, '0')
+    val minutes = ((elapsedTime % 3600000) / 60000).toString().padStart(2, '0')
+    val seconds = ((elapsedTime % 60000) / 1000).toString().padStart(2, '0')
+    return "$hours:$minutes:$seconds"
 }

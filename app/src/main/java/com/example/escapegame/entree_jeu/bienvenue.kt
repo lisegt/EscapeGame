@@ -28,7 +28,7 @@ fun pageBienvenue(
     navController: NavController
 ){
 
-    Button(onClick = {navController.navigate("salle_conseil_dilemmes")}){}
+    Button(onClick = {navController.navigate("salle_afrique")}){}
 
     //background avec image
     Box(modifier = with (Modifier){

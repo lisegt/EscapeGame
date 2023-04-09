@@ -86,7 +86,6 @@ fun pageBienvenue(
 @Composable
 private fun BoutonVersHallAccueil(navController: NavController) {
     Button(
-        modifier = Modifier.padding(vertical = 10.dp),
         onClick = { navController.navigate("hall_accueil") }
     ) {
         Text(text = "Entrer")

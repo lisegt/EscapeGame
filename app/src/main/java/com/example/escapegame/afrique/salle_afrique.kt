@@ -3,7 +3,6 @@ import android.content.Intent
 import androidx.compose.foundation.*
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.runtime.*
@@ -12,25 +11,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.draw.paint
 import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.graphics.painter.BitmapPainter
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.input.pointer.positionChange
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.*
@@ -39,8 +32,6 @@ import androidx.core.net.toUri
 import androidx.navigation.NavController
 import com.example.escapegame.entree_jeu.*
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlin.math.roundToInt
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -151,6 +142,12 @@ fun MurFondAfrique(
     var showTabPetrole by remember { mutableStateOf(false) }
     var showJournal by remember { mutableStateOf(false) }
     var showMotsFleches by remember { mutableStateOf(false) }
+    var showBoite by remember { mutableStateOf(false) }
+    var showIndiceMap by remember { mutableStateOf(false) }
+    var showPointNord by remember { mutableStateOf(false) }
+    var showPointOuest by remember { mutableStateOf(false) }
+    var showPointSud by remember { mutableStateOf(false) }
+
 
     val context = LocalContext.current
 
@@ -371,6 +368,236 @@ fun MurFondAfrique(
                 Row() {
                     FloatingButtonClosePopup(
                         onClick = {showMotsFleches = false }
+                    )
+                }
+            }
+        }
+    }
+
+    //click sur boite
+    ClickElement(
+        clickableWidthPercent = 0.08F,
+        clickableHeightPercent = 0.1F,
+        clickableOffsetPercent = Offset(0.54F, 0.72F),
+        navController = navController,
+        onClick = { showBoite= true })
+
+    //zoom sur boite
+    if (showBoite){
+        // Popup contenant le journal le monde
+        Popup() {
+            Column(
+                modifier = modifier
+                    .fillMaxSize()
+                    .padding(10.dp, 10.dp),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Box(modifier = Modifier.fillMaxSize()) {
+                    Box(modifier = with (Modifier){
+                        fillMaxSize()
+                            .paint(
+                                // Replace with your image id
+                                painterResource(id = R.drawable.boite_osier_ouverte),
+                                contentScale = ContentScale.FillBounds)
+                    })
+
+                    ClickElement(
+                        clickableWidthPercent = 0.28F,
+                        clickableHeightPercent = 0.3F,
+                        clickableOffsetPercent = Offset(0.2F, 0.25F),
+                        navController = navController,
+                        onClick = { showBoite = false ; showIndiceMap = true })
+                }
+            }
+
+            Column(
+                modifier = modifier
+                    .fillMaxSize()
+                    .padding(30.dp, 20.dp),
+                verticalArrangement = Arrangement.Top,
+                horizontalAlignment = Alignment.End
+            ){
+                Row() {
+                    FloatingButtonClosePopup(
+                        onClick = {showBoite = false }
+                    )
+                }
+            }
+        }
+    }
+
+    //indices points GPS
+    if (showIndiceMap){
+        // Popup contenant les mots fléchés
+        Popup() {
+            Column(
+                modifier = modifier
+                    .fillMaxSize()
+                    .padding(10.dp, 10.dp),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Box(modifier = Modifier.fillMaxSize()) {
+                    Box(modifier = with (Modifier){
+                        fillMaxSize()
+                            .paint(
+                                // Replace with your image id
+                                painterResource(id = R.drawable.map_coord_gps),
+                                contentScale = ContentScale.FillBounds)
+                    })
+
+                    //clic sur le point ouest
+                    ClickElement(
+                        clickableWidthPercent = 0.04F,
+                        clickableHeightPercent = 0.07F,
+                        clickableOffsetPercent = Offset(0.57F, 0.25F),
+                        navController = navController,
+                        onClick = { showPointOuest = true })
+
+                    //clic sur le point nord
+                    ClickElement(
+                        clickableWidthPercent = 0.04F,
+                        clickableHeightPercent = 0.07F,
+                        clickableOffsetPercent = Offset(0.68F, 0.19F),
+                        navController = navController,
+                        onClick = { showPointNord = true})
+
+                    //clic sur le point sud
+                    ClickElement(
+                        clickableWidthPercent = 0.04F,
+                        clickableHeightPercent = 0.07F,
+                        clickableOffsetPercent = Offset(0.717F, 0.625F),
+                        navController = navController,
+                        onClick = { showPointSud = true })
+
+                }
+            }
+
+            Column(
+                modifier = modifier
+                    .fillMaxSize()
+                    .padding(30.dp, 20.dp),
+                verticalArrangement = Arrangement.Top,
+                horizontalAlignment = Alignment.End
+            ){
+                Row() {
+                    FloatingButtonClosePopup(
+                        onClick = {showIndiceMap = false }
+                    )
+                }
+            }
+        }
+    }
+
+    //indice point gps ouest
+    if (showPointOuest){
+        // Popup contenant le journal le monde
+        Popup() {
+            Column(
+                modifier = modifier
+                    .fillMaxSize()
+                    .padding(10.dp, 10.dp),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Box(modifier = Modifier.fillMaxSize()) {
+                    Box(modifier = with (Modifier){
+                        fillMaxSize()
+                            .paint(
+                                // Replace with your image id
+                                painterResource(id = R.drawable.coord_gps_ouest),
+                                contentScale = ContentScale.FillBounds)
+                    })
+                }
+            }
+
+            Column(
+                modifier = modifier
+                    .fillMaxSize()
+                    .padding(30.dp, 20.dp),
+                verticalArrangement = Arrangement.Top,
+                horizontalAlignment = Alignment.End
+            ){
+                Row() {
+                    FloatingButtonClosePopup(
+                        onClick = {showPointOuest = false}
+                    )
+                }
+            }
+        }
+    }
+
+    //indice point gps nord
+    if (showPointNord){
+        // Popup contenant le journal le monde
+        Popup() {
+            Column(
+                modifier = modifier
+                    .fillMaxSize()
+                    .padding(10.dp, 10.dp),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Box(modifier = Modifier.fillMaxSize()) {
+                    Box(modifier = with (Modifier){
+                        fillMaxSize()
+                            .paint(
+                                // Replace with your image id
+                                painterResource(id = R.drawable.coord_gps_nord),
+                                contentScale = ContentScale.FillBounds)
+                    })
+                }
+            }
+
+            Column(
+                modifier = modifier
+                    .fillMaxSize()
+                    .padding(30.dp, 20.dp),
+                verticalArrangement = Arrangement.Top,
+                horizontalAlignment = Alignment.End
+            ){
+                Row() {
+                    FloatingButtonClosePopup(
+                        onClick = {showPointNord = false}
+                    )
+                }
+            }
+        }
+    }
+
+    //indice point gps sud
+    if (showPointSud){
+        // Popup contenant le journal le monde
+        Popup() {
+            Column(
+                modifier = modifier
+                    .fillMaxSize()
+                    .padding(10.dp, 10.dp),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Box(modifier = Modifier.fillMaxSize()) {
+                    Box(modifier = with (Modifier){
+                        fillMaxSize()
+                            .paint(
+                                // Replace with your image id
+                                painterResource(id = R.drawable.coord_gps_sud),
+                                contentScale = ContentScale.FillBounds)
+                    })
+                }
+            }
+
+            Column(
+                modifier = modifier
+                    .fillMaxSize()
+                    .padding(30.dp, 20.dp),
+                verticalArrangement = Arrangement.Top,
+                horizontalAlignment = Alignment.End
+            ){
+                Row() {
+                    FloatingButtonClosePopup(
+                        onClick = {showPointSud = false}
                     )
                 }
             }
@@ -1844,8 +2071,8 @@ fun MurDroiteAfrique(
     }
 
     MoveableMasque1(clickableOffsetPercent = Offset(0.28F, 0.35F))
-    MoveableMasque2(clickableOffsetPercent = Offset(0.35F, 0.2F))
-    MoveableMasque3(clickableOffsetPercent = Offset(0.42F, 0.3F))
+    MoveableMasque2(clickableOffsetPercent = Offset(0.37F, 0.2F))
+    MoveableMasque3(clickableOffsetPercent = Offset(0.44F, 0.3F))
 
     //Boutons de navigation entre les murs
     ToNextRightWall(modifier = modifier, navController =  navController, onClick = {onDisplayChangeToRight(!isDisplayedRight)})

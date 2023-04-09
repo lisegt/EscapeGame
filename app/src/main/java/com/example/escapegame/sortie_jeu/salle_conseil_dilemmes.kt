@@ -73,7 +73,7 @@ fun salleConseilDilemmes(
         Row() {
             Column() {
                 FloatingButtonHome(
-                    onClick = { navController.navigate("bienvenue")}
+                    onClick = { navController.navigate("accueil")}
                 )
                 FloatingButtonSend(
                     onClick = { val intent = Intent(Intent.ACTION_VIEW, "https://docs.google.com/forms/d/e/1FAIpQLSfn_cw4jcmauDGwhlAurKYwFXasfpbsAEdiPuVwEFOBFxH9Wg/viewform".toUri())

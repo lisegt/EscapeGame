@@ -3,13 +3,11 @@ package com.example.escapegame
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.viewModels
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -20,9 +18,6 @@ import kotlin.time.ExperimentalTime
 
 class MainActivity : ComponentActivity() {
 
-    @OptIn(ExperimentalTime::class)
-    private val viewModel: MainViewModel by viewModels()
-
     @OptIn(ExperimentalAnimationApi::class, ExperimentalTime::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,7 +26,7 @@ class MainActivity : ComponentActivity() {
 
                 val navController = rememberNavController()
 
-                MyAppNavHost(modifier = Modifier, navController, "accueil",viewModel)
+                MyAppNavHost(modifier = Modifier, navController, "accueil")
 
             }
         }
@@ -43,8 +38,7 @@ class MainActivity : ComponentActivity() {
 fun MyAppNavHost(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
-    startDestination: String = "accueil",
-    viewModel: MainViewModel
+    startDestination: String = "accueil"
 ) {
     NavHost(
         modifier = modifier,
@@ -109,8 +103,7 @@ fun MyAppNavHost(
 fun OnboardingPreview() {
     EscapeGameTheme {
         val navController = rememberNavController()
-        val viewModel: MainViewModel by viewModel()
-        MyAppNavHost(modifier = Modifier, navController, "accueil", viewModel)
+        MyAppNavHost(modifier = Modifier, navController, "accueil")
     }
 }
 
@@ -121,7 +114,6 @@ fun OnboardingPreview() {
 fun MyAppPreview() {
     EscapeGameTheme {
         val navController = rememberNavController()
-        val viewModel: MainViewModel by viewModel()
-        MyAppNavHost(Modifier.fillMaxSize(),navController, "accueil", viewModel)
+        MyAppNavHost(Modifier.fillMaxSize(),navController, "accueil")
     }
 }

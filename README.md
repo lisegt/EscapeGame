@@ -3,14 +3,19 @@
 ## Résumé et contexte du projet
 
 Ce projet s'inscrit dans le cadre de la deuxième année du cycle ingénieur ISIS (Informatique et Système d’Information pour la Santé). 
-S'adressant à notre client, Mme Delphine VIELA, il consiste en la création d’une application mobile permettant de jouer à un escape game. 
-
-A l'heure actuelle, ce projet n'est pas encore abouti, il est en cours de développement.
+S'adressant à notre client, Mme Delphine VIELA (représentant l'INU Champollion), il consiste en la création d’une application mobile permettant de jouer à un Escape Game Numérique, sur le thème de la transition socio-écologique.
 
 ## Pour exécuter le projet
 
-- exécution du projet dans Android Studio
-- utiisation d'un émulateur Android
+### Sur Android Studio
 
-## Fabriqué avec
-- Kotlin dans Android Studio, associé au kit Jetpack Compose
+- Sélectionner un émulateur Android dans Android Studio
+- Exécuter le projet dans Android Studio
+
+### Sur un smartphone Android
+- Ouvrir le fichier LienTelechargementApp.txt
+- Cliquer sur le lien de téléchargement
+- Exécuter le fichier sur votre smartphone en acceptant d'installer une application ne provenant pas du Google Play Store
+
+## Développé avec
+- Kotlin dans Android Studio, associé à la bibliothèque Jetpack Compose

@@ -13,9 +13,13 @@ S'adressant à notre client, Mme Delphine VIELA (représentant l'INU Champollion
 - Exécuter le projet dans Android Studio
 
 ### Sur un smartphone Android
-- Ouvrir le fichier LienTelechargementApp.txt
-- Cliquer sur le lien de téléchargement
+- Ouvrir le fichier lienTelechargementApp.txt
+- Cliquer sur le lien de téléchargement (attention celui-ci n'est valide que jusqu'au 10 mai 2023)
 - Exécuter le fichier sur votre smartphone en acceptant d'installer une application ne provenant pas du Google Play Store
 
 ## Développé avec
 - Kotlin dans Android Studio, associé à la bibliothèque Jetpack Compose
+
+## Pour accéder aux salles Genially
+- Ouvrir le fichier liensGenially.txt
+- Cliquer sur le lien de la salle souhaitée

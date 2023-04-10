@@ -3,9 +3,7 @@
 ## Résumé et contexte du projet
 
 Ce projet s'inscrit dans le cadre de la deuxième année du cycle ingénieur ISIS (Informatique et Système d’Information pour la Santé). 
-S'adressant à notre client, Mme Delphine VIELA, il consiste en la création d’une application mobile permettant de jouer à un escape game. 
-
-A l'heure actuelle, ce projet n'est pas encore abouti, il est en cours de développement.
+S'adressant à notre client, Mme Delphine VIELA (représentant l'INU Champollion), il consiste en la création d’une application mobile permettant de jouer à un Escape Game Numérique, sur le thème de la transition socio-écologique.
 
 ## Pour exécuter le projet
 

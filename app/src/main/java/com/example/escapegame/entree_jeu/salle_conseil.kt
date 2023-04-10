@@ -51,7 +51,7 @@ fun salleConseil(
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(screenHeight * 0.45f)
+                .height(screenHeight * 0.6f)
                 .background(Color.Black.copy(alpha = 0.6f), shape = RoundedCornerShape(16.dp))
         ) {
             Column(modifier = Modifier.padding(10.dp, 10.dp)) {

@@ -51,7 +51,7 @@ fun pageHallAccueil(
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(screenHeight * 0.38f)
+                .height(screenHeight * 0.45f)
                 .background(Color.Black.copy(alpha = 0.6f), shape = RoundedCornerShape(16.dp))
         ) {
             Column() {

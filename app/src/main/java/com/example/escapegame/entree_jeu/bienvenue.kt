@@ -53,7 +53,7 @@ fun pageBienvenue(
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(screenHeight * 0.3f)
+                .height(screenHeight * 0.4f)
                 .background(Color.Black.copy(alpha = 0.6f), shape = RoundedCornerShape(16.dp))
         ) {
             Column() {

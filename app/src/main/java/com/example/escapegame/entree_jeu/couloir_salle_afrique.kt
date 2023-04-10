@@ -47,7 +47,7 @@ fun couloirSalleAfrique(
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(screenHeight * 0.54f)
+                .height(screenHeight * 0.65f)
                 .background(Color.Black.copy(alpha = 0.6f), shape = RoundedCornerShape(16.dp))
         ) {
             Column() {

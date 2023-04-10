@@ -23,6 +23,9 @@ fun pageAccueil(
     modifier: Modifier = Modifier,
     navController: NavController
 ) {
+    Button(onClick = { navController.navigate("salle_conseil_dilemmes") }) {
+        
+    }
     //background avec image
     Box(modifier = with (Modifier){
         fillMaxSize()
